@@ -1,0 +1,106 @@
+from abc import ABC
+from model.object_enum import ObjectEnum
+from utils.object_utils import get_object_key
+from utils.date_utils import format_date
+
+
+class BaseTransformer(ABC):
+    def __init__(self, db_service, related_object_columns, ocel_event_log):
+        self.db_service = db_service
+        self.related_object_columns = related_object_columns
+        self.ocel_event_log = ocel_event_log
+        self.object_type = None
+        self.object_class = None
+        self.sort_by = None
+        self.has_relationships = None
+
+    # Main method to be called for processing
+    def transform(self):
+        records = self.db_service.query_object(self.object_class, sort_by=self.sort_by)
+
+        if not records:
+            return
+
+        self.process_records(records)
+
+    def process_records(self, records):
+        list_of_objects = []
+
+        columns = self.get_columns()
+        if not columns:
+            return
+
+        for row in records:
+            attributes = self.get_attributes(row, columns)
+
+            row_obj = {
+                "id": get_object_key(self.object_type, row["id"]),
+                "type": self.object_type.value.name,
+                "attributes": attributes,
+            }
+
+            if self.has_relationships:
+                relationships = self.get_relationship(row)
+
+                if relationships:
+                    row_obj["relationships"] = relationships
+
+            list_of_objects.append(row_obj)
+
+        self.ocel_event_log["objects"].extend(list_of_objects)
+
+    def get_attributes(self, row, columns):
+        return [
+            {"name": col["name"], "value": row.get(col["name"], None)}
+            for col in columns
+        ]
+
+    def get_columns(self):
+        columns = self.related_object_columns.get(self.object_type.value.name)
+
+        if not columns:
+            print(
+                f"[WARN] Skipping '{self.object_type.value.name}' processor due to missing metadata."
+            )
+            return None
+
+        return columns
+
+    def get_relationship(self, row):
+        relationships = []
+
+        course_modules = self.db_service.fetch_course_modules_by_ids(
+            row["id"], self.object_type.value.module_id
+        )
+
+        if course_modules:
+            for course_module in course_modules:
+                relationships.append(
+                    {
+                        "objectId": get_object_key(
+                            ObjectEnum.COURSE_MODULE, course_module["id"]
+                        ),
+                        "qualifier": f"{self.object_type.value.name} is course module",
+                        "from": format_date(course_module["added"]),
+                        "to": "9999-12-31T23:59:59.999Z",
+                    }
+                )
+
+        calendar_events = self.db_service.fetch_related_calendar_events(
+            self.object_type.value.module_name, row["id"]
+        )
+
+        if calendar_events:
+            for calendar_event in calendar_events:
+                relationships.append(
+                    {
+                        "objectId": get_object_key(
+                            ObjectEnum.CALENDAR, calendar_event["id"]
+                        ),
+                        "qualifier": f"'{self.object_type.value.name}' has calendar event",
+                        "from": format_date(calendar_event["timestart"]),
+                        "to": "9999-12-31T23:59:59.999Z",
+                    }
+                )
+
+        return relationships

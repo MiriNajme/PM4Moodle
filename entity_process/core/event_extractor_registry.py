@@ -1,10 +1,12 @@
-from entity_process.core.events.assign_extractor import AssignExtractor
-from entity_process.core.events.choice_extractor import ChoiceExtractor
-from entity_process.core.events.file_extractor import FileExtractor
-from entity_process.core.events.folder_extractor import FolderExtractor
-from entity_process.core.events.label_extractor import LabelExtractor
-from entity_process.core.events.page_extractor import PageExtractor
-from entity_process.core.events.url_extractor import UrlExtractor
+from entity_process.core.extractors.assign import Assign
+from entity_process.core.extractors.choice import Choice
+from entity_process.core.extractors.file import File
+from entity_process.core.extractors.folder import Folder
+from entity_process.core.extractors.forum import Forum
+from entity_process.core.extractors.label import Label
+from entity_process.core.extractors.page import Page
+from entity_process.core.extractors.quiz import Quiz
+from entity_process.core.extractors.url import Url
 
 
 class EventExtractorRegistry:
@@ -16,43 +18,55 @@ class EventExtractorRegistry:
         self.related_event_columns = related_event_columns
         self.ocel_event_log = ocel_event_log
         self.generators = [
-            AssignExtractor(
+            Assign(
                 self.db_service,
                 self.related_object_columns,
                 self.related_event_columns,
                 self.ocel_event_log,
             ),
-            ChoiceExtractor(
+            Choice(
                 self.db_service,
                 self.related_object_columns,
                 self.related_event_columns,
                 self.ocel_event_log,
             ),
-            FileExtractor(
+            File(
                 self.db_service,
                 self.related_object_columns,
                 self.related_event_columns,
                 self.ocel_event_log,
             ),
-            FolderExtractor(
+            Folder(
                 self.db_service,
                 self.related_object_columns,
                 self.related_event_columns,
                 self.ocel_event_log,
             ),
-            LabelExtractor(
+            Label(
                 self.db_service,
                 self.related_object_columns,
                 self.related_event_columns,
                 self.ocel_event_log,
             ),
-            PageExtractor(
+            Page(
                 self.db_service,
                 self.related_object_columns,
                 self.related_event_columns,
                 self.ocel_event_log,
             ),
-            UrlExtractor(
+            Url(
+                self.db_service,
+                self.related_object_columns,
+                self.related_event_columns,
+                self.ocel_event_log,
+            ),
+            Forum(
+                self.db_service,
+                self.related_object_columns,
+                self.related_event_columns,
+                self.ocel_event_log,
+            ),
+            Quiz(
                 self.db_service,
                 self.related_object_columns,
                 self.related_event_columns,

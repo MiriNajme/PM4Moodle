@@ -1,0 +1,25 @@
+from model.object_enum import ObjectEnum
+from entity_process.core.transformers.base import Base
+from utils.object_utils import convert_value_type
+
+
+class QuestionAnswer(Base):
+    def __init__(self, db_service, related_object_columns, ocel_event_log):
+        super().__init__(db_service, related_object_columns, ocel_event_log)
+        self.object_type = ObjectEnum.QUESTION_ANSWER
+        self.object_class = self.db_service.Base.classes.mdl_question_answers
+        self.has_relationships = True
+        self.has_relation_to_calendar_events = False
+
+    def get_attributes(self, row, columns):
+        attributes = []
+
+        for col in columns:
+            attributes.append(
+                {
+                    "name": col["name"],
+                    "value": convert_value_type(row[col["name"]]),
+                }
+            )
+
+        return attributes

@@ -98,7 +98,23 @@ class EntityProcess:
             course_module_completion_attributes
         )
 
+        QuizAttempt = self.db_service.Base.classes.mdl_quiz_attempts
+        quiz_attempt_attributes = self.db_service.get_column_names_and_types(
+            QuizAttempt.__table__
+        )
+        self.related_event_columns["quiz_attempt"] = quiz_attempt_attributes
+
+        QuizGrades = self.db_service.Base.classes.mdl_quiz_grades
+        quiz_grades_attributes = self.db_service.get_column_names_and_types(
+            QuizGrades.__table__
+        )
+        self.related_event_columns["quiz_grades"] = quiz_grades_attributes
+
+        # Add grade attribute to set_grade_assignment and update_grade_assignment
+        grade_attributes = log_attributes.copy() + [{"name": "grade", "type": "float"}]
+
         event_types = [
+            # region ASSIGN
             {"name": "create_assign", "attributes": log_attributes},
             {"name": "import_assign", "attributes": []},
             {"name": "update_assign", "attributes": log_attributes},
@@ -121,8 +137,16 @@ class EntityProcess:
             {"name": "redraft_individual_assign", "attributes": log_attributes},
             {"name": "edit_assign_submission", "attributes": log_attributes},
             {"name": "remove_assign_submission", "attributes": log_attributes},
-            {"name": "set_grade_assignment", "attributes": log_attributes},
-            {"name": "update_grade_assignment", "attributes": log_attributes},
+            {
+                "name": "set_grade_assignment",
+                "attributes": grade_attributes,
+            },
+            {
+                "name": "update_grade_assignment",
+                "attributes": grade_attributes,
+            },
+            # endregion ASSIGN
+            # region CHOICE
             {"name": "create_choice", "attributes": log_attributes},
             {"name": "import_choice", "attributes": []},
             {"name": "update_choice", "attributes": log_attributes},
@@ -135,6 +159,8 @@ class EntityProcess:
             {"name": "complete_choice_automatic", "attributes": log_attributes},
             {"name": "select_option", "attributes": log_attributes},
             {"name": "remove_selection", "attributes": log_attributes},
+            # endregion CHOICE
+            # region FILE
             {"name": "create_file", "attributes": log_attributes},
             {"name": "import_file", "attributes": []},
             {"name": "update_file", "attributes": log_attributes},
@@ -145,6 +171,8 @@ class EntityProcess:
                 "attributes": course_module_completion_attributes,
             },
             {"name": "complete_file_automatic", "attributes": log_attributes},
+            # endregion FILE
+            # region FOLDER
             {"name": "create_folder", "attributes": log_attributes},
             {"name": "import_folder", "attributes": []},
             {"name": "update_folder", "attributes": log_attributes},
@@ -156,6 +184,8 @@ class EntityProcess:
             },
             {"name": "complete_folder_automatic", "attributes": log_attributes},
             {"name": "download_folder", "attributes": log_attributes},
+            # endregion FOLDER
+            # region LABEL
             {"name": "create_label", "attributes": log_attributes},
             {"name": "import_label", "attributes": []},
             {"name": "update_label", "attributes": log_attributes},
@@ -165,6 +195,8 @@ class EntityProcess:
                 "attributes": course_module_completion_attributes,
             },
             {"name": "complete_label_automatic", "attributes": log_attributes},
+            # endregion LABEL
+            # region PAGE
             {"name": "create_page", "attributes": log_attributes},
             {"name": "import_page", "attributes": []},
             {"name": "update_page", "attributes": log_attributes},
@@ -175,6 +207,8 @@ class EntityProcess:
                 "attributes": course_module_completion_attributes,
             },
             {"name": "complete_page_automatic", "attributes": log_attributes},
+            # endregion PAGE
+            # region URL
             {"name": "create_url", "attributes": log_attributes},
             {"name": "import_url", "attributes": []},
             {"name": "update_url", "attributes": log_attributes},
@@ -185,7 +219,54 @@ class EntityProcess:
                 "attributes": course_module_completion_attributes,
             },
             {"name": "complete_url_automatic", "attributes": log_attributes},
+            # endregion URL
+            # region FORUM
+            {"name": "create_forum", "attributes": log_attributes},
+            {"name": "import_forum", "attributes": []},
+            {"name": "update_forum", "attributes": log_attributes},
+            {"name": "delete_forum", "attributes": task_adhoc_attributes},
+            {"name": "view_forum", "attributes": log_attributes},
+            {
+                "name": "complete_forum_manually",
+                "attributes": course_module_completion_attributes,
+            },
+            {"name": "complete_forum_automatic", "attributes": log_attributes},
+            {"name": "subscribe_to_forum", "attributes": log_attributes},
+            {"name": "unsubscribe_from_forum", "attributes": log_attributes},
+            {"name": "add_discussion", "attributes": log_attributes},
+            {"name": "delete_discussion", "attributes": log_attributes},
+            {"name": "lock_discussion", "attributes": log_attributes},
+            {"name": "subscribe_to_discussion", "attributes": log_attributes},
+            {"name": "unsubscribe_from_discussion", "attributes": log_attributes},
+            {"name": "upload_post", "attributes": log_attributes},
+            {"name": "delete_post", "attributes": log_attributes},
+            {"name": "edit_post", "attributes": log_attributes},
+            {"name": "set_grade_forum", "attributes": grade_attributes},
+            {"name": "update_grade_forum", "attributes": grade_attributes},
+            {"name": "rate_post", "attributes": grade_attributes},
+            {"name": "edit_post_rate", "attributes": grade_attributes},
+            # endregion FORUM
+            # region QUIZ
+            {"name": "create_quiz", "attributes": log_attributes},
+            {"name": "import_quiz", "attributes": []},
+            {"name": "update_quiz", "attributes": log_attributes},
+            {"name": "delete_quiz", "attributes": task_adhoc_attributes},
+            {"name": "view_quiz", "attributes": log_attributes},
+            {
+                "name": "complete_quiz_manually",
+                "attributes": course_module_completion_attributes,
+            },
+            {"name": "complete_quiz_automatic", "attributes": log_attributes},
+            {"name": "add_question", "attributes": log_attributes},
+            {"name": "delete_question", "attributes": log_attributes},
+            {"name": "add_question_slot", "attributes": log_attributes},
+            {"name": "delete_question_slot", "attributes": log_attributes},
+            {"name": "attempt_quiz", "attributes": quiz_attempt_attributes},
+            {"name": "reattempt_quiz", "attributes": quiz_attempt_attributes},
+            {"name": "set_grade_quiz", "attributes": quiz_grades_attributes},
+            # endregion QUIZ
         ]
+
         self.ocel_event_log["event_types"].extend(event_types)
 
     def write_output(self):

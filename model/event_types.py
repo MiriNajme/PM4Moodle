@@ -16,18 +16,88 @@ class EventType(Enum):
     UPDATED = EventValue("updated", "upd", "update", "Updates")
     VIEWED = EventValue("viewed", "vew", "view", "Views")
     COMPLETED = EventValue("completed", "cpt", "complete", "Completes")
-    
+
     # Folder events
     DOWNLOADED = EventValue("downloaded", "dld", "download", "Downloaded")
-    
+
     # Assign events
     SET = EventValue("set", "set", "set", "Sets")
 
     # Choice events
-    CREATED_ANSWER = EventValue("created_answer", "crt_answer", "select_option", "Related to")
+    CREATED_ANSWER = EventValue(
+        "created_answer", "crt_answer", "select_option", "Related to"
+    )
     DELETED_ANSWER = EventValue(
         "deleted_answer", "del_answer", "remove_selection", "Related to"
     )
+
+    # region Forum events
+    ADD_DISCUSSION = EventValue("add_discussion", "add_disc", "add", "Adds discussion")
+    DELETE_DISCUSSION = EventValue(
+        "delete_discussion", "del_disc", "delete", "Deletes discussion"
+    )
+    LOCK_DISCUSSION = EventValue(
+        "lock_discussion", "lock_disc", "lock", "Locks discussion"
+    )
+    UNLOCK_DISCUSSION = EventValue(
+        "unlock_discussion", "unlock_disc", "unlock", "Unlocks discussion"
+    )
+    SUBSCRIBE_TO_FORUM = EventValue(
+        "subscribe_to_forum", "sub_frm", "subscribe_to", "Subscribes in"
+    )
+    UNSUBSCRIBE_FROM_FORUM = EventValue(
+        "unsubscribe_from_forum",
+        "unsub_frm",
+        "unsubscribe_from",
+        "Unsubscribes from",
+    )
+    SUBSCRIBE_TO_DISCUSSION = EventValue(
+        "subscribe_to_discussion", "sub_disc", "subscribe_to", "Subscribes in"
+    )
+    UNSUBSCRIBE_FROM_DISCUSSION = EventValue(
+        "unsubscribe_from_discussion",
+        "unsub_disc",
+        "unsubscribe_from",
+        "Unsubscribes from",
+    )
+    UPLOAD_POST = EventValue("upload_post", "upl_post", "upload", "Uploads post")
+    EDIT_POST = EventValue("edit_post", "edt_post", "edit", "Edits post")
+    DELETE_POST = EventValue("delete_post", "del_post", "delete", "Deletes post")
+    SET_GRADE_FORUM = EventValue(
+        "set_grade", "set_grade", "set_grade", "Sets grade for"
+    )
+    UPDATE_GRADE_FORUM = EventValue(
+        "update_grade",
+        "upd_grade",
+        "update_grade",
+        "Updates grade for",
+    )
+    RATE_USER_FORUM = EventValue(
+        "rate_user_forum", "rat_usr_frm", "rate_user_forum", "Rates user in forum"
+    )
+    UPDATE_RATE_USER_FORUM = EventValue(
+        "update_rate_user_forum",
+        "upd_rat_usr_frm",
+        "update_rate_user_forum",
+        "Updates user rate in forum",
+    )
+    # endregion Forum events
+
+    # region QUIZ
+    CREATE_QUESTION = EventValue("create_question", "crt_ques", "create", "Creates")
+    DELETE_QUESTION = EventValue(
+        "delete_question", "del_ques", "delete", "Deletes"
+    )
+    ADD_QUESTION_SLOT = EventValue("add_question_to_quiz", "add_ques_slt", "add", "Adds")
+    DELETE_QUESTION_SLOT = EventValue(
+        "delete_question_from_quiz", "del_ques_slt", "del", "Deletes"
+    )
+    QUIZ_ATTEMPT = EventValue("attempt_quiz", "quz_atmp", "quz_atmp", "Attempts")
+    QUIZ_REATTEMPT = EventValue(
+        "reattempt_quiz", "quz_reatmp", "quz_reatmp", "Reattempts"
+    )
+    QUIZ_SET_GRADE = EventValue("set_grade", "set_grade", "set_grade", "Sets grade for")
+    # endregion QUIZ
 
     def __str__(self):
         # This method will control how instances of EventType are converted to strings

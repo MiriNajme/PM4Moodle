@@ -23,7 +23,7 @@ class ObjectEnum(Enum):
     FeedBack_FILE = ObjectValue("feedback_file", "ffl", "mdl_files")
     FOLDER = ObjectValue("folder", "fld", "mdl_folder", "folder", 8)
     GRADE_ITEM = ObjectValue("grade_item", "gri", "mdl_grade_items", "grade_item")
-    GRADES_HISTORY = ObjectValue("grade", "grd", "mdl_grade_grades_history")
+    # GRADES_HISTORY = ObjectValue("grade", "grd", "mdl_grade_grades_history")
     GROUP = ObjectValue("group", "grp", "mdl_groups")
     LABEL = ObjectValue("label", "lbl", "mdl_label", "label", 13)
     PAGE = ObjectValue("page", "pag", "mdl_page", "page", 16)
@@ -32,6 +32,41 @@ class ObjectEnum(Enum):
     TAG_INSTANCE = ObjectValue("tag_instance", "tgi", "mdl_tag_instance")
     URL = ObjectValue("url", "url", "mdl_url", "url", 21)
     USER = ObjectValue("user", "usr", "mdl_user")
+    FORUM = ObjectValue("forum", "frm", "mdl_forum", "forum", 9)
+    FORUM_DISCUSSION = ObjectValue("forum_discussion", "fdi", "mdl_forum_discussions")
+    FORUM_POST = ObjectValue("forum_post", "fpo", "mdl_forum_posts")
+    QUIZ = ObjectValue("quiz", "quz", "mdl_quiz", "quiz", 17)
+    QUESTION = ObjectValue("question", "qst", "mdl_question")
+    QUESTION_ANSWER = ObjectValue("question_answers", "qan", "mdl_question_answers")
+    QUESTION_HINT = ObjectValue("question_hints", "qhi", "mdl_question_hints")
+    QUESTION_SLOT = ObjectValue("question_slots", "qsl", "mdl_quiz_slots")
+    QUESTION_BANK_ENTRY = ObjectValue(
+        "question_bank_entry", "qbe", "mdl_question_bank_entries"
+    )
+    TRUE_FALSE_QUESTION = ObjectValue(
+        "truefalse_question", "qtf", "mdl_question_truefalse"
+    )
+    MULTI_CHOICE_QUESTION = ObjectValue(
+        "multichoice_question", "qtmco", "mdl_qtype_multichoice_options"
+    )
+    MATCH_QUSESTION_SUB_QUSETION = ObjectValue(
+        "match_question_subquestion", "qtmsq", "mdl_qtype_match_subquestions"
+    )
+    MATCH_QUSESTION_OPTION = ObjectValue(
+        "match_question_option", "qtmo", "mdl_qtype_match_options"
+    )
+    SHORT_ANSWER_QUSESTION = ObjectValue(
+        "short_answer_question", "qtsaq", "mdl_qtype_shortanswer_options"
+    )
+    NUMERICAL_QUESTION = ObjectValue(
+        "numerical_question", "qtnuq", "mdl_question_numerical"
+    )
+    NUMERICAL_OPTION = ObjectValue(
+        "numerical_option", "nuopt", "mdl_question_numerical_options"
+    )
+    NUMERICAL_UNIT = ObjectValue(
+        "numerical_unit", "nuopt", "mdl_question_numerical_units"
+    )
 
     @classmethod
     def all_values(cls):
@@ -40,4 +75,3 @@ class ObjectEnum(Enum):
     def __str__(self):
         # This method will control how instances of EventType are converted to strings
         return self.value
-

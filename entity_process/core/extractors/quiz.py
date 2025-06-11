@@ -3,6 +3,7 @@ from model.event_types import EventType
 from model.object_enum import ObjectEnum
 from entity_process.core.extractors.base import Base
 from utils.date_utils import format_date
+from utils.object_utils import convert_value_type
 from utils.extractor_utils import (
     build_attributes,
     get_formatted_event_id,
@@ -205,13 +206,13 @@ class Quiz(Base):
             event_type_enum = EventType.QUIZ_ATTEMPT
             user_qualifier = "Attempted by user"
         else:
-            event_type_enum = EventType.REQUIZ_ATTEMPT
+            event_type_enum = EventType.QUIZ_REATTEMPT
             user_qualifier = "Reattempted by user"
 
         event_type = get_module_event_type_name(
             ObjectEnum.QUIZ, event_type_enum
         )
-        attributes = build_attributes(event, self.related_event_columns["quiz_attempt"])
+        attributes = [{"name": col["name"], "value": convert_value_type(event[col["name"]])} for col in self.related_event_columns["quiz_attempt"]]
 
         result = {
             "id": get_formatted_event_id(
@@ -241,7 +242,7 @@ class Quiz(Base):
         event_type = get_module_event_type_name(
             ObjectEnum.QUIZ, EventType.QUIZ_SET_GRADE
         )
-        attributes = build_attributes(event, self.related_event_columns["quiz_grades"])
+        attributes = [{"name": col["name"], "value": convert_value_type(event[col["name"]])} for col in self.related_event_columns["quiz_grades"]]
 
         result = {
             "id": get_formatted_event_id(

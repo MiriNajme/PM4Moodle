@@ -23,7 +23,7 @@ class FileService:
 
     def write_json(self, json_data, file_name):
         new_file_path = os.path.join(self.file_path, file_name)
-
+        os.makedirs(os.path.dirname(new_file_path), exist_ok=True)  # Ensure directory exists
         with open(new_file_path, 'w') as f:
             json.dump(json_data, f, indent=4)
 

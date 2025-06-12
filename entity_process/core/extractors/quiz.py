@@ -209,9 +209,7 @@ class Quiz(Base):
             event_type_enum = EventType.QUIZ_REATTEMPT
             user_qualifier = "Reattempted by user"
 
-        event_type = get_module_event_type_name(
-            ObjectEnum.QUIZ, event_type_enum
-        )
+        event_type = event_type_enum.value.type
         attributes = [{"name": col["name"], "value": convert_value_type(event[col["name"]])} for col in self.related_event_columns["quiz_attempt"]]
 
         result = {
@@ -239,9 +237,9 @@ class Quiz(Base):
     def get_set_grade_quiz_event_object(self, event):
         user_qualifier = "Graded user"
 
-        event_type = get_module_event_type_name(
-            ObjectEnum.QUIZ, EventType.QUIZ_SET_GRADE
-        )
+        # event_type = EventType.QUIZ_SET_GRADE.value.type
+        event_type = get_module_event_type_name(ObjectEnum.QUIZ, EventType.QUIZ_SET_GRADE)
+        
         attributes = [{"name": col["name"], "value": convert_value_type(event[col["name"]])} for col in self.related_event_columns["quiz_grades"]]
 
         result = {

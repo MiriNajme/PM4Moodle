@@ -92,9 +92,9 @@ class EventType(Enum):
     DELETE_QUESTION_SLOT = EventValue(
         "delete_question_from_quiz", "del_ques_slt", "del", "Deletes"
     )
-    QUIZ_ATTEMPT = EventValue("attempt_quiz", "quz_atmp", "quz_atmp", "Attempts")
+    QUIZ_ATTEMPT = EventValue("attempt_quiz", "quz_atmp", "attempt_quiz", "Attempts")
     QUIZ_REATTEMPT = EventValue(
-        "reattempt_quiz", "quz_reatmp", "quz_reatmp", "Reattempts"
+        "reattempt_quiz", "quz_reatmp", "reattempt_quiz", "Reattempts"
     )
     QUIZ_SET_GRADE = EventValue("set_grade", "set_grade", "set_grade", "Sets grade for")
     # endregion QUIZ

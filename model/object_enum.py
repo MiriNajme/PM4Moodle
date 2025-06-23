@@ -43,19 +43,25 @@ class ObjectEnum(Enum):
     QUESTION_BANK_ENTRY = ObjectValue(
         "question_bank_entry", "qbe", "mdl_question_bank_entries"
     )
+    QUESTION_DATASET = ObjectValue(
+        "question_dataset", "qds", "mdl_question_datasets"
+    )
+    DATASET_DEFINITION = ObjectValue(
+        "dataset_definition", "qdsdef", "mdl_question_dataset_definitions"
+    )
     TRUE_FALSE_QUESTION = ObjectValue(
         "truefalse_question", "qtf", "mdl_question_truefalse"
     )
     MULTI_CHOICE_QUESTION = ObjectValue(
         "multichoice_question", "qtmco", "mdl_qtype_multichoice_options"
     )
-    MATCH_QUSESTION_SUB_QUSETION = ObjectValue(
+    MATCH_QUESTION_SUB_QUESTION = ObjectValue(
         "match_question_subquestion", "qtmsq", "mdl_qtype_match_subquestions"
     )
-    MATCH_QUSESTION_OPTION = ObjectValue(
+    MATCH_QUESTION_OPTION = ObjectValue(
         "match_question_option", "qtmo", "mdl_qtype_match_options"
     )
-    SHORT_ANSWER_QUSESTION = ObjectValue(
+    SHORT_ANSWER_QUESTION = ObjectValue(
         "short_answer_question", "qtsaq", "mdl_qtype_shortanswer_options"
     )
     NUMERICAL_QUESTION = ObjectValue(
@@ -70,6 +76,13 @@ class ObjectEnum(Enum):
     ESSAY_OPTION = ObjectValue(
         "essay_option", "qtesq", "mdl_qtype_essay_options"
     )
+    CALCULATED_QUESTION = ObjectValue(
+        "calculated_question", "calq", "mdl_question_calculated"
+    )
+    CALCULATED_OPTION = ObjectValue(
+        "calculated_option", "calopt", "mdl_question_calculated_options"
+    )
+
     @classmethod
     def all_values(cls):
         return [item.value for item in cls]

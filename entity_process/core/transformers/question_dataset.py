@@ -1,0 +1,32 @@
+from model.object_enum import ObjectEnum
+from entity_process.core.transformers.base import Base
+from utils.object_utils import convert_value_type, get_object_key
+
+
+class QuestionDataset(Base):
+    def __init__(self, db_service, related_object_columns, ocel_event_log):
+        super().__init__(db_service, related_object_columns, ocel_event_log)
+        self.object_type = ObjectEnum.QUESTION_DATASET
+        self.object_class = self.db_service.Base.classes.mdl_question_datasets
+        self.has_relationships = True
+        
+    def get_attributes(self, row, columns):
+        attributes = []
+
+        for col in columns:
+            attributes.append(
+                {
+                    "name": col["name"],
+                    "value": convert_value_type(row[col["name"]]),
+                }
+            )
+
+        return attributes
+    
+    def get_relationship(self, row):
+        return [
+            {
+                "objectId": get_object_key(ObjectEnum.DATASET_DEFINITION, row["datasetdefinition"]),
+                "qualifier": "Has defintion",
+            }
+        ]

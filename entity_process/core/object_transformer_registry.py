@@ -53,6 +53,18 @@ from entity_process.core.transformers.numerical_unit import (
 from entity_process.core.transformers.essay_question import (
     EssayQuestion,
 )
+from entity_process.core.transformers.calculated_question import (
+    CalculatedQuestion,
+)
+from entity_process.core.transformers.calculated_options import (
+    CalculatedOptions,
+)
+from entity_process.core.transformers.question_dataset import (
+    QuestionDataset,
+)
+from entity_process.core.transformers.dataset_definition import (
+    DatasetDefinition,
+)
 from entity_process.core.transformers.quiz import Quiz
 from entity_process.core.transformers.url import Url
 
@@ -91,6 +103,8 @@ class ObjectTransformerRegistry:
             QuestionAnswer(db_service, related_object_columns, ocel_event_log),
             QuestionHint(db_service, related_object_columns, ocel_event_log),
             QuestionBankEntry(db_service, related_object_columns, ocel_event_log),
+            QuestionDataset(db_service, related_object_columns, ocel_event_log),
+            DatasetDefinition(db_service, related_object_columns, ocel_event_log),
             QuestionSlot(db_service, related_object_columns, ocel_event_log),
             MultiChoiceQustion(db_service, related_object_columns, ocel_event_log),
             TrueFalseQustion(db_service, related_object_columns, ocel_event_log),
@@ -103,6 +117,8 @@ class ObjectTransformerRegistry:
             NumericalQuestion(db_service, related_object_columns, ocel_event_log),
             NumericalOption(db_service, related_object_columns, ocel_event_log),
             NumericalUnit(db_service, related_object_columns, ocel_event_log),
+            CalculatedQuestion(db_service, related_object_columns, ocel_event_log),
+            CalculatedOptions(db_service, related_object_columns, ocel_event_log),
         ]
 
     def transform_all(self):

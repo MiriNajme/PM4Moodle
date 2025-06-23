@@ -116,7 +116,7 @@ class Question(Base):
                 qtype_qualifier,
                 relationships,
             )
-        elif qtype == "calculated":
+        elif "calculated" in qtype:
             self.append_relationships(
                 ObjectEnum.CALCULATED_QUESTION,
                 self.fetch_calculated_questions(row["id"]),

@@ -67,7 +67,9 @@ class ObjectEnum(Enum):
     NUMERICAL_UNIT = ObjectValue(
         "numerical_unit", "nuopt", "mdl_question_numerical_units"
     )
-
+    ESSAY_OPTION = ObjectValue(
+        "essay_option", "qtesq", "mdl_qtype_essay_options"
+    )
     @classmethod
     def all_values(cls):
         return [item.value for item in cls]

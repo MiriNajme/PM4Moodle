@@ -124,7 +124,6 @@ class Question(Base):
                             "qualifier": f"has numerical units",
                         }
                     )
-
         elif row["qtype"] == "match":
             rel_rows = self.fetch_match_subquestions(row["id"])
             if rel_rows:
@@ -148,7 +147,19 @@ class Question(Base):
                             "qualifier": f"Is a {row["qtype"]}",
                         }
                     )
-
+        elif row["qtype"] == "essay":
+            rel_rows = self.fetch_essay_questions(row["id"])
+            if rel_rows:
+                for rel_row in rel_rows:
+                    relationships.append(
+                        {
+                            "objectId": get_object_key(
+                                ObjectEnum.ESSAY_OPTION, rel_row["id"]
+                            ),
+                            "qualifier": f"Is a {row["qtype"]}",
+                        }
+                    )
+        
         return relationships
 
     def fetch_answers(self, question_id):
@@ -189,6 +200,12 @@ class Question(Base):
 
     def fetch_short_answer_questions(self, question_id):
         TABLE = self.db_service.Base.classes.mdl_qtype_shortanswer_options
+        filter_conditions = [TABLE.questionid == question_id]
+        rows = self.db_service.query_object(TABLE, filter_conditions)
+        return rows if rows else None
+    
+    def fetch_essay_questions(self, question_id):
+        TABLE = self.db_service.Base.classes.mdl_qtype_essay_options
         filter_conditions = [TABLE.questionid == question_id]
         rows = self.db_service.query_object(TABLE, filter_conditions)
         return rows if rows else None

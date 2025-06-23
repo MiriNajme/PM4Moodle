@@ -50,6 +50,9 @@ from entity_process.core.transformers.numerical_option import (
 from entity_process.core.transformers.numerical_unit import (
     NumericalUnit,
 )
+from entity_process.core.transformers.essay_question import (
+    EssayQuestion,
+)
 from entity_process.core.transformers.quiz import Quiz
 from entity_process.core.transformers.url import Url
 
@@ -96,6 +99,7 @@ class ObjectTransformerRegistry:
             ),
             MatchQuestionOption(db_service, related_object_columns, ocel_event_log),
             ShortAnswerQuestion(db_service, related_object_columns, ocel_event_log),
+            EssayQuestion(db_service, related_object_columns, ocel_event_log),
             NumericalQuestion(db_service, related_object_columns, ocel_event_log),
             NumericalOption(db_service, related_object_columns, ocel_event_log),
             NumericalUnit(db_service, related_object_columns, ocel_event_log),

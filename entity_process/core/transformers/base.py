@@ -52,7 +52,11 @@ class Base(ABC):
 
     def get_attributes(self, row, columns):
         return [
-            {"name": col["name"], "value": row.get(col["name"], None)}
+            {
+                "name": col["name"],
+                "time": "1970-01-01T00:00:00Z",  
+                "value": row.get(col["name"], None)
+            }
             for col in columns
         ]
 

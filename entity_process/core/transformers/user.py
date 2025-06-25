@@ -30,9 +30,21 @@ class User(Base):
             "id": get_object_key(self.object_type, "unknown"),
             "type": self.object_type.value.name,
             "attributes": [
-                {"name": "id", "value": get_object_key(self.object_type, "unknown")},
-                {"name": "username", "value": "unknown"},
-                {"name": "firstname", "value": "Unknown"},
+                {
+                    "name": "id",
+                    "time": "1970-01-01T00:00:00Z",
+                    "value": get_object_key(self.object_type, "unknown")
+                },
+                {
+                    "name": "username", 
+                    "time": "1970-01-01T00:00:00Z",
+                    "value": "unknown"
+                },
+                {
+                    "name": "firstname",
+                    "time": "1970-01-01T00:00:00Z",
+                    "value": "Unknown"
+                },
             ],
         }
 
@@ -41,9 +53,21 @@ class User(Base):
             "id": get_object_key(self.object_type, "system"),
             "type": self.object_type.value.name,
             "attributes": [
-                {"name": "id", "value": get_object_key(self.object_type, "system")},
-                {"name": "username", "value": "system"},
-                {"name": "firstname", "value": "system"},
+                {
+                    "name": "id", 
+                    "time": "1970-01-01T00:00:00Z",
+                    "value": get_object_key(self.object_type, "system")
+},
+                {
+                    "name": "username",
+                    "time": "1970-01-01T00:00:00Z",
+                    "value": "system"
+},
+                {
+                    "name": "firstname",
+                    "time": "1970-01-01T00:00:00Z",
+                    "value": "system"
+                },
             ],
         }
 

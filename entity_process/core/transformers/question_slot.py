@@ -19,6 +19,7 @@ class QuestionSlot(Base):
                 {
                     "name": col["name"],
                     "value": convert_value_type(row[col["name"]]),
+                    "time": "1970-01-01T00:00:00Z",
                 }
             )
 

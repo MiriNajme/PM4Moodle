@@ -12,7 +12,7 @@ class EntityProcess:
         self.related_event_columns = {}
         self.ocel_event_log = {
             "objectTypes": [],
-            "event_types": [],
+            "eventTypes": [],
             "objects": [],
             "events": [],
         }
@@ -267,7 +267,7 @@ class EntityProcess:
             # endregion QUIZ
         ]
 
-        self.ocel_event_log["event_types"].extend(event_types)
+        self.ocel_event_log["eventTypes"].extend(event_types)
 
     def write_output(self):
         self.file_service.write_ocel(

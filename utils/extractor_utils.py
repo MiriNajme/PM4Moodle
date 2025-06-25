@@ -1,5 +1,4 @@
 from model.event_types import EventType
-from model.event_types import EventType
 from model.object_enum import ObjectEnum
 from utils.object_utils import get_object_key
 

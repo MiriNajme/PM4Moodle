@@ -84,9 +84,7 @@ class Quiz(Base):
 
         if events:
             for event in events:
-                formated_event_object = self.get_attempt_quiz_event_object(
-                    event
-                )
+                formated_event_object = self.get_attempt_quiz_event_object(event)
                 if formated_event_object is not None:
                     self.ocel_event_log["events"].append(formated_event_object)
 
@@ -158,11 +156,11 @@ class Quiz(Base):
 
         if event_type_enum is EventType.CREATE_QUESTION:
             user_qualifier = "Added by user"
-            question_qualifier = "Adds question to quiz"
+            question_qualifier = "Adds question bank entry"
             quiz_qualifier = "Added to the quiz"
         elif event_type_enum is EventType.CREATE_QUESTION:
             user_qualifier = "Deleted by user"
-            question_qualifier = "Deletes question from quiz"
+            question_qualifier = "Deletes question bank entry"
             quiz_qualifier = "Deleted from the quiz"
         else:
             user_qualifier = ""
@@ -173,21 +171,35 @@ class Quiz(Base):
             get_formatted_relationship(
                 ObjectEnum.USER, event["userid"], user_qualifier
             ),
-            get_formatted_relationship(
-                ObjectEnum.QUESTION, event["objectid"], question_qualifier
-            ),
+            # get_formatted_relationship(
+            #     ObjectEnum.QUESTION, event["objectid"], question_qualifier
+            # ),
         ]
 
+        question_refrence = self.fetch_question_refrence(
+            event["objectid"], "itemid"
+        )
+        if question_refrence is not None:
+            relationships.append(
+                get_formatted_relationship(
+                    ObjectEnum.QUESTION_BANK_ENTRY,
+                    question_refrence["questionbankentryid"],
+                    question_qualifier,
+                )
+            )
+        
         instance = json.loads(event["other"])
         if instance:
             relationships.append(
                 get_formatted_relationship(
-                    ObjectEnum.QUESTION, instance["quizid"], quiz_qualifier
+                    ObjectEnum.QUIZ, instance["quizid"], quiz_qualifier
                 )
             ),
 
         if event_type_enum == EventType.ADD_QUESTION_SLOT:
-            question_refrence = self.fetch_question_refrence(event["objectid"], "itemid")
+            question_refrence = self.fetch_question_refrence(
+                event["objectid"], "itemid"
+            )
             if question_refrence is not None:
                 relationships.append(
                     get_formatted_relationship(
@@ -210,7 +222,10 @@ class Quiz(Base):
             user_qualifier = "Reattempted by user"
 
         event_type = event_type_enum.value.type
-        attributes = [{"name": col["name"], "value": convert_value_type(event[col["name"]])} for col in self.related_event_columns["quiz_attempt"]]
+        attributes = [
+            {"name": col["name"], "value": convert_value_type(event[col["name"]])}
+            for col in self.related_event_columns["quiz_attempt"]
+        ]
 
         result = {
             "id": get_formatted_event_id(
@@ -238,9 +253,14 @@ class Quiz(Base):
         user_qualifier = "Graded user"
 
         # event_type = EventType.QUIZ_SET_GRADE.value.type
-        event_type = get_module_event_type_name(ObjectEnum.QUIZ, EventType.QUIZ_SET_GRADE)
-        
-        attributes = [{"name": col["name"], "value": convert_value_type(event[col["name"]])} for col in self.related_event_columns["quiz_grades"]]
+        event_type = get_module_event_type_name(
+            ObjectEnum.QUIZ, EventType.QUIZ_SET_GRADE
+        )
+
+        attributes = [
+            {"name": col["name"], "value": convert_value_type(event[col["name"]])}
+            for col in self.related_event_columns["quiz_grades"]
+        ]
 
         result = {
             "id": get_formatted_event_id(

@@ -37,7 +37,9 @@ from entity_process.core.transformers.question_slot import QuestionSlot
 from entity_process.core.transformers.multichoice_question import MultiChoiceQustion
 from entity_process.core.transformers.trufalse_question import TrueFalseQustion
 from entity_process.core.transformers.match_question_options import MatchQuestionOption
-from entity_process.core.transformers.match_question_subquestion import MatchQuestionSubQuestion
+from entity_process.core.transformers.match_question_subquestion import (
+    MatchQuestionSubQuestion,
+)
 from entity_process.core.transformers.short_asnwer_question import (
     ShortAnswerQuestion,
 )
@@ -105,7 +107,7 @@ class ObjectTransformerRegistry:
             QuestionBankEntry(db_service, related_object_columns, ocel_event_log),
             QuestionDataset(db_service, related_object_columns, ocel_event_log),
             DatasetDefinition(db_service, related_object_columns, ocel_event_log),
-            QuestionSlot(db_service, related_object_columns, ocel_event_log),
+            # QuestionSlot(db_service, related_object_columns, ocel_event_log),
             MultiChoiceQustion(db_service, related_object_columns, ocel_event_log),
             TrueFalseQustion(db_service, related_object_columns, ocel_event_log),
             MatchQuestionSubQuestion(

@@ -114,6 +114,14 @@ class EntityProcess:
         grade_attributes = log_attributes.copy() + [{"name": "grade", "type": "float"}]
 
         event_types = [
+            {
+                "name": "set_grade",
+                "attributes": grade_attributes,
+            },
+            {
+                "name": "update_grade",
+                "attributes": grade_attributes,
+            },
             # region ASSIGN
             {"name": "create_assign", "attributes": log_attributes},
             {"name": "import_assign", "attributes": []},
@@ -137,14 +145,6 @@ class EntityProcess:
             {"name": "redraft_individual_assign", "attributes": log_attributes},
             {"name": "edit_assign_submission", "attributes": log_attributes},
             {"name": "remove_assign_submission", "attributes": log_attributes},
-            {
-                "name": "set_grade_assignment",
-                "attributes": grade_attributes,
-            },
-            {
-                "name": "update_grade_assignment",
-                "attributes": grade_attributes,
-            },
             # endregion ASSIGN
             # region CHOICE
             {"name": "create_choice", "attributes": log_attributes},
@@ -241,8 +241,8 @@ class EntityProcess:
             {"name": "upload_post", "attributes": log_attributes},
             {"name": "delete_post", "attributes": log_attributes},
             {"name": "edit_post", "attributes": log_attributes},
-            {"name": "set_grade_forum", "attributes": grade_attributes},
-            {"name": "update_grade_forum", "attributes": grade_attributes},
+            # {"name": "set_grade_forum", "attributes": grade_attributes},
+            # {"name": "update_grade_forum", "attributes": grade_attributes},
             {"name": "rate_post", "attributes": grade_attributes},
             {"name": "edit_post_rate", "attributes": grade_attributes},
             # endregion FORUM

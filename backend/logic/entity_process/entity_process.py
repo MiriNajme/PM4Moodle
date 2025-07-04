@@ -38,15 +38,12 @@ class EntityProcess:
         self.write_output()
 
     def process_custom(self, module_events: dict = None):
-        print("[INFO] Processing custom module events...", module_events)
         if module_events is None:
             process_all()
             return
             
         # Create objects type based on the provided related objects
         objects, events = self.get_selected_events_and_objects(module_events)
-        print("[INFO] Selected objects:", objects)
-        print("[INFO] Selected events:", events)
         
         self.create_objects_type(objects)
 

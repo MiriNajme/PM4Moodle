@@ -6,6 +6,7 @@ import glob
 from logic.model.event_types import EventType
 from logic.model.object_enum import ObjectEnum
 from logic.utils.extractor_utils import get_module_events_map
+from logic.utils.ocel_tools import get_database_config, set_database_config
 from logic.pm4py_test import run_dfg_analysis
 
 app = Flask(__name__)
@@ -68,6 +69,87 @@ def get_modules():
     return jsonify(modules)
 
 
+@app.route("/api/get-db-config")
+def get_db_config():
+    """
+    Get DB configuration
+    ---
+    responses:
+      200:
+        description: Database configuration
+        examples:
+          application/json: {"host": "localhost", "port": 3306, "user, "root", "password": "", "db_name": "moodle"}
+    """
+    return jsonify(get_database_config())
+
+
+@app.route("/api/set-db-config", methods=["POST"])
+@swag_from(
+    {
+        "parameters": [
+            {
+                "name": "body",
+                "in": "body",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "host": {"type": "string", "example": "localhost"},
+                        "port": {"type": "integer", "example": 3306},
+                        "user": {"type": "string", "example": "root"},
+                        "password": {"type": "string", "example": ""},
+                        "db_name": {"type": "string", "example": "moodle"},
+                    },
+                    "required": ["host", "port", "user", "password", "db_name"],
+                },
+            }
+        ],
+        "responses": {200: {"description": "Success"}},
+    }
+)
+def set_db_config():
+    """
+    Set database configuration for Moodle
+    ---
+    parameters:
+      - name: body
+        in: body
+        schema:
+          type: object
+          properties:
+            host:
+              type: string
+              example: localhost
+            port:
+              type: integer
+              example: 3306
+            user:
+              type: string
+              example: root
+            password:
+              type: string
+              example: ""
+            db_name:
+              type: string
+              example: moodle
+          required:
+            - host
+            - port
+            - user
+            - password
+            - db_name
+    responses:
+      200:
+        description: Success
+    """
+    data = request.json
+    required_keys = {"host", "port", "user", "password", "db_name"}
+    if not isinstance(data, dict) or not required_keys.issubset(data.keys()):
+        return jsonify({"error": "Invalid request body"}), 400
+
+    set_database_config(data)
+    return jsonify()
+
+
 @app.route("/api/run-extraction", methods=["POST"])
 @swag_from(
     {
@@ -87,7 +169,7 @@ def get_modules():
         "responses": {200: {"description": "Success"}},
     }
 )
-def run_analysis():
+def run_extraction():
     """
     Run OCEL generation and DFG analysis
     ---

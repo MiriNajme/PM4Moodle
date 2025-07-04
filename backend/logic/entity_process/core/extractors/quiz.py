@@ -194,11 +194,11 @@ class Quiz(Base):
 
         if event_type_enum is EventType.CREATE_QUESTION:
             user_qualifier = "Added by user"
-            question_qualifier = "Adds question to quiz"
+            question_qualifier = "Adds question bank entry"
             quiz_qualifier = "Added to the quiz"
         elif event_type_enum is EventType.CREATE_QUESTION:
             user_qualifier = "Deleted by user"
-            question_qualifier = "Deletes question from quiz"
+            question_qualifier = "Deletes question bank entry"
             quiz_qualifier = "Deleted from the quiz"
         else:
             user_qualifier = ""
@@ -209,11 +209,23 @@ class Quiz(Base):
             get_formatted_relationship(
                 ObjectEnum.USER, event["userid"], user_qualifier
             ),
-            get_formatted_relationship(
-                ObjectEnum.QUESTION, event["objectid"], question_qualifier
-            ),
+            # get_formatted_relationship(
+            #     ObjectEnum.QUESTION, event["objectid"], question_qualifier
+            # ),
         ]
 
+        question_refrence = self.fetch_question_refrence(
+            event["objectid"], "itemid"
+        )
+        if question_refrence is not None:
+            relationships.append(
+                get_formatted_relationship(
+                    ObjectEnum.QUESTION_BANK_ENTRY,
+                    question_refrence["questionbankentryid"],
+                    question_qualifier,
+                )
+            )
+        
         instance = json.loads(event["other"])
         if instance:
             relationships.append(

@@ -105,7 +105,7 @@ class ObjectTransformerRegistry:
             QuestionBankEntry(db_service, related_object_columns, ocel_event_log),
             QuestionDataset(db_service, related_object_columns, ocel_event_log),
             DatasetDefinition(db_service, related_object_columns, ocel_event_log),
-            QuestionSlot(db_service, related_object_columns, ocel_event_log),
+            # QuestionSlot(db_service, related_object_columns, ocel_event_log),
             MultiChoiceQustion(db_service, related_object_columns, ocel_event_log),
             TrueFalseQustion(db_service, related_object_columns, ocel_event_log),
             MatchQuestionSubQuestion(

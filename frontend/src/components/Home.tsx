@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { GrDocument } from "react-icons/gr";
 import { HiPhoto } from "react-icons/hi2";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
+import DbConfiguationModal from "./DbConfiguationModal";
 
 const Home = React.memo(() => {
   const navigate = useNavigate();
@@ -58,8 +59,13 @@ const Home = React.memo(() => {
     <div className='max-w-4xl mx-auto'>
       <div className='min-h-screen flex justify-center py-10 px-6'>
         <div className='w-full max-w-3xl bg-white shadow-xl rounded-xl p-8'>
-          <Heading as='h1' size='6' className='text-center mb-6'>
+          <Heading
+            as='h1'
+            size='6'
+            className='flex items-center justify-between mb-6'
+          >
             Moodle OCEL Extraction
+            <DbConfiguationModal />
           </Heading>
           <Text align='center' className='mb-4'>
             Select modules and their events to generate your OCEL and OCDFG

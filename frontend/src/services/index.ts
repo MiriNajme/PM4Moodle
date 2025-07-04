@@ -53,3 +53,32 @@ export const runExtraction = async (data: ExtractionRequest) => {
     throw error;
   }
 };
+
+export type DbConfigModel = {
+  host: string;
+  port: number;
+  user: string;
+  password: string;
+  db_name: string;
+};
+
+export const getDbConfig = async () => {
+  try {
+    const response = await axios.get<DbConfigModel>(
+      `${BASE_URL}/get-db-config`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error to get db config:", error);
+    throw error;
+  }
+};
+
+export const saveDbConfig = async (data: DbConfigModel) => {
+  try {
+    await axios.post(`${BASE_URL}/set-db-config`, data);
+  } catch (error) {
+    console.error("Error to set db config:", error);
+    throw error;
+  }
+};

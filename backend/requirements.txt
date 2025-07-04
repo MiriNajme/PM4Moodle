@@ -1,0 +1,6 @@
+flask
+flask-cors
+flasgger
+pm4py
+sqlalchemy
+mysql-connector-python

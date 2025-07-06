@@ -1,27 +1,18 @@
 import { DownloadIcon, ExternalLinkIcon } from "@radix-ui/react-icons";
-import {
-  Button,
-  Flex,
-  Grid,
-  Heading,
-  Inset,
-  Popover,
-  Text,
-} from "@radix-ui/themes";
+import { Button, Flex, Heading, Text } from "@radix-ui/themes";
+import coverPng from "../../assets/cover.png";
 
 export function ImageButton({
   imageUrl,
-  buttonText,
   title,
   description,
-  buttonIcon,
+  isJson = false,
   onClick,
 }: {
   imageUrl: string;
-  buttonText?: string;
   title: string;
   description: string;
-  buttonIcon: React.ReactNode;
+  isJson: boolean;
   onClick?: () => void;
 }) {
   const handleDownload = async () => {
@@ -45,54 +36,37 @@ export function ImageButton({
   };
 
   return (
-    <Popover.Root>
-      <Popover.Trigger>
-        <Button variant='soft'>
-          {buttonIcon}
-          {buttonText}
-        </Button>
-      </Popover.Trigger>
-      <Popover.Content width='360px'>
-        <Grid columns='130px 1fr'>
-          <Inset side='left' pr='current'>
-            <img
-              src={
-                imageUrl ??
-                "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?&auto=format&fit=crop&w=400&q=80"
-              }
-              style={{ objectFit: "cover", width: "100%", height: "100%" }}
-              onError={(e) => {
-                (e.target as HTMLImageElement).src =
-                  "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?&auto=format&fit=crop&w=400&q=80";
-              }}
-            />
-          </Inset>
+    <div className='max-w[480px] w-full rounded-lg shadow-lg p-4'>
+      <div className='grid grid-cols-[130px_1fr] gap-4'>
+        <div>
+          <img
+            src={isJson ? coverPng : imageUrl ?? coverPng}
+            className='w-full h-full object-cover rounded-lg'
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = coverPng;
+            }}
+          />
+        </div>
+        <div>
+          <Heading size='2' mb='1'>
+            {title}
+          </Heading>
+          <Text as='p' size='2' mb='4' color='gray'>
+            {description}
+          </Text>
 
-          <div>
-            <Heading size='2' mb='1'>
-              {title}
-            </Heading>
-            <Text as='p' size='2' mb='4' color='gray'>
-              {description}
-            </Text>
-
-            <Flex direction='column' align='stretch' gap='2'>
-              <Popover.Close>
-                <Button size='1' variant='soft' onClick={onClick}>
-                  <ExternalLinkIcon width='16' height='16' />
-                  view in full size
-                </Button>
-              </Popover.Close>
-              <Popover.Close>
-                <Button size='1' variant='soft' onClick={handleDownload}>
-                  <DownloadIcon width='16' height='16' />
-                  Download
-                </Button>
-              </Popover.Close>
-            </Flex>
-          </div>
-        </Grid>
-      </Popover.Content>
-    </Popover.Root>
+          <Flex direction='column' align='stretch' gap='2'>
+            <Button size='1' variant='soft' onClick={onClick}>
+              <ExternalLinkIcon width='16' height='16' />
+              View in full size
+            </Button>
+            <Button size='1' variant='soft' onClick={handleDownload}>
+              <DownloadIcon width='16' height='16' />
+              Download
+            </Button>
+          </Flex>
+        </div>
+      </div>
+    </div>
   );
 }

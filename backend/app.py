@@ -198,11 +198,16 @@ def run_extraction():
 
     result = run_dfg_analysis(module_events)
 
+    if result["image_file"] is not None:
+        img_url = url_for(
+            "serve_output_file", filename=result["image_file"], _external=True
+        )
+    else:
+        img_url = ""
+
     return jsonify(
         {
-            "image_url": url_for(
-                "serve_output_file", filename=result["image_file"], _external=True
-            ),
+            "image_url": img_url,
             "json_url": url_for(
                 "serve_output_file", filename=result["json_file"], _external=True
             ),

@@ -1,3 +1,4 @@
+import { useCallback, useMemo, useState } from "react";
 import {
   DownloadIcon,
   MinusIcon,
@@ -5,20 +6,16 @@ import {
   ResetIcon,
 } from "@radix-ui/react-icons";
 import { Button } from "@radix-ui/themes";
-import { useCallback, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useAppContext } from "../context/useAppContext";
 
 export default function ImagePreview() {
-  const [params] = useSearchParams();
-
+  const { imageUrl } = useAppContext();
   const [scale, setScale] = useState(1);
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [startDrag, setStartDrag] = useState<{ x: number; y: number } | null>(
     null
   );
-
-  const imageUrl = useMemo(() => params.get("url") ?? "", [params]);
 
   const imageStyle = useMemo(
     () => ({
@@ -73,6 +70,11 @@ export default function ImagePreview() {
 
   const handleDownload = useCallback(async () => {
     try {
+      if (!imageUrl) {
+        alert("No image URL available for download.");
+        return;
+      }
+
       const response = await fetch(imageUrl, { mode: "cors" });
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
@@ -94,7 +96,7 @@ export default function ImagePreview() {
   return (
     <div className='relative w-full min-h-[95dvh] bg-gray-50 py-10 px-6 rounded-lg shadow-xl overflow-auto'>
       <img
-        src={imageUrl}
+        src={imageUrl ?? ""}
         alt='Preview'
         style={imageStyle}
         onMouseDown={handleMouseDown}

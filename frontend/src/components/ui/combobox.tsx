@@ -71,7 +71,7 @@ export function Combobox({
               return (
                 <span
                   key={val}
-                  className='flex items-center bg-indigo-100 text-indigo-700 rounded px-2 py-0.5 text-xs'
+                  className='flex items-center bg-indigo-100  text-indigo-700 rounded px-2 py-0.5 text-xs'
                 >
                   {option?.label ?? val}
                   <button

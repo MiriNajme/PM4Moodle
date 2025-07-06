@@ -82,3 +82,10 @@ export const saveDbConfig = async (data: DbConfigModel) => {
     throw error;
   }
 };
+
+export type OCEL_Json_content = {
+  objectTypes: any[];
+  eventTypes: any[];
+  objects: any[];
+  events: any[];
+};

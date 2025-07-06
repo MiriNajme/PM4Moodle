@@ -1,5 +1,6 @@
 import argparse
 import pm4py
+
 # from pm4py.visualization.ocdfg import visualizer as ocdfg_visualizer
 
 # from app import generate_ocel, read_ocel_file
@@ -93,35 +94,34 @@ def generate_dfg():
     except Exception as e:
         print(f"An error occurred: {e}")
 
+
 # API
 # This function is used to run the DFG analysis with optional parameters.
 # It generates the OCEL, reads the JSON file, converts objects, filters events by type
 # and ID, and finally discovers the DFG.
 # It returns a dictionary with the JSON file name and the image file name.
-def run_dfg_analysis(
-    module_events: dict
-) -> dict:
+def run_dfg_analysis(module_events: dict) -> dict:
+    path = os.path.join(os.path.dirname(__file__), "output")
+    output_file = "ocel2__last.json"
+    generate_ocel(module_events)
+    full_path = os.path.join(path, output_file)
+
     try:
-        path = os.path.join(os.path.dirname(__file__), "output")
-        output_file = "ocel2__last.json"
-        generate_ocel(module_events)
-        full_path = os.path.join(path, output_file)
         log = pm4py.read.read_ocel2_json(full_path)
         dfg = pm4py.discover_ocdfg(log)
-
         # Explicitly save the image
         image_file = output_file.replace(".json", ".png")
         image_path = os.path.join(path, image_file)
         pm4py.save_vis_ocdfg(dfg, image_path)
         # pm4py.view_ocdfg(dfg, format="png")  # Saves a .png file
-
-        return {
-            "json_file": output_file,
-            "image_file": image_file,  # .replace(".json", ".png")
-        }
-
     except Exception as e:
-        raise RuntimeError(f"PM4Py analysis failed: {e}")
+        # raise RuntimeError(f"PM4Py analysis failed: {e}")
+        image_file = None
+
+    return {
+        "json_file": output_file,
+        "image_file": image_file,  # .replace(".json", ".png")
+    }
 
 
 # if __name__ == "__main__":

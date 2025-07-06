@@ -1,10 +1,10 @@
-import { DotsVerticalIcon } from "@radix-ui/react-icons";
+import { GearIcon } from "@radix-ui/react-icons";
 import { Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import React, { useCallback, useEffect, useState } from "react";
 import { getDbConfig, saveDbConfig, type DbConfigModel } from "../services";
 import Spinner from "./ui/Spinner";
 
-const DbConfiguationModal = React.memo(() => {
+const DbConfigurationModal = React.memo(() => {
   const [dbConfig, setDbConfig] = useState<DbConfigModel>({
     host: "localhost",
     port: 3306,
@@ -62,15 +62,17 @@ const DbConfiguationModal = React.memo(() => {
         <Button
           variant='ghost'
           color='gray'
-          aria-label='Database configuration'
-          title='Database configuration'
+          aria-label='Moodle Database Connection'
+          title='Moodle Database Connection'
         >
-          <DotsVerticalIcon />
+          <span style={{ fontSize: 24, display: "flex", alignItems: "center" }}>
+            <GearIcon width={24} height={24} />
+          </span>
         </Button>
       </Dialog.Trigger>
 
       <Dialog.Content maxWidth='450px'>
-        <Dialog.Title>Database configuration</Dialog.Title>
+        <Dialog.Title>Moodle Database Connection</Dialog.Title>
         <Dialog.Description size='2' mb='4'>
           Update your moodle database configuration.
         </Dialog.Description>
@@ -156,4 +158,4 @@ const DbConfiguationModal = React.memo(() => {
   );
 });
 
-export default DbConfiguationModal;
+export default DbConfigurationModal;

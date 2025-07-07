@@ -12,6 +12,7 @@ from logic.ocel_convert import (
 )
 import sys
 import os
+from datetime import datetime
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -88,8 +89,12 @@ def generate_dfg():
         print("\t-- JSON file successfully imported and validated.\n")
 
         dfg = pm4py.discover_ocdfg(log)
-        pm4py.view_ocdfg(dfg, format="png")
-        print("\t-- DFG file successfully generated.\n")
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        image_file = os.path.basename(file_path).replace(".json", f"_{timestamp}.png")
+        image_path = os.path.join(path, image_file)
+
+        pm4py.save_vis_ocdfg(dfg, image_path)
+        print(f"\t-- DFG file successfully generated and saved as {image_file}.\n")
 
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -105,12 +110,12 @@ def run_dfg_analysis(module_events: dict) -> dict:
     output_file = "ocel2__last.json"
     generate_ocel(module_events)
     full_path = os.path.join(path, output_file)
-
     try:
         log = pm4py.read.read_ocel2_json(full_path)
         dfg = pm4py.discover_ocdfg(log)
         # Explicitly save the image
-        image_file = output_file.replace(".json", ".png")
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        image_file = output_file.replace(".json", f"_{timestamp}.png")
         image_path = os.path.join(path, image_file)
         pm4py.save_vis_ocdfg(dfg, image_path)
         # pm4py.view_ocdfg(dfg, format="png")  # Saves a .png file

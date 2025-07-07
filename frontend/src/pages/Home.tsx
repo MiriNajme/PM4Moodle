@@ -32,7 +32,7 @@ const Home = React.memo(() => {
                   data-[state=active]:border-b-2 data-[state=active]:border-orange-300 data-[state=active]:text-blue-950
                   data-[state=active]:shadow-md'
               >
-                Verification
+                Verification matrix
               </Tabs.Trigger>
             </Tabs.List>
             <div

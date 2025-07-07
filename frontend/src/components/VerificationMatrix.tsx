@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAppContext } from "../context/useAppContext";
 import clsx from "clsx";
 import Spinner from "./ui/Spinner";
-import { Table, Text } from "@radix-ui/themes";
+import { Text } from "@radix-ui/themes";
 
 const OcelVerificationMatrix = React.memo(() => {
   const { pivot, isLoadingContent } = useAppContext();
@@ -34,35 +34,30 @@ const OcelVerificationMatrix = React.memo(() => {
       <Text as='div' weight='bold' className='mb-2'>
         Verification Matrix (Object counts per event)
       </Text>
-      <div className='my-4 max-h-[600px] overflow-auto'>
+      <div className='my-4 max-h-[600px] overflow-auto border border-gray-200 rounded-lg'>
         {" "}
-        {/* scrollable area with limited height */}
-        <Table.Root variant='surface' size='2'>
-          <Table.Header>
-            <Table.Row>
-              {/* Top-left corner cell */}
-              <Table.ColumnHeaderCell
-                className=
-                  "border-b p-2 text-left sticky top-0 left-0 z-30 bg-white min-w-[140px]"
-              >
+        <table>
+          <thead>
+            <tr>
+              <th className='bg-white border-b border-r p-2 text-left sticky top-0 left-0 min-w-[140px]'>
                 Event \ Object
-              </Table.ColumnHeaderCell>
+              </th>
               {pivot.objectTypes.map((objType, colIdx) => (
-                <Table.ColumnHeaderCell
+                <th
                   key={objType}
                   className={clsx(
-                    "border-b p-2 sticky top-0 z-20 bg-white text-center min-w-[120px]",
+                    "bg-gray-100 border-b p-2 sticky top-0 z-20 text-center min-w-[120px]",
                     hovered.col === colIdx ? "!bg-blue-100" : ""
                   )}
                 >
                   {objType}
-                </Table.ColumnHeaderCell>
+                </th>
               ))}
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
+            </tr>
+          </thead>
+          <tbody>
             {pivot.eventTypes.map((eventType, rowIdx) => (
-              <Table.Row
+              <tr
                 key={eventType}
                 className={clsx(
                   rowIdx % 2 === 1 ? "bg-gray-50" : "",
@@ -71,21 +66,20 @@ const OcelVerificationMatrix = React.memo(() => {
                     : ""
                 )}
               >
-                {/* Row header */}
-                <Table.RowHeaderCell
+                <td
                   className={clsx(
-                    "border-b p-2 font-semibold sticky left-0 z-20 bg-white min-w-[140px]",
-                    rowIdx % 2 === 1 ? "bg-gray-50" : "",
+                    "bg-gray-100 border-b border-r p-2 font-semibold sticky left-0 z-20 min-w-[140px] border-gray-100 border-r-gray-500",
+                    rowIdx % 2 === 1 ? "bg-gray-200" : "",
                     hovered.row === rowIdx ? "!bg-blue-100" : ""
                   )}
                 >
                   {eventType}
-                </Table.RowHeaderCell>
+                </td>
                 {pivot.objectTypes.map((objType, colIdx) => (
-                  <Table.Cell
+                  <td
                     key={objType}
                     className={clsx(
-                      "border-b p-2 text-center cursor-pointer",
+                      "border-b border-gray-100 p-2 text-center cursor-pointer",
                       hovered.row === rowIdx || hovered.col === colIdx
                         ? "!bg-blue-100"
                         : "",
@@ -99,12 +93,12 @@ const OcelVerificationMatrix = React.memo(() => {
                     onMouseLeave={() => setHovered({ row: null, col: null })}
                   >
                     {pivot.matrix[eventType][objType] || "-"}
-                  </Table.Cell>
+                  </td>
                 ))}
-              </Table.Row>
+              </tr>
             ))}
-          </Table.Body>
-        </Table.Root>
+          </tbody>
+        </table>
       </div>
     </div>
   );

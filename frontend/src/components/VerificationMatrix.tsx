@@ -4,7 +4,7 @@ import clsx from "clsx";
 import Spinner from "./ui/Spinner";
 import { Table, Text } from "@radix-ui/themes";
 
-const OcelPivotTable = React.memo(() => {
+const OcelVerificationMatrix = React.memo(() => {
   const { pivot, isLoadingContent } = useAppContext();
   const [hovered, setHovered] = useState<{
     row: number | null;
@@ -34,11 +34,17 @@ const OcelPivotTable = React.memo(() => {
       <Text as='div' weight='bold' className='mb-2'>
         Verification Matrix (Object counts per event)
       </Text>
-      <div className='my-4'>
+      <div className='my-4 max-h-[600px] overflow-auto'>
+        {" "}
+        {/* scrollable area with limited height */}
         <Table.Root variant='surface' size='2'>
           <Table.Header>
             <Table.Row>
-              <Table.ColumnHeaderCell className='border-b p-2 text-left sticky top-0 left-0 z-30 bg-white'>
+              {/* Top-left corner cell */}
+              <Table.ColumnHeaderCell
+                className=
+                  "border-b p-2 text-left sticky top-0 left-0 z-30 bg-white min-w-[140px]"
+              >
                 Event \ Object
               </Table.ColumnHeaderCell>
               {pivot.objectTypes.map((objType, colIdx) => (
@@ -65,9 +71,10 @@ const OcelPivotTable = React.memo(() => {
                     : ""
                 )}
               >
+                {/* Row header */}
                 <Table.RowHeaderCell
                   className={clsx(
-                    "border-b p-2 font-semibold sticky left-0 z-10 bg-white min-w-[140px]",
+                    "border-b p-2 font-semibold sticky left-0 z-20 bg-white min-w-[140px]",
                     rowIdx % 2 === 1 ? "bg-gray-50" : "",
                     hovered.row === rowIdx ? "!bg-blue-100" : ""
                   )}
@@ -103,4 +110,4 @@ const OcelPivotTable = React.memo(() => {
   );
 });
 
-export default OcelPivotTable;
+export default OcelVerificationMatrix;

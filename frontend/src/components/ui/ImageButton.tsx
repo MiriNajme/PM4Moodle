@@ -1,6 +1,6 @@
 import { DownloadIcon, ExternalLinkIcon } from "@radix-ui/react-icons";
 import { Button, Flex, Heading, Text } from "@radix-ui/themes";
-import coverPng from "../../assets/cover.png";
+import coverPng from "../../assets/JSON-OCEL.png";
 
 export function ImageButton({
   imageUrl,
@@ -41,10 +41,7 @@ export function ImageButton({
         <div>
           <img
             src={isJson ? coverPng : imageUrl ?? coverPng}
-            className='w-full h-full object-cover rounded-lg'
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = coverPng;
-            }}
+            className='w-30 h-full object-cover rounded-lg'
           />
         </div>
         <div>

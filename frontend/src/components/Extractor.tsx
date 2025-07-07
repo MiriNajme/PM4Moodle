@@ -121,7 +121,7 @@ const Extractor = React.memo(() => {
           </div>
         )}
         {imageUrl && (
-          <div className='w-full flex justify-between gap-4 border-lg border-2 border-gray-100 shadow p-4 rounded-lg mt-6'>
+          <div className='w-full flex justify-between gap-4 p-4 rounded-lg mt-6'>
             <ImageButton
               title='View DFG Diagram'
               description='Click to view the generated DFG diagram.'

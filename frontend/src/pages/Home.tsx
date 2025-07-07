@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import Extractor from "../components/Extractor.tsx";
 import MoodleHeading from "../components/MoodleHeading.tsx";
-import OcelPivotTable from "../components/VerificationMatrix.tsx";
+import OcelVerificationMatrix from "../components/VerificationMatrix.tsx";
 
 const Home = React.memo(() => {
   const [activeTab, setActiveTab] = useState<string>("extraction");
@@ -47,7 +47,7 @@ const Home = React.memo(() => {
               <Extractor />
             </Tabs.Content>
             <Tabs.Content value='verification'>
-              <OcelPivotTable />
+              <OcelVerificationMatrix />
             </Tabs.Content>
           </Tabs.Root>
         </div>

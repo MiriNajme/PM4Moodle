@@ -106,14 +106,16 @@ export function Combobox({
 
       <PopoverPortal>
         <PopoverContent
-          className='w-full p-0 max-h-[40vh] overflow-auto z-50 bg-white border border-gray-200 shadow-xl rounded-md'
+          className='w-full p-0 z-50 bg-white border border-gray-200 shadow-xl rounded-md'
           side='bottom'
           align='start'
         >
           <Command>
-            <CommandInput placeholder='Search...' />
+            <div className='bg-red sticky top-0 '>
+              <CommandInput placeholder='Search...' />
+            </div>
             <CommandEmpty>No options found.</CommandEmpty>
-            <CommandGroup>
+            <CommandGroup className='max-h-[40vh] overflow-y-auto'>
               {options.map((o) => {
                 const isSelected = value.includes(o.value);
                 return (

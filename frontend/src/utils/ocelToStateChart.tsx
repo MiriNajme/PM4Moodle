@@ -1,36 +1,90 @@
-import type { OCEL_Json_content } from "../services";
+import type { ModuleType, OCEL_Json_content } from "../services";
 
-export function getStateChartData(
+export function sequenceToStateChart(states: string[]) {
+  if (!states || states.length === 0) {
+    return {
+      states: ["Start", "End"],
+      transitions: [{ from: "Start", to: "End" }],
+    };
+  }
+
+  return {
+    states: ["Start", ...states, "End"],
+    transitions: [
+      { from: "Start", to: states[0] },
+      ...states.slice(1).map((to, i) => ({
+        from: states[i],
+        to,
+      })),
+      { from: states[states.length - 1], to: "End" },
+    ],
+  };
+}
+
+export function getModuleIcon(module: string) {
+  switch (module) {
+    case "assign":
+      return "📝";
+    case "choice":
+      return "🔀";
+    case "file":
+      return "📃";
+    case "folder":
+      return "📂";
+    case "label":
+      return "🏷️";
+    case "page":
+      return "📄";
+    case "url":
+      return "🔗";
+    case "forum":
+      return "💬";
+      case "quiz":
+      return "✅";
+    default:
+      return "📦"; // Default package icon
+  }
+}
+
+export type OcelChartState = {
+  module: string;
+  icon: string;
+  chartData: {
+    states: string[];
+    transitions: { from: string; to: string }[];
+  };
+};
+
+export function ocelToStateChart(
   ocel: OCEL_Json_content,
-  eventMap: Record<string, string>
-): { states: string[]; transitions: { from: string; to: string }[] } {
-  // 1. Filter events by relevant types in eventMap
-  const events = Object.values(ocel.events || {}).filter((e: any) =>
-    Object.keys(eventMap).includes(e.event_type)
-  );
+  modules: string[],
+  moduleEventsMappings: ModuleType
+): OcelChartState[] {
+  return modules
+    .filter((module) => moduleEventsMappings[module])
+    .map((module) => {
+      const mapping = moduleEventsMappings[module];
+      const relevantEventTypes = Object.keys(mapping);
 
-  // 2. Map events to states, group by object, and remove repetition
-  const stateMap: Record<string, string[]> = {};
-  events.forEach((ev: any) => {
-    (ev.omap || []).forEach((objId: string) => {
-      if (!stateMap[objId]) stateMap[objId] = [];
-      const state = eventMap[ev.event_type] || ev.event_type;
-      if (stateMap[objId][stateMap[objId].length - 1] !== state) {
-        stateMap[objId].push(state);
-      }
+      // Filter json
+      const filteredEvents = (
+        ocel?.events?.filter(
+          (event) => event.type && relevantEventTypes.includes(event.type)
+        ) ?? []
+      )
+        .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime())
+        .reduce((acc, event) => {
+          const eventType = mapping[event.type] || event.type;
+          if (!acc.includes(eventType)) {
+            acc.push(eventType);
+          }
+          return acc;
+        }, []) as string[];
+
+      return {
+        module,
+        icon: getModuleIcon(module),
+        chartData: sequenceToStateChart(filteredEvents),
+      };
     });
-  });
-
-  // 3. Collect unique states and transitions
-  const states = Array.from(new Set(Object.values(stateMap).flat()));
-  const transitions: { from: string; to: string }[] = [];
-  Object.values(stateMap).forEach((seq) => {
-    for (let i = 1; i < seq.length; ++i) {
-      const edge = { from: seq[i - 1], to: seq[i] };
-      if (!transitions.some((t) => t.from === edge.from && t.to === edge.to)) {
-        transitions.push(edge);
-      }
-    }
-  });
-  return { states, transitions };
 }

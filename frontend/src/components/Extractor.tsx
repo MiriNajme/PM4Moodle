@@ -69,10 +69,12 @@ const Extractor = React.memo(() => {
             value={selectedEvents}
             onValueChange={setSelectedEvents}
             options={selectedModules.flatMap((module) =>
-              (modules[module] || []).sort().map((event) => ({
-                value: `${module}__${event}`,
-                label: `${module} → ${event}`,
-              }))
+              Object.keys(modules[module] ?? [])
+                .sort()
+                .map((event) => ({
+                  value: `${module}__${event}`,
+                  label: `${module} → ${event}`,
+                }))
             )}
           />
         </div>

@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { useAppContext } from "../context/useAppContext";
-import clsx from "clsx";
-import Spinner from "./ui/Spinner";
 import { Text } from "@radix-ui/themes";
+import clsx from "clsx";
+import { useAppContext } from "../context/useAppContext";
+import Spinner from "./ui/Spinner";
+
+type RowColType = {
+  row: number | null;
+  col: number | null;
+};
 
 const OcelVerificationMatrix = React.memo(() => {
   const { pivot, isLoadingContent } = useAppContext();
-  const [hovered, setHovered] = useState<{
-    row: number | null;
-    col: number | null;
-  }>({
+  const [hovered, setHovered] = useState<RowColType>({
     row: null,
     col: null,
   });
@@ -22,20 +24,20 @@ const OcelVerificationMatrix = React.memo(() => {
     );
   }
 
-  if (!pivot || !pivot.objectTypes || !pivot.eventTypes) {
+  if (!pivot || !pivot.objectTypes?.length || !pivot.eventTypes?.length) {
     return (
       <Text className='text-center text-gray-500'>
         No data available to display.
       </Text>
     );
   }
+
   return (
     <div className='overflow-x-auto'>
-      <Text as='div' weight='bold' className='mb-2'>
+      <Text className='mb-4'>
         Verification Matrix (Object counts per event)
       </Text>
-      <div className='my-4 max-h-[600px] overflow-auto border border-gray-200 rounded-lg'>
-        {" "}
+      <div className='my-4 max-h-[60dvh] overflow-auto border border-gray-200 rounded-lg'>
         <table>
           <thead>
             <tr>

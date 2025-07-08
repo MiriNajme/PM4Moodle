@@ -5,11 +5,16 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import { getModules, runExtraction, type OCEL_Json_content } from "../services";
+import {
+  getModules,
+  runExtraction,
+  type ModuleType,
+  type OCEL_Json_content,
+} from "../services";
 import { buildPivotTable, type OCEL_Pivot_Table } from "../utils/pivot";
 
 type AppContextType = {
-  modules: Record<string, string[]>;
+  modules: ModuleType;
   jsonUrl: string | null;
   imageUrl: string | null;
   jsonContent: OCEL_Json_content | null;
@@ -29,7 +34,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [jsonUrl, setJsonUrl] = useState<string | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [modules, setModules] = useState<Record<string, string[]>>({});
+  const [modules, setModules] = useState<ModuleType>({});
   const [selectedModules, setSelectedModules] = useState<string[]>([]);
   const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
 
@@ -64,7 +69,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
               .filter((event) => event.startsWith(module))
               .map((event) => event.split("__")[1]);
           } else {
-            request[module] = modules[module] || [];
+            request[module] = Object.keys(modules[module] ?? {}) ?? [];
           }
         });
       }
@@ -100,9 +105,6 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoading(false);
     };
     fetchModules();
-
-    setImageUrl("http://localhost:5000/output/ocel2__last_20250708_151705.png");
-    setJsonUrl("http://localhost:5000/output/ocel2__last.json");
   }, []);
 
   return (

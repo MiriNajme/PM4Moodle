@@ -4,12 +4,23 @@ import Extractor from "../components/Extractor.tsx";
 import MoodleHeading from "../components/MoodleHeading.tsx";
 import OcelVerificationMatrix from "../components/VerificationMatrix.tsx";
 import { VerificationStateChart } from "../components/VerificationStateChart.tsx";
+import { useAppContext } from "../context/useAppContext.ts";
+import Spinner from "../components/ui/Spinner.tsx";
 
 const Home = React.memo(() => {
   const [activeTab, setActiveTab] = useState<string>("extraction");
+  const { isLoading } = useAppContext();
+
+  if (isLoading) {
+    return (
+      <div className='flex justify-center items-center h-full pt-10'>
+        <Spinner className='w-20 h-20 fill-blue-400' />
+      </div>
+    );
+  }
 
   return (
-    <div className='w-full lg:w-1/2 mx-auto'>
+    <div className='w-full mx-auto' style={{ maxWidth: "58%" }}>
       <div className='min-h-screen flex justify-center py-4 px-1'>
         <div className='w-full bg-white shadow-xl rounded-xl p-8'>
           <MoodleHeading />
@@ -59,9 +70,7 @@ const Home = React.memo(() => {
               <OcelVerificationMatrix />
             </Tabs.Content>
             <Tabs.Content value='statechart'>
-              <div className='text-center py-8 text-gray-500'>
-                <VerificationStateChart />
-              </div>
+              <VerificationStateChart />
             </Tabs.Content>
           </Tabs.Root>
         </div>

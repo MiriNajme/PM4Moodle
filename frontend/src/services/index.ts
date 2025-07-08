@@ -22,11 +22,11 @@ export const getEventTypes = async (): Promise<string[]> => {
   }
 };
 
-export const getModules = async (): Promise<Record<string, string[]>> => {
+export type ModuleType = Record<string, Record<string, string>>;
+
+export const getModules = async (): Promise<ModuleType> => {
   try {
-    const response = await axios.get<Record<string, string[]>>(
-      `${BASE_URL}/modules`
-    );
+    const response = await axios.get<ModuleType>(`${BASE_URL}/modules`);
     return response.data;
   } catch (error) {
     console.error("Error running analysis:", error);

@@ -3,12 +3,13 @@ import * as Tabs from "@radix-ui/react-tabs";
 import Extractor from "../components/Extractor.tsx";
 import MoodleHeading from "../components/MoodleHeading.tsx";
 import OcelVerificationMatrix from "../components/VerificationMatrix.tsx";
+import { VerificationStateChart } from "../components/VerificationStateChart.tsx";
 
 const Home = React.memo(() => {
   const [activeTab, setActiveTab] = useState<string>("extraction");
 
   return (
-    <div className='w-full lg:w-2/3 mx-auto'>
+    <div className='w-full lg:w-1/2 mx-auto'>
       <div className='min-h-screen flex justify-center py-4 px-1'>
         <div className='w-full bg-white shadow-xl rounded-xl p-8'>
           <MoodleHeading />
@@ -34,6 +35,14 @@ const Home = React.memo(() => {
               >
                 Verification matrix
               </Tabs.Trigger>
+              <Tabs.Trigger
+                value='statechart'
+                className='px-4 py-2 font-semibold transition-colors rounded-none relative
+                  data-[state=active]:border-b-2 data-[state=active]:border-orange-300 data-[state=active]:text-blue-950
+                  data-[state=active]:shadow-md'
+              >
+                State Chart Diagram
+              </Tabs.Trigger>
             </Tabs.List>
             <div
               className='w-full h-2 mb-8 rounded-full'
@@ -48,6 +57,11 @@ const Home = React.memo(() => {
             </Tabs.Content>
             <Tabs.Content value='verification'>
               <OcelVerificationMatrix />
+            </Tabs.Content>
+            <Tabs.Content value='statechart'>
+              <div className='text-center py-8 text-gray-500'>
+                <VerificationStateChart />
+              </div>
             </Tabs.Content>
           </Tabs.Root>
         </div>

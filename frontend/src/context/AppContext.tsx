@@ -100,6 +100,9 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoading(false);
     };
     fetchModules();
+
+    setImageUrl("http://localhost:5000/output/ocel2__last_20250708_151705.png");
+    setJsonUrl("http://localhost:5000/output/ocel2__last.json");
   }, []);
 
   return (

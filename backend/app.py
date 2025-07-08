@@ -63,7 +63,20 @@ def get_modules():
       200:
         description: A list of modules with all eventtypes and object enums
         examples:
-          application/json: {assign: ["created", "imported", "updated", "deleted", "viewed", "completed", "submit_group_assign", ...], folder: ["created", "imported", ...], ...}
+          application/json: {
+            assign: {
+              "create_assign": "Created",
+              "import_assign": "Imported",
+              "update_assign": "Updated",
+              "delete_assign ": "Deleted",
+              ...
+            },
+            folder: {
+              "create_folder": "Created",
+              "update_folder": "Updated",
+              "delete_folder": "Deleted",
+            ...},
+          ...}
     """
     modules = get_module_events_map()
     return jsonify(modules)

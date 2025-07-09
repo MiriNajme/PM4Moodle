@@ -9,7 +9,7 @@ import {
   getModules,
   runExtraction,
   type ModuleType,
-  type OCEL_Json_content,
+  type OcelJsonContent,
 } from "../services";
 import { buildPivotTable, type OCEL_Pivot_Table } from "../utils/pivot";
 
@@ -17,7 +17,7 @@ type AppContextType = {
   modules: ModuleType;
   jsonUrl: string | null;
   imageUrl: string | null;
-  jsonContent: OCEL_Json_content | null;
+  jsonContent: OcelJsonContent | null;
   pivot: OCEL_Pivot_Table | null;
   isLoading: boolean;
   isLoadingContent: boolean;
@@ -41,9 +41,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingContent, setIsLoadingContent] = useState<boolean>(false);
   const [isWorking, setIsWorking] = useState(false);
-  const [jsonContent, setJsonContent] = useState<OCEL_Json_content | null>(
-    null
-  );
+  const [jsonContent, setJsonContent] = useState<OcelJsonContent | null>(null);
 
   const pivot = useMemo(
     () =>

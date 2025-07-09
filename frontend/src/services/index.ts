@@ -83,9 +83,36 @@ export const saveDbConfig = async (data: DbConfigModel) => {
   }
 };
 
-export type OCEL_Json_content = {
-  objectTypes: any[];
-  eventTypes: any[];
-  objects: any[];
-  events: any[];
+export type OcelTypesModel = {
+  name: string;
+  attributes: any[];
+};
+
+export type OcelRelationshipsModel = {
+  objectId: string;
+  qualifier: string;
+  from?: string;
+  to?: string;
+};
+
+export type OcelObjectsModel = {
+  id: string;
+  type: string;
+  attributes: any[];
+  relationships: OcelRelationshipsModel[];
+};
+
+export type OcelEventModel = {
+  id: string;
+  type: string;
+  time: string;
+  attributes: any[];
+  relationships: OcelRelationshipsModel[];
+};
+
+export type OcelJsonContent = {
+  objectTypes: OcelTypesModel[];
+  eventTypes: OcelTypesModel[];
+  objects: OcelObjectsModel[];
+  events: OcelEventModel[];
 };

@@ -2,7 +2,6 @@
 import * as React from "react";
 
 import { cn } from "../../utils/utils";
-import { Button } from "./button";
 import {
   Command,
   CommandEmpty,
@@ -32,7 +31,6 @@ export function Combobox({
   name,
   id,
   disabled,
-  title,
   placeholder,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
@@ -116,6 +114,46 @@ export function Combobox({
             </div>
             <CommandEmpty>No options found.</CommandEmpty>
             <CommandGroup className='max-h-[40vh] overflow-y-auto'>
+              {/* Select All Option */}
+              <CommandItem
+                key='__select_all__'
+                value='__select_all__'
+                className={cn(
+                  "cursor-pointer flex items-center gap-2 px-3 py-2 font-semibold border-b border-gray-200 bg-indigo-50/60",
+                  value.length === options.length
+                    ? "bg-indigo-100 text-indigo-700"
+                    : "text-indigo-700"
+                )}
+                style={{
+                  position: "sticky",
+                  top: 0,
+                  zIndex: 1,
+                }}
+                onSelect={() => {
+                  if (value.length === options.length) {
+                    // Deselect all
+                    onValueChange([]);
+                  } else {
+                    // Select all
+                    onValueChange(options.map((o) => o.value));
+                  }
+                }}
+              >
+                <span
+                  className={cn(
+                    "inline-block h-4 w-4 border rounded-sm border-gray-400 flex items-center justify-center",
+                    value.length === options.length
+                      ? "bg-indigo-600"
+                      : "bg-white"
+                  )}
+                >
+                  {value.length === options.length && (
+                    <div className='h-2 w-2 bg-white rounded-sm' />
+                  )}
+                </span>
+                Select All
+              </CommandItem>
+              {/* End Select All Option */}
               {options.map((o) => {
                 const isSelected = value.includes(o.value);
                 return (

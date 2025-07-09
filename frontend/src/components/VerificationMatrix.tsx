@@ -32,6 +32,11 @@ const OcelVerificationMatrix = React.memo(() => {
     );
   }
 
+  // Filter objectTypes to only those with at least one non-falsy value in the matrix
+  const filteredObjectTypes = pivot.objectTypes.filter((objType) =>
+    pivot.eventTypes.some((eventType) => pivot.matrix[eventType][objType])
+  );
+
   return (
     <div className='overflow-x-auto'>
       <Text className='mb-4'>
@@ -44,7 +49,7 @@ const OcelVerificationMatrix = React.memo(() => {
               <th className='bg-white border-b border-r p-2 text-left sticky top-0 left-0 min-w-[140px]'>
                 Event \ Object
               </th>
-              {pivot.objectTypes.map((objType, colIdx) => (
+              {filteredObjectTypes.map((objType, colIdx) => (
                 <th
                   key={objType}
                   className={clsx(
@@ -77,7 +82,7 @@ const OcelVerificationMatrix = React.memo(() => {
                 >
                   {eventType}
                 </td>
-                {pivot.objectTypes.map((objType, colIdx) => (
+                {filteredObjectTypes.map((objType, colIdx) => (
                   <td
                     key={objType}
                     className={clsx(

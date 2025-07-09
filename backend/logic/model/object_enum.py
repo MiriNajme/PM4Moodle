@@ -43,9 +43,7 @@ class ObjectEnum(Enum):
     QUESTION_BANK_ENTRY = ObjectValue(
         "question_bank_entry", "qbe", "mdl_question_bank_entries"
     )
-    QUESTION_DATASET = ObjectValue(
-        "question_dataset", "qds", "mdl_question_datasets"
-    )
+    QUESTION_DATASET = ObjectValue("question_dataset", "qds", "mdl_question_datasets")
     DATASET_DEFINITION = ObjectValue(
         "dataset_definition", "qdsdef", "mdl_question_dataset_definitions"
     )
@@ -73,9 +71,7 @@ class ObjectEnum(Enum):
     NUMERICAL_UNIT = ObjectValue(
         "numerical_unit", "nuopt", "mdl_question_numerical_units"
     )
-    ESSAY_OPTION = ObjectValue(
-        "essay_option", "qtesq", "mdl_qtype_essay_options"
-    )
+    ESSAY_OPTION = ObjectValue("essay_option", "qtesq", "mdl_qtype_essay_options")
     CALCULATED_QUESTION = ObjectValue(
         "calculated_question", "calq", "mdl_question_calculated"
     )

@@ -1,18 +1,43 @@
+import { useEffect, useState } from "react";
 import { JsonEditor as Editor } from "jsoneditor-react";
 import "jsoneditor-react/es/editor.min.css";
 import Ajv from "ajv";
-import { useAppContext } from "../context/useAppContext";
+import Spinner from "../components/ui/Spinner";
 
 const ajv = new Ajv({ allErrors: true, verbose: true });
 
 export default function JsonPreview() {
-  const { jsonUrl, jsonContent, isLoadingContent } = useAppContext();
+  const [jsonContent, setJsonContent] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const jsonUrl = urlParams.get("url") || "";
+
+  useEffect(() => {
+    if (jsonUrl && !jsonContent) {
+      setIsLoading(true);
+      fetch(jsonUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          setJsonContent(data);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching JSON from URL:", error);
+          setIsLoading(false);
+        });
+    }
+  }, [jsonUrl, jsonContent]);
 
   if (!jsonUrl) {
     return <div className='text-gray-500'>No URL provided.</div>;
   }
-  if (isLoadingContent) {
-    return <div className='text-gray-500'>Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className='flex justify-center items-center h-full pt-10'>
+        <Spinner className='w-20 h-20 fill-blue-400' />
+      </div>
+    );
   }
 
   if (!jsonContent || Object.keys(jsonContent).length === 0) {

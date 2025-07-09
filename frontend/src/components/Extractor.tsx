@@ -4,12 +4,10 @@ import { Label } from "./ui/label";
 import Spinner from "./ui/Spinner";
 import { Combobox } from "./ui/combobox";
 import { ImageButton } from "./ui/ImageButton";
-import { useNavigate } from "react-router-dom";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { useAppContext } from "../context/useAppContext";
 
 const Extractor = React.memo(() => {
-  const navigate = useNavigate();
   const {
     selectedModules,
     selectedEvents,
@@ -129,14 +127,18 @@ const Extractor = React.memo(() => {
               description='Click to view the generated DFG diagram.'
               imageUrl={imageUrl ?? ""}
               isJson={false}
-              onClick={() => navigate("./preview/image")}
+              onClick={() =>
+                window.open(`./preview/image?url=${encodeURIComponent(imageUrl || "")}`, "_blank")
+              }
             />
             <ImageButton
               title='View JSON Output'
               description='Click to view the generated JSON output.'
               imageUrl={jsonUrl ?? ""}
               isJson={true}
-              onClick={() => navigate("./preview/json")}
+              onClick={() =>
+                window.open(`./preview/json?url=${encodeURIComponent(jsonUrl || "")}`, "_blank")
+              }
             />
           </div>
         )}

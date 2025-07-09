@@ -6,10 +6,8 @@ import {
   ResetIcon,
 } from "@radix-ui/react-icons";
 import { Button } from "@radix-ui/themes";
-import { useAppContext } from "../context/useAppContext";
 
 export default function ImagePreview() {
-  const { imageUrl } = useAppContext();
   const [scale, setScale] = useState(1);
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -17,6 +15,9 @@ export default function ImagePreview() {
     null
   );
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const imageUrl = urlParams.get("url") || "";
+  
   const imageStyle = useMemo(
     () => ({
       transform: `scale(${scale}) translate(${position.x / scale}px, ${

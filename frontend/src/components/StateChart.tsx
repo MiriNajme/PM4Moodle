@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import cytoscape from "cytoscape";
+import type { Transition } from "../utils/ocelToStateChart";
 
 interface StateChartProps {
   chartData: {
     states: string[];
-    transitions: { from: string; to: string }[];
+    transitions: Transition[];
   };
 }
 
@@ -15,6 +16,7 @@ export const StateChart: React.FC<StateChartProps> = ({ chartData }) => {
     if (!ref.current) return;
 
     ref.current.innerHTML = "";
+    const stateSet = new Set(chartData.states); // Should NOT contain Start/End if you removed them
 
     const cy = cytoscape({
       container: ref.current,
@@ -25,9 +27,20 @@ export const StateChart: React.FC<StateChartProps> = ({ chartData }) => {
           classes: state === "Start" || state === "End" ? "endpoint" : "state",
         })),
         // Edges
-        ...chartData.transitions.map((t, i) => ({
-          data: { id: `e${i}`, source: t.from, target: t.to },
-        })),
+        ...chartData.transitions
+          .filter((t) => stateSet.has(t.from) && stateSet.has(t.to))
+          .map((t, i) => ({
+            data: { id: `e${i}`, source: t.from, target: t.to },
+            classes: t.count > 1 ? "thick-edge" : "",
+          })),
+        // ...chartData.transitions.map((t, i) => ({
+        //   data: {
+        //     id: `e${i}`,
+        //     source: t.from,
+        //     target: t.to,
+        //   },
+        //   classes: t.count > 1 ? "thick-edge" : "",
+        // })),
       ],
       style: [
         {
@@ -76,11 +89,33 @@ export const StateChart: React.FC<StateChartProps> = ({ chartData }) => {
             "curve-style": "bezier",
           },
         },
+        {
+          selector: "edge.thick-edge",
+          style: {
+            width: 6, // thicker line for repeated transitions
+          },
+        },
+        {
+          selector: "edge",
+          style: {
+            width: 3,
+            "line-color": "#93c5fd",
+            "target-arrow-color": "#2563eb",
+            "target-arrow-shape": "triangle",
+            "curve-style": "bezier",
+            label: "data(label)", // Show count if > 1
+            "font-size": "12px",
+            "text-background-color": "#fff",
+            "text-background-opacity": 0.7,
+            "text-background-padding": "2",
+            "text-margin-y": -8,
+          },
+        },
       ],
-      layout: {
-        name: "grid",
-        rows: 1,
-      },
+      // layout: {
+      //   name: "grid",
+      //   rows: 1,
+      // },
     });
 
     return () => {
@@ -88,10 +123,5 @@ export const StateChart: React.FC<StateChartProps> = ({ chartData }) => {
     };
   }, [chartData]);
 
-  return (
-    <div
-      ref={ref}
-      className='w-full h-full rounded-xl bg-blue-50 shadow-inner'
-    />
-  );
+  return <div ref={ref} className='w-full h-full'></div>;
 };

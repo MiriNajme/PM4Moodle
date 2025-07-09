@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
-import { Text } from "@radix-ui/themes";
+import { Tabs, Text } from "@radix-ui/themes";
 import { useAppContext } from "../context/useAppContext";
 import { StateChart } from "./StateChart";
-import { ocelToStateChart } from "../utils/ocelToStateChart";
+import { ocelToFullRelationStateChart } from "../utils/ocelToStateChart";
 
 export const VerificationStateChart: React.FC = () => {
   const { jsonContent, selectedModules, modules } = useAppContext();
@@ -10,7 +10,7 @@ export const VerificationStateChart: React.FC = () => {
   const moduleCharts = useMemo(() => {
     if (!jsonContent || !selectedModules) return [];
 
-    return ocelToStateChart(jsonContent, selectedModules, modules);
+    return ocelToFullRelationStateChart(jsonContent, selectedModules, modules);
   }, [jsonContent, selectedModules, modules]);
 
   if (!jsonContent)
@@ -21,32 +21,39 @@ export const VerificationStateChart: React.FC = () => {
     );
 
   return (
-    <div className='overflow-x-auto flex flex-col gap-4'>
-      <Text className='mb-4'>Modules State Chart Diagrams</Text>
-      <div className='flex flex-col gap-6 max-h-[60vh] overflow-y-auto'>
-        {moduleCharts.map(({ module, icon, chartData }) => (
-          <div
-            key={module}
-            className='rounded-2xl shadow-md p-4 flex flex-col gap-2 border border-gray-200'
-          >
-            <div className='flex items-center mb-2 gap-2'>
-              <span className='text-2xl'>{icon}</span>
-              <span className='text-lg font-bold capitalize'>
-                {module} Module
+    <div className='w-full'>
+      <Tabs.Root>
+        <Tabs.List className='mb-4'>
+          {moduleCharts.map(({ module, icon }) => (
+            <Tabs.Trigger key={module} value={module}>
+              <span className='flex items-center gap-2'>
+                <span className='text-2xl'>{icon}</span>
+                <span className='capitalize'>{module}</span>
               </span>
-            </div>
-            <div className='w-full h-48 flex items-center justify-center'>
-              {chartData && chartData.states && chartData.states.length > 0 ? (
-                <StateChart chartData={chartData} />
-              ) : (
-                <span className='text-gray-400'>
-                  No state chart data available.
-                </span>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
+            </Tabs.Trigger>
+          ))}
+        </Tabs.List>
+
+        <div className='flex flex-col gap-6 max-h-[60vh] overflow-y-auto'>
+          {moduleCharts.map(({ module, chartData }) => (
+            <Tabs.Content key={module} value={module}>
+              <div className='p-4 flex flex-col gap-2'>
+                <div className='w-full h-[500px] flex items-center justify-center'>
+                  {chartData &&
+                  chartData.states &&
+                  chartData.states.length > 0 ? (
+                    <StateChart chartData={chartData} />
+                  ) : (
+                    <span className='text-gray-400'>
+                      No state chart data available.
+                    </span>
+                  )}
+                </div>
+              </div>
+            </Tabs.Content>
+          ))}
+        </div>
+      </Tabs.Root>
     </div>
   );
 };

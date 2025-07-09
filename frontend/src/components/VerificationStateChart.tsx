@@ -22,17 +22,19 @@ export const VerificationStateChart: React.FC = () => {
 
   return (
     <div className='w-full'>
-      <Tabs.Root>
-        <Tabs.List className='mb-4'>
-          {moduleCharts.map(({ module, icon }) => (
-            <Tabs.Trigger key={module} value={module}>
-              <span className='flex items-center gap-2'>
-                <span className='text-2xl'>{icon}</span>
-                <span className='capitalize'>{module}</span>
-              </span>
-            </Tabs.Trigger>
-          ))}
-        </Tabs.List>
+      <Tabs.Root defaultValue={moduleCharts[0]?.module || ""}>
+        {moduleCharts.length > 1 && (
+          <Tabs.List className='mb-4'>
+            {moduleCharts.map(({ module, icon }) => (
+              <Tabs.Trigger key={module} value={module}>
+                <span className='flex items-center gap-2'>
+                  <span className='text-2xl'>{icon}</span>
+                  <span className='capitalize'>{module}</span>
+                </span>
+              </Tabs.Trigger>
+            ))}
+          </Tabs.List>
+        )}
 
         <div className='flex flex-col gap-6 max-h-[60vh] overflow-y-auto'>
           {moduleCharts.map(({ module, chartData }) => (

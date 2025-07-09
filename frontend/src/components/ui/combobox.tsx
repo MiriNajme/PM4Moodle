@@ -119,16 +119,11 @@ export function Combobox({
                 key='__select_all__'
                 value='__select_all__'
                 className={cn(
-                  "cursor-pointer flex items-center gap-2 px-3 py-2 font-semibold border-b border-gray-200 bg-indigo-50/60",
+                  " sticky top-[-4px] z-10 cursor-pointer flex items-center gap-2 px-3 py-2 font-semibold border-b border-gray-200 bg-indigo-50",
                   value.length === options.length
                     ? "bg-indigo-100 text-indigo-700"
                     : "text-indigo-700"
                 )}
-                style={{
-                  position: "sticky",
-                  top: 0,
-                  zIndex: 1,
-                }}
                 onSelect={() => {
                   if (value.length === options.length) {
                     // Deselect all
@@ -141,7 +136,7 @@ export function Combobox({
               >
                 <span
                   className={cn(
-                    "inline-block h-4 w-4 border rounded-sm border-gray-400 flex items-center justify-center",
+                    "inline-flex h-4 w-4 border rounded-sm border-gray-400 items-center justify-center",
                     value.length === options.length
                       ? "bg-indigo-600"
                       : "bg-white"
@@ -174,7 +169,7 @@ export function Combobox({
                   >
                     <span
                       className={cn(
-                        "inline-block h-4 w-4 border rounded-sm border-gray-400 flex items-center justify-center",
+                        "inline-flex h-4 w-4 border rounded-sm border-gray-400 items-center justify-center",
                         value.includes(o.value) ? "bg-indigo-600" : "bg-white"
                       )}
                     >

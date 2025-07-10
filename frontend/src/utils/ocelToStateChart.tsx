@@ -1,27 +1,38 @@
 import type { ModuleType, OcelEventModel, OcelJsonContent } from "../services";
+import { Assign } from "../components/icons/Assign";
+import { Choice } from "../components/icons/Choice";
+import { File } from "../components/icons/File";
+import { Folder } from "../components/icons/Folder";
+import { Forum } from "../components/icons/Forum";
+import { Label } from "../components/icons/Label";
+import { Page } from "../components/icons/Page";
+import { Quiz } from "../components/icons/Quiz";
+import { Unknown } from "../components/icons/Unknown";
+import { Url } from "../components/icons/Url";
+import type React from "react";
 
 export function getModuleIcon(module: string) {
   switch (module) {
     case "assign":
-      return "📝";
+      return <Assign />;
     case "choice":
-      return "🔀";
+      return <Choice />;
     case "file":
-      return "📃";
+      return <File />;
     case "folder":
-      return "📂";
+      return <Folder />;
     case "label":
-      return "🏷️";
+      return <Label />;
     case "page":
-      return "📄";
+      return <Page />;
     case "url":
-      return "🔗";
+      return <Url />;
     case "forum":
-      return "💬";
+      return <Forum />;
     case "quiz":
-      return "✅";
+      return <Quiz />;
     default:
-      return "📦"; // Default package icon
+      return <Unknown />;
   }
 }
 
@@ -29,7 +40,7 @@ export type Transition = { from: string; to: string; count: number };
 
 export type OcelFullRelationChartState = {
   module: string;
-  icon: string;
+  icon: React.ReactNode;
   chartData: {
     states: string[];
     transitions: Transition[];

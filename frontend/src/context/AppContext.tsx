@@ -103,6 +103,9 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoading(false);
     };
     fetchModules();
+
+    // setImageUrl("http://localhost:5000/output/ocel2__last_20250710_115418.png");
+    // setJsonUrl("http://localhost:5000/output/ocel2_all_objects_0710_1154.json");
   }, []);
 
   return (

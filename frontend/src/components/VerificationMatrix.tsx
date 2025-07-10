@@ -9,6 +9,19 @@ type RowColType = {
   col: number | null;
 };
 
+const groupEventTypesByPostfix = (eventTypes: string[]) => {
+  // Group event types by postfix (after last underscore)
+  const groups: Record<string, string[]> = {};
+  eventTypes.forEach((eventType) => {
+    const parts = eventType.split("_");
+    const postfix = parts.length > 1 ? parts[parts.length - 1] : eventType;
+    if (!groups[postfix]) groups[postfix] = [];
+    groups[postfix].push(eventType);
+  });
+  // Flatten grouped event types, preserving group order
+  return Object.values(groups).flat();
+};
+
 const OcelVerificationMatrix = React.memo(() => {
   const { pivot, isLoadingContent } = useAppContext();
   const [hovered, setHovered] = useState<RowColType>({
@@ -37,6 +50,14 @@ const OcelVerificationMatrix = React.memo(() => {
     pivot.eventTypes.some((eventType) => pivot.matrix[eventType][objType])
   );
 
+  // Filter eventTypes to only those with at least one non-falsy value in the filtered columns
+  let filteredEventTypes = pivot.eventTypes.filter((eventType) =>
+    filteredObjectTypes.some((objType) => pivot.matrix[eventType][objType])
+  );
+
+  // Group filteredEventTypes by postfix
+  filteredEventTypes = groupEventTypesByPostfix(filteredEventTypes);
+
   return (
     <div className='overflow-x-auto'>
       <Text className='mb-4'>
@@ -63,7 +84,7 @@ const OcelVerificationMatrix = React.memo(() => {
             </tr>
           </thead>
           <tbody>
-            {pivot.eventTypes.map((eventType, rowIdx) => (
+            {filteredEventTypes.map((eventType, rowIdx) => (
               <tr
                 key={eventType}
                 className={clsx(

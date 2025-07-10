@@ -25,4 +25,128 @@ This tool streamlines the extraction, validation, and analysis of object-centric
 
 ---
 
+## Project Structure
+
+```
+root/
+├── backend/
+│   ├── app.py
+│   └── ...
+└── frontend/
+    └── ...
+```
+
+---
+
+## Backend Setup
+
+The backend is built with **Python** and **Flask**.
+
+### 1. Install Python
+
+Make sure you have Python 3.8+ installed.  
+[Download Python here](https://www.python.org/downloads/)
+
+### 2. Create and Activate a Virtual Environment
+
+From your `backend/` folder:
+
+```bash
+python -m venv venv
+```
+
+Activate the virtual environment:
+
+- **Windows:**
+  ```
+  .\venv\Scripts\Activate
+  ```
+- **macOS/Linux:**
+  ```
+  source venv/bin/activate
+  ```
+
+You should now see your prompt prefixed with `(venv)`.
+
+### 3. Install Dependencies
+
+Inside your virtual environment, run:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Set Environment Variables
+
+- **Windows PowerShell:**
+  ```powershell
+  $env:FLASK_APP = "app.py"
+  $env:FLASK_DEBUG = "1"   # Optional for debug mode
+  ```
+- **macOS/Linux:**
+  ```bash
+  export FLASK_APP=app.py
+  export FLASK_DEBUG=1     # Optional for debug mode
+  ```
+
+### 5. Run the Flask Application
+
+```bash
+flask run
+```
+
+You should see something like:
+```
+* Running on http://127.0.0.1:5000/
+```
+
+**Pro Tip:**  
+If `flask run` does not work, use:
+```bash
+python -m flask run
+```
+
+---
+
+## Frontend Setup
+
+The frontend requires **Node.js**.
+
+### 1. Install Node.js
+
+Download and install Node.js from the [official website](https://nodejs.org/).
+
+### 2. Install Frontend Dependencies
+
+Navigate to the `frontend/` folder and run:
+
+```bash
+npm install
+```
+
+### 3. Start the Frontend Development Server
+
+```bash
+npm run dev
+```
+
+The frontend should now be running, typically on [[http://localhost:3000](http://localhost:5173/)].
+
+---
+
+## Troubleshooting
+
+- Make sure Python and Node.js are correctly installed and added to your system PATH.
+- Ensure your virtual environment is activated before installing Python packages or running the Flask app.
+- For database or specific environment configurations, check the `backend/` or `frontend/` folders for `.env.example` files.
+
+---
+
+## License
+
+Specify your license here.  
+For example:  
+[MIT](LICENSE)
+
+---
 

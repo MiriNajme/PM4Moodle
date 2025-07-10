@@ -1,0 +1,10 @@
+# Logs
+logs
+*.log
+venv
+venv/*
+
+__pycache__/
+
+output/*
+logic/output/*

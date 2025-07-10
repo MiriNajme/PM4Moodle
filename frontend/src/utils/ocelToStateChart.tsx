@@ -1,27 +1,38 @@
 import type { ModuleType, OcelEventModel, OcelJsonContent } from "../services";
+import { Assign } from "../components/icons/Assign";
+import { Choice } from "../components/icons/Choice";
+import { File } from "../components/icons/File";
+import { Folder } from "../components/icons/Folder";
+import { Forum } from "../components/icons/Forum";
+import { Label } from "../components/icons/Label";
+import { Page } from "../components/icons/Page";
+import { Quiz } from "../components/icons/Quiz";
+import { Unknown } from "../components/icons/Unknown";
+import { Url } from "../components/icons/Url";
+import type React from "react";
 
 export function getModuleIcon(module: string) {
   switch (module) {
     case "assign":
-      return "📝";
+      return <Assign color='#eb66a2' />;
     case "choice":
-      return "🔀";
+      return <Choice color='#12a676' />;
     case "file":
-      return "📃";
+      return <File color='r#399be2ed' />;
     case "folder":
-      return "📂";
+      return <Folder color='#399be2' />;
     case "label":
-      return "🏷️";
+      return <Label color='#399be2' />;
     case "page":
-      return "📄";
+      return <Page color='#399be2' />;
     case "url":
-      return "🔗";
+      return <Url color='#399be2' />;
     case "forum":
-      return "💬";
+      return <Forum color='#f7634d' />;
     case "quiz":
-      return "✅";
+      return <Quiz color='#eb66a2' />;
     default:
-      return "📦";
+      return <Unknown />;
   }
 }
 
@@ -29,7 +40,7 @@ export type Transition = { from: string; to: string; count: number };
 
 export type OcelFullRelationChartState = {
   module: string;
-  icon: string;
+  icon: React.ReactNode;
   chartData: {
     states: string[];
     transitions: Transition[];

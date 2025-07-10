@@ -18,7 +18,7 @@ export function getModuleIcon(module: string) {
     case "choice":
       return <Choice color='#12a676' />;
     case "file":
-      return <File color='r#399be2ed' />;
+      return <File color='#399be2' />;
     case "folder":
       return <Folder color='#399be2' />;
     case "label":

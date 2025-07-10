@@ -130,7 +130,7 @@ npm install
 npm run dev
 ```
 
-The frontend should now be running, typically on [[http://localhost:3000](http://localhost:5173/)].
+The frontend should now be running, typically on [[http://localhost:5173](http://localhost:5173/)].
 
 ---
 
@@ -138,7 +138,8 @@ The frontend should now be running, typically on [[http://localhost:3000](http:/
 
 - Make sure Python and Node.js are correctly installed and added to your system PATH.
 - Ensure your virtual environment is activated before installing Python packages or running the Flask app.
-- For database or specific environment configurations, check the `backend/` or `frontend/` folders for `.env.example` files.
+- If you encounter errors when running `flask run`, make sure you have activated your virtual environment first by running `.\venv\Scripts\Activate` (on Windows) or `source venv/bin/activate` (on macOS/Linux), and then try `flask run` again.
+
 
 ---
 

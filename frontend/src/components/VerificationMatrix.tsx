@@ -10,7 +10,6 @@ type RowColType = {
 };
 
 const groupEventTypesByPostfix = (eventTypes: string[]) => {
-  // Group event types by postfix (after last underscore)
   const groups: Record<string, string[]> = {};
   eventTypes.forEach((eventType) => {
     const parts = eventType.split("_");
@@ -18,7 +17,6 @@ const groupEventTypesByPostfix = (eventTypes: string[]) => {
     if (!groups[postfix]) groups[postfix] = [];
     groups[postfix].push(eventType);
   });
-  // Flatten grouped event types, preserving group order
   return Object.values(groups).flat();
 };
 
@@ -49,12 +47,10 @@ const OcelVerificationMatrix = React.memo(() => {
     pivot.eventTypes.some((eventType) => pivot.matrix[eventType][objType])
   );
 
-  // Filter eventTypes to only those with at least one non-falsy value in the filtered columns
   let filteredEventTypes = pivot.eventTypes.filter((eventType) =>
     filteredObjectTypes.some((objType) => pivot.matrix[eventType][objType])
   );
 
-  // Group filteredEventTypes by postfix
   filteredEventTypes = groupEventTypesByPostfix(filteredEventTypes);
 
   return (
@@ -62,7 +58,7 @@ const OcelVerificationMatrix = React.memo(() => {
       <Text className='mb-4'>
         Verification Matrix (Object counts per event)
       </Text>
-      <div className='my-4 max-h-[60dvh] overflow-auto border border-gray-200 rounded-lg'>
+      <div className='my-4 max-h-[55dvh] overflow-auto border border-gray-200 rounded-lg'>
         <table>
           <thead>
             <tr>

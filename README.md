@@ -18,6 +18,7 @@ This tool streamlines the extraction, validation, and analysis of object-centric
 ## Table of Contents
 
 - [Project Structure](#project-structure)
+- [Cloning the Repository](#Cloning-the-Repository)
 - [Backend Setup](#backend-setup)
 - [Frontend Setup](#frontend-setup)
 - [Troubleshooting](#troubleshooting)

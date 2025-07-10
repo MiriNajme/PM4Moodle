@@ -14,23 +14,23 @@ import type React from "react";
 export function getModuleIcon(module: string) {
   switch (module) {
     case "assign":
-      return <Assign />;
+      return <Assign color='#eb66a2' />;
     case "choice":
-      return <Choice />;
+      return <Choice color='#12a676' />;
     case "file":
-      return <File />;
+      return <File color='r#399be2ed' />;
     case "folder":
-      return <Folder />;
+      return <Folder color='#399be2' />;
     case "label":
-      return <Label />;
+      return <Label color='#399be2' />;
     case "page":
-      return <Page />;
+      return <Page color='#399be2' />;
     case "url":
-      return <Url />;
+      return <Url color='#399be2' />;
     case "forum":
-      return <Forum />;
+      return <Forum color='#f7634d' />;
     case "quiz":
-      return <Quiz />;
+      return <Quiz color='#eb66a2' />;
     default:
       return <Unknown />;
   }

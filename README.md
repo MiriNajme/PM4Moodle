@@ -177,7 +177,7 @@ The frontend should now be running, typically on [[http://localhost:5173](http:/
 ## License
 
 Specify your license here.  
-For example:  
+ 
 [MIT](LICENSE)
 
 ---

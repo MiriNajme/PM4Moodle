@@ -44,7 +44,6 @@ const Extractor = React.memo(() => {
             value={selectedModules}
             onValueChange={(newModules) => {
               setSelectedModules(newModules.sort());
-              // Remove any events that belong to unselected modules
               setSelectedEvents((prevEvents) =>
                 prevEvents.filter((eventValue) => {
                   const module = eventValue.split("__")[0];

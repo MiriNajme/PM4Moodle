@@ -239,7 +239,6 @@ class Choice(Base):
 
         return result
 
-    # get_completed_manually_choice_event_object
     def get_completed_module_event_object(self, event):
         attributes = build_attributes(
             event, self.related_event_columns["course_module_completion"]

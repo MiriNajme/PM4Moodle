@@ -37,7 +37,6 @@ export function Combobox({
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      {/* Label support */}
       {id && (
         <input
           type='text'
@@ -114,7 +113,6 @@ export function Combobox({
             </div>
             <CommandEmpty>No options found.</CommandEmpty>
             <CommandGroup className='max-h-[40vh] overflow-y-auto'>
-              {/* Select All Option */}
               <CommandItem
                 key='__select_all__'
                 value='__select_all__'
@@ -126,10 +124,8 @@ export function Combobox({
                 )}
                 onSelect={() => {
                   if (value.length === options.length) {
-                    // Deselect all
                     onValueChange([]);
                   } else {
-                    // Select all
                     onValueChange(options.map((o) => o.value));
                   }
                 }}
@@ -148,7 +144,6 @@ export function Combobox({
                 </span>
                 Select All
               </CommandItem>
-              {/* End Select All Option */}
               {options.map((o) => {
                 const isSelected = value.includes(o.value);
                 return (

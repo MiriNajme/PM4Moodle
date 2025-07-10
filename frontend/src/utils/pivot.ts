@@ -1,22 +1,20 @@
-import type { OCEL_Json_content } from "../services";
+import type { OcelJsonContent } from "../services";
 
-export interface OCEL_Pivot_Table {
+export interface OcelPivotTable {
   objectTypes: string[];
   eventTypes: string[];
   matrix: Record<string, Record<string, number>>;
 }
 
-export function buildPivotTable(ocelData: OCEL_Json_content): OCEL_Pivot_Table {
+export function buildPivotTable(ocelData: OcelJsonContent): OcelPivotTable {
   const objectTypes = ocelData.objectTypes.map((o) => o.name).sort();
   const eventTypes = ocelData.eventTypes.map((e) => e.name).sort();
 
-  // Build a lookup for object id -> object type
   const objectIdToType: Record<string, string> = {};
   ocelData.objects.forEach((obj: any) => {
     objectIdToType[obj.id] = obj.type;
   });
 
-  // Initialize matrix: eventType x objectType
   const matrix: Record<string, Record<string, number>> = {};
   for (const eType of eventTypes) {
     matrix[eType] = {};

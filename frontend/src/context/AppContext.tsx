@@ -11,14 +11,14 @@ import {
   type ModuleType,
   type OcelJsonContent,
 } from "../services";
-import { buildPivotTable, type OCEL_Pivot_Table } from "../utils/pivot";
+import { buildPivotTable, type OcelPivotTable } from "../utils/pivot";
 
 type AppContextType = {
   modules: ModuleType;
   jsonUrl: string | null;
   imageUrl: string | null;
   jsonContent: OcelJsonContent | null;
-  pivot: OCEL_Pivot_Table | null;
+  pivot: OcelPivotTable | null;
   isLoading: boolean;
   isLoadingContent: boolean;
   isWorking: boolean;

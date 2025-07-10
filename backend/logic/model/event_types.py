@@ -100,5 +100,4 @@ class EventType(Enum):
     # endregion QUIZ
 
     def __str__(self):
-        # This method will control how instances of EventType are converted to strings
         return self.value

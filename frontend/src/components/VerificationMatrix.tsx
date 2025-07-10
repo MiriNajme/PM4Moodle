@@ -32,7 +32,6 @@ const OcelVerificationMatrix = React.memo(() => {
     );
   }
 
-  // Filter objectTypes to only those with at least one non-falsy value in the matrix
   const filteredObjectTypes = pivot.objectTypes.filter((objType) =>
     pivot.eventTypes.some((eventType) => pivot.matrix[eventType][objType])
   );

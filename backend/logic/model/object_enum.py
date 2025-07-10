@@ -84,5 +84,4 @@ class ObjectEnum(Enum):
         return [item.value for item in cls]
 
     def __str__(self):
-        # This method will control how instances of EventType are converted to strings
         return self.value

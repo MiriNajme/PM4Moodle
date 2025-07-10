@@ -95,18 +95,14 @@ class Assign(Base):
             self.add_grade_assignment_events()
 
     def add_create_import_events(self):
-        # read all assigns from assign table
         assigns = self.fetch_assigns()
         for assign in assigns:
-            # course module.instance = assign.id and module = 1
             course_module = self.fetch_course_module_by_instance(
                 assign["id"], ObjectEnum.ASSIGN.value.module_id
             )
-            # log.objectid == coursemodule.id and eventtype == created
             event = self.fetch_assign_event_by_ids(
                 course_module["id"], EventType.CREATED.value.name
             )
-            # if has it then generate create log else import
             if event:
                 self.ocel_event_log["events"].append(
                     self.get_assign_create_event_object(event, assign)
@@ -117,10 +113,8 @@ class Assign(Base):
                 )
 
     def add_complete_events(self):
-        # manually completed
         super().add_complete_events()
 
-        # automatically completed
         events = self.fetch_completed_events(2)
         if events:
             for event in events:
@@ -164,7 +158,6 @@ class Assign(Base):
     def add_grade_assignment_events(self):
         object_ids = []
         events = self.fetch_grade_assignment_events()
-        # first objectid is set others are update
         if events:
             for event in events:
                 if event["objectid"] in object_ids:
@@ -192,7 +185,6 @@ class Assign(Base):
 
         # region RELATIONSHIPS
         relationships = []
-        # event["objectid"] == coursemodule.id -> instance
         instance = self.fetch_course_module_by_id(event["objectid"])
 
         if instance:

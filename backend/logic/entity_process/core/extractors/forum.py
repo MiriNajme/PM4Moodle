@@ -456,15 +456,6 @@ class Forum(Base):
             ),
         ]
 
-        # discussion = self.fetch_discussion_by_id(event["objectid"])
-        # if discussion:
-        # relationships.append(
-        #     get_formatted_relationship(
-        #         ObjectEnum.FORUM,
-        #         discussion["forum"],
-        #         f"Pertains to forum",
-        #     ),
-        # )
         relationships.append(
             get_formatted_relationship(
                 ObjectEnum.FORUM,
@@ -632,17 +623,6 @@ class Forum(Base):
                         "potentially creates tag instance",
                     )
                 )
-
-        # files = self.fetch_files_by_context_id(event["contextid"])
-        # if files:
-        #     for file in files:
-        #         relationships.append(
-        #             get_formatted_relationship(
-        #                 ObjectEnum.FILES,
-        #                 file["id"],
-        #                 "Contains file",
-        #             )
-        #         )
 
         result["relationships"] = relationships
         # endregion
@@ -815,10 +795,6 @@ class Forum(Base):
             final_grade = float(grade.get("finalgrade"))
             if final_grade is not None:
                 attributes.append({"name": "grade", "value": final_grade})
-
-        # if is_rating:
-        #     self.get_rating_by_id()
-        #     attributes.append({"name": "rating", "value": event[col["name"]]})
 
         result = {
             "id": f"{event_qualifier}_{event["id"]}",

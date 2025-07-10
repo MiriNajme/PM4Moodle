@@ -5,15 +5,12 @@ from pm4py.algo.discovery.dfg import algorithm as dfg_discovery
 import networkx as nx
 import matplotlib.pyplot as plt
 
-# --- Step 1: Load Ocel 2.0 file ---
 with open("ocel-dfg (4).json") as f:
     ocel = json.load(f)
 
-# Step 2: Filter for relevant events
 assign_events = {"create_assign", "update_assign", "submit_group_assign"}
 url_events = {"create_url", "update_url", "delete_url", "view_url"}
 
-# Flatten events and filter by type
 events = ocel["events"]
 filtered_events = []
 for eid, event in events.items():
@@ -23,14 +20,12 @@ for eid, event in events.items():
                 "event_id": eid,
                 "event_type": event["event_type"],
                 "timestamp": event["timestamp"],
-                "omap": event["omap"],  # object references
+                "omap": event["omap"],
             }
         )
 
-# Step 3: Sort by timestamp
 filtered_events = sorted(filtered_events, key=lambda x: x["timestamp"])
 
-# Step 4: Build event sequences per object
 object_sequences = {}
 for ev in filtered_events:
     for oid in ev["omap"]:
@@ -39,7 +34,6 @@ for ev in filtered_events:
         object_sequences[oid].append(ev)
 
 
-# Step 5: For each object, make state sequence (no repetitions)
 def map_event_to_state(evtype):
     return {
         "create_assign": "created",
@@ -61,7 +55,6 @@ for oid, evs in object_sequences.items():
             seq.append(state)
     object_state_sequences[oid] = seq
 
-# Step 6: Build transitions for state chart
 transitions = {}
 for seq in object_state_sequences.values():
     for a, b in zip(seq, seq[1:]):
@@ -69,7 +62,6 @@ for seq in object_state_sequences.values():
             transitions[(a, b)] = 0
         transitions[(a, b)] += 1
 
-# Step 7: Draw State Chart (using networkx)
 G = nx.DiGraph()
 for (a, b), cnt in transitions.items():
     G.add_edge(a, b, label=str(cnt))
@@ -81,6 +73,3 @@ edge_labels = nx.get_edge_attributes(G, "label")
 nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
 plt.title("State Chart (Lifecycle) for Assign and URL Modules")
 plt.show()
-
-# Step 8: For reference, discover the DFG (optional, for raw event transitions)
-# This can be done via pm4py directly if using their ocel-importer

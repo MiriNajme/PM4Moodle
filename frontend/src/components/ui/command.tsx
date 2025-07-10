@@ -39,7 +39,6 @@ const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
-  // eslint-disable-next-line react/no-unknown-property
   <div
     className='flex items-center border-b px-3 border-zinc-100'
     cmdk-input-wrapper=''
@@ -64,7 +63,6 @@ const CommandList = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.List
     onWheelCapture={(ev) => {
-      // Otherwise seomething up the chain prevents scrolling
       ev.stopPropagation();
     }}
     ref={ref}

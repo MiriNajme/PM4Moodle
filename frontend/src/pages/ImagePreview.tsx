@@ -57,11 +57,11 @@ export default function ImagePreview() {
   }, []);
 
   const handleZoomIn = useCallback(() => {
-    setScale((prev) => Math.min(prev * 1.2, 3)); // Limit max zoom to 3x
+    setScale((prev) => Math.min(prev * 1.2, 3)); 
   }, []);
 
   const handleZoomOut = useCallback(() => {
-    setScale((prev) => Math.max(prev / 1.2, 0.5)); // Limit min zoom to 0.5x
+    setScale((prev) => Math.max(prev / 1.2, 0.5)); 
   }, []);
 
   const handleResetZoom = useCallback(() => {

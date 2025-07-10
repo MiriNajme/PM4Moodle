@@ -42,7 +42,6 @@ class EntityProcess:
             process_all()
             return
             
-        # Create objects type based on the provided related objects
         objects, events = self.get_selected_events_and_objects(module_events)
         
         self.create_objects_type(objects)
@@ -50,12 +49,9 @@ class EntityProcess:
         registry = ObjectTransformerRegistry(
             self.db_service, self.related_object_columns, self.ocel_event_log
         )
-        # Transform objects based on the provided related objects
         registry.transform_all(objects)
 
-        # Create events type based on the provided module events
         self.create_events_type(events)
-        # Extract events based on the provided module events
         event_registry = EventExtractorRegistry(
             self.db_service,
             self.related_object_columns,
@@ -82,13 +78,11 @@ class EntityProcess:
                 except Exception as e:
                     print(f"[WARN] Failed to get columns for {table_name}: {e}")
 
-        # remove password columns from the user object
         user_attributes = [
             d for d in result[ObjectEnum.USER.value.name] if d["name"] != "password"
         ]
         result[ObjectEnum.USER.value.name] = user_attributes
 
-        # Add the 'completion_rule_attributes' object type with its columns
         result[ObjectEnum.COMPLETION_RULE.value.name] = [
             {"name": "id", "type": "string"},
             {"name": "is_manual", "type": "integer"},
@@ -147,7 +141,6 @@ class EntityProcess:
         )
         self.related_event_columns["quiz_grades"] = quiz_grades_attributes
 
-        # Add grade attribute to set_grade_assignment and update_grade_assignment
         grade_attributes = log_attributes.copy() + [{"name": "grade", "type": "float"}]
 
         event_types = [
@@ -280,8 +273,6 @@ class EntityProcess:
             {"name": "upload_post", "attributes": log_attributes},
             {"name": "delete_post", "attributes": log_attributes},
             {"name": "edit_post", "attributes": log_attributes},
-            # {"name": "set_grade_forum", "attributes": grade_attributes},
-            # {"name": "update_grade_forum", "attributes": grade_attributes},
             {"name": "rate_user_forum", "attributes": log_attributes},
             {"name": "update_rate_user_forum", "attributes": log_attributes},
             # endregion FORUM
@@ -307,7 +298,6 @@ class EntityProcess:
         ]
 
         if events is not None and len(events) > 0:
-            # If specific events are provided, filter the event types
             event_types = [
                 event for event in event_types if event["name"] in events
             ]
@@ -315,7 +305,6 @@ class EntityProcess:
         self.ocel_event_log["eventTypes"].extend(event_types)
     
     def get_selected_events_and_objects(self, selected: dict = None):
-        # selected is like: { "assign": ["create_assign"], "choice": ["view_choice"] }
         if selected is not None:
             modules_map = get_module_event_objects_map()
             objects = set([
@@ -332,7 +321,6 @@ class EntityProcess:
             events = []
 
             for module, event_list in selected.items():
-                # Defensive: check if module exists in mapping
                 if module in modules_map:
                     module_map = modules_map[module]
                     if module == ObjectEnum.QUESTION.value.name or \
@@ -364,12 +352,10 @@ class EntityProcess:
                         ])
                     
                     for event in event_list:
-                        # Defensive: check if event exists in module
                         if event in module_map:
                             objects.update(module_map[event])
                             events.append(event)
             
-            # Return sorted results if desired
             return sorted(objects), sorted(events)
         return [], []
     

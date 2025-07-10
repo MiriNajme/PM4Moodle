@@ -203,7 +203,6 @@ def run_extraction():
     if not isinstance(data, dict):
         return jsonify({"error": "Invalid request body"}), 400
 
-    # Example: data = {"assign": ["created", "viewed"], "file": ["deleted"]}
     if not data:
         module_events = None
     else:

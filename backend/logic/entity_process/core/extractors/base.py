@@ -223,8 +223,7 @@ class Base(ABC):
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
-        # if the module's completion has been set 2 when the first view event raised
-        # then we should create both view and complete events
+
         if id in ids and not ids[id]:
             ids[id] = True
 
@@ -770,7 +769,6 @@ class Base(ABC):
 
         return None
 
-    # --- Relationships logic moved to protected/private methods ---
     def module_relationships(self, event, event_type_enum: EventType):
         relationships = []
         qualifier = f"{event_type_enum.value.qualifier} {self.object_type.value.name}"

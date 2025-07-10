@@ -209,14 +209,9 @@ class Quiz(Base):
             get_formatted_relationship(
                 ObjectEnum.USER, event["userid"], user_qualifier
             ),
-            # get_formatted_relationship(
-            #     ObjectEnum.QUESTION, event["objectid"], question_qualifier
-            # ),
         ]
 
-        question_refrence = self.fetch_question_refrence(
-            event["objectid"], "itemid"
-        )
+        question_refrence = self.fetch_question_refrence(event["objectid"], "itemid")
         if question_refrence is not None:
             relationships.append(
                 get_formatted_relationship(
@@ -225,7 +220,7 @@ class Quiz(Base):
                     question_qualifier,
                 )
             )
-        
+
         instance = json.loads(event["other"])
         if instance:
             relationships.append(
@@ -290,7 +285,6 @@ class Quiz(Base):
     def get_set_grade_quiz_event_object(self, event):
         user_qualifier = "Graded user"
 
-        # event_type = EventType.QUIZ_SET_GRADE.value.type
         event_type = get_module_event_type_name(
             ObjectEnum.QUIZ, EventType.QUIZ_SET_GRADE
         )
@@ -367,32 +361,24 @@ class Quiz(Base):
         return rows if rows else None
 
     def fetch_question_version(self, question_id):
-        # SELECT * from moodle.mdl_question_versions
-        # WHERE questionid=40;
         TABLE = self.db_service.Base.classes.mdl_question_versions
         filter_conditions = [TABLE.questionid == question_id]
         rows = self.db_service.query_object(TABLE, filter_conditions)
         return rows[0] if rows else None
 
     def fetch_question_refrence(self, id, column_name):
-        # SELECT * FROM moodle.mdl_question_references
-        # WHERE questionbankentryid=37;
         TABLE = self.db_service.Base.classes.mdl_question_references
         filter_conditions = [getattr(TABLE, column_name) == id]
         rows = self.db_service.query_object(TABLE, filter_conditions)
         return rows[0] if rows else None
 
     def fetch_context(self, using_context_id):
-        # SELECT * FROM moodle.mdl_context
-        # WHERE id=574;
         TABLE = self.db_service.Base.classes.mdl_question_references
         filter_conditions = [TABLE.id == using_context_id]
         rows = self.db_service.query_object(TABLE, filter_conditions)
         return rows[0] if rows else None
 
     def fetch_course_modules(self, instance_id):
-        # SELECT * FROM moodle.mdl_course_modules
-        # WHERE id=412;
         TABLE = self.db_service.Base.classes.mdl_course_modules
         filter_conditions = [TABLE.id == instance_id]
         rows = self.db_service.query_object(TABLE, filter_conditions)

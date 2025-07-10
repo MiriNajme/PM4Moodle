@@ -50,7 +50,6 @@ def generate_dfg():
             help="filter OCEL2 by event type. ex, url",
         )
 
-        # Parse arguments
         args = parser.parse_args()
 
         print("1) Generating OCEL2\n")
@@ -61,7 +60,6 @@ def generate_dfg():
 
         print("2) Generating DFG\n")
 
-        # Load the OCEL log
         file_path = args.filename + ".json"
         if args.convert == "y" or args.convert == "Y":
             json_data = read_ocel_file(file_path)
@@ -100,11 +98,6 @@ def generate_dfg():
         print(f"An error occurred: {e}")
 
 
-# API
-# This function is used to run the DFG analysis with optional parameters.
-# It generates the OCEL, reads the JSON file, converts objects, filters events by type
-# and ID, and finally discovers the DFG.
-# It returns a dictionary with the JSON file name and the image file name.
 def run_dfg_analysis(module_events: dict) -> dict:
     path = os.path.join(os.path.dirname(__file__), "output")
     output_file = "ocel2__last.json"
@@ -113,35 +106,14 @@ def run_dfg_analysis(module_events: dict) -> dict:
     try:
         log = pm4py.read.read_ocel2_json(full_path)
         dfg = pm4py.discover_ocdfg(log)
-        # Explicitly save the image
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         image_file = output_file.replace(".json", f"_{timestamp}.png")
         image_path = os.path.join(path, image_file)
         pm4py.save_vis_ocdfg(dfg, image_path)
-        # pm4py.view_ocdfg(dfg, format="png")  # Saves a .png file
     except Exception as e:
-        # raise RuntimeError(f"PM4Py analysis failed: {e}")
         image_file = None
 
     return {
         "json_file": output_file,
-        "image_file": image_file,  # .replace(".json", ".png")
+        "image_file": image_file,
     }
-
-
-# if __name__ == "__main__":
-#     print("\n")
-#     generate_dfg()
-#     print("*** DONE ***\n\n")
-
-# py pm4py_test.py
-# --filename ocel2__last
-# --objectid url11
-# --eventtype url
-# --genocel y (generate ocel)
-# --convert y
-
-
-# py src\v1\pm4py_test.py  --genocel n --eventtype folder
-# py src\v1\pm4py_test.py  --genocel n --objectid asn_2
-# py src\v1\pm4py_test.py  --genocel n --convert y

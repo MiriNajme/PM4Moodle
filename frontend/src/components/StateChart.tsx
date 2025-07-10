@@ -16,7 +16,7 @@ export const StateChart: React.FC<StateChartProps> = ({ chartData }) => {
     if (!ref.current) return;
 
     ref.current.innerHTML = "";
-    const stateSet = new Set(chartData.states); // Should NOT contain Start/End if you removed them
+    const stateSet = new Set(chartData.states);
 
     const cy = cytoscape({
       container: ref.current,
@@ -33,14 +33,6 @@ export const StateChart: React.FC<StateChartProps> = ({ chartData }) => {
             data: { id: `e${i}`, source: t.from, target: t.to },
             classes: t.count > 1 ? "thick-edge" : "",
           })),
-        // ...chartData.transitions.map((t, i) => ({
-        //   data: {
-        //     id: `e${i}`,
-        //     source: t.from,
-        //     target: t.to,
-        //   },
-        //   classes: t.count > 1 ? "thick-edge" : "",
-        // })),
       ],
       style: [
         {
@@ -65,15 +57,15 @@ export const StateChart: React.FC<StateChartProps> = ({ chartData }) => {
           selector: "node.state",
           style: {
             shape: "roundrectangle",
-            "background-color": "#e5e7eb", // Tailwind gray-200
+            "background-color": "#e5e7eb",
             "text-outline-color": "#e5e7eb",
             "text-outline-width": 2,
             "border-width": 2,
-            "border-color": "#9ca3af", // Tailwind gray-400
+            "border-color": "#9ca3af",
             width: 90,
             height: 45,
             "font-size": "15px",
-            color: "#111827", // Tailwind gray-900
+            color: "#111827",
             label: "data(label)",
             "text-valign": "center",
             "text-halign": "center",
@@ -92,7 +84,7 @@ export const StateChart: React.FC<StateChartProps> = ({ chartData }) => {
         {
           selector: "edge.thick-edge",
           style: {
-            width: 6, // thicker line for repeated transitions
+            width: 6,
           },
         },
         {
@@ -103,7 +95,7 @@ export const StateChart: React.FC<StateChartProps> = ({ chartData }) => {
             "target-arrow-color": "#2563eb",
             "target-arrow-shape": "triangle",
             "curve-style": "bezier",
-            label: "data(label)", // Show count if > 1
+            label: "data(label)",
             "font-size": "12px",
             "text-background-color": "#fff",
             "text-background-opacity": 0.7,
@@ -112,10 +104,6 @@ export const StateChart: React.FC<StateChartProps> = ({ chartData }) => {
           },
         },
       ],
-      // layout: {
-      //   name: "grid",
-      //   rows: 1,
-      // },
     });
 
     return () => {

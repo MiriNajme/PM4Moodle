@@ -25,5 +25,4 @@ This tool streamlines the extraction, validation, and analysis of object-centric
 
 ---
 
-## Project Structure
 

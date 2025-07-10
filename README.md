@@ -38,6 +38,24 @@ root/
 
 ---
 
+## Cloning the Repository
+
+To get started, you need to clone this repository to your local machine.
+
+1. Open your terminal or command prompt.
+2. Navigate to the directory where you want to place the project.
+3. Run the following command:
+
+   ```bash
+   git clone https://github.com/MiriNajme/Ocpm2-extension.git
+
+4. Change into the project directory:
+
+    ```bash
+   cd Ocpm2-extension
+
+You are now ready to set up the backend and frontend.
+
 ## Backend Setup
 
 The backend is built with **Python** and **Flask**.
@@ -47,9 +65,22 @@ The backend is built with **Python** and **Flask**.
 Make sure you have Python 3.8+ installed.  
 [Download Python here](https://www.python.org/downloads/)
 
-### 2. Create and Activate a Virtual Environment
+### 2. Open the Project in Your Code Editor
 
-From your `backend/` folder:
+We recommend using [Visual Studio Code (VS Code)](https://code.visualstudio.com/) for the best experience.
+
+1. Launch VS Code (or your preferred editor).
+2. Open the cloned project folder (`Ocpm2-extension`).
+
+
+### 3. Create and Activate a Virtual Environment
+
+In your terminal go to your `backend/` folder by the command:
+
+```bash
+cd backend
+```
+Then run:
 
 ```bash
 python -m venv venv
@@ -68,7 +99,7 @@ Activate the virtual environment:
 
 You should now see your prompt prefixed with `(venv)`.
 
-### 3. Install Dependencies
+### 4. Install Dependencies
 
 Inside your virtual environment, run:
 
@@ -76,7 +107,7 @@ Inside your virtual environment, run:
 pip install -r requirements.txt
 ```
 
-### 4. Set Environment Variables
+### 5. Set Environment Variables
 
 - **Windows PowerShell:**
   ```powershell
@@ -89,7 +120,7 @@ pip install -r requirements.txt
   export FLASK_DEBUG=1     # Optional for debug mode
   ```
 
-### 5. Run the Flask Application
+### 6. Run the Flask Application
 
 ```bash
 flask run

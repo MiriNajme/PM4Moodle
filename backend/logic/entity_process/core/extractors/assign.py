@@ -437,7 +437,11 @@ class Assign(Base):
 
         if id_ in ids and ids[id_] is False and is_just_completed_by_view:
             ids[id_] = True
-
+            print(
+                "*** Assign -- ",
+                self.object_type.value.name,
+                EventType.COMPLETED.value.name,
+            )
             result["types"] = [
                 get_module_event_type_name(self.object_type, EventType.VIEWED),
                 f"{get_module_event_type_name(

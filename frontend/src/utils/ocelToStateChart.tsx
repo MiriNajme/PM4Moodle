@@ -99,9 +99,19 @@ export function ocelToFullRelationStateChart(
           const key = `${seq[i]}->${seq[i + 1]}`;
           transitionsMap.set(key, (transitionsMap.get(key) ?? 0) + 1);
         }
+        // // Optionally connect Start/End
+        if (seq.length) {
+          // Start -> first
+          const startKey = `Start->${seq[0]}`;
+          transitionsMap.set(startKey, (transitionsMap.get(startKey) ?? 0) + 1);
+          // last -> End
+          const endKey = `${seq[seq.length - 1]}->End`;
+          transitionsMap.set(endKey, (transitionsMap.get(endKey) ?? 0) + 1);
+        }
       }
 
-      const states = [...Array.from(statesSet)];
+      // Build arrays for state chart
+      const states = ["Start", ...Array.from(statesSet), "End"];
       const transitions: Transition[] = Array.from(
         transitionsMap.entries()
       ).map(([key, count]) => {

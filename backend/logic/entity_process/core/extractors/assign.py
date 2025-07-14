@@ -444,9 +444,7 @@ class Assign(Base):
             )
             result["types"] = [
                 get_module_event_type_name(self.object_type, EventType.VIEWED),
-                f"{get_module_event_type_name(
-                    self.object_type, EventType.COMPLETED
-                )}_automatic",
+                f"{get_module_event_type_name(self.object_type, EventType.COMPLETED)}_automatic",
             ]
 
             qualifier = "Viewed and completed by user"
@@ -658,7 +656,7 @@ class Assign(Base):
 
         attributes = build_attributes(event, self.related_event_columns["log"])
         result = {
-            "id": f"evt_assign_{type_abbr}_{event["id"]}",
+            "id": f'evt_assign_{type_abbr}_{event["id"]}',
             "type": event_type,
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
@@ -775,7 +773,7 @@ class Assign(Base):
 
         attributes = build_attributes(event, self.related_event_columns["log"])
         result = {
-            "id": f"evt_assign_{type_abbr}_{event["id"]}",
+            "id": f'evt_assign_{type_abbr}_{event["id"]}',
             "type": event_type,
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
@@ -849,7 +847,7 @@ class Assign(Base):
         attributes = build_attributes(event, self.related_event_columns["log"])
 
         result = {
-            "id": f"evt_assign_edit_submit_{event["id"]}",
+            "id": f'evt_assign_edit_submit_{event["id"]}',
             "type": "edit_assign_submission",
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
@@ -913,7 +911,7 @@ class Assign(Base):
         )
 
         result = {
-            "id": f"evt_assign_remove_submit_{event["id"]}",
+            "id": f'evt_assign_remove_submit_{event["id"]}',
             "type": "remove_assign_submission",
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
@@ -970,7 +968,7 @@ class Assign(Base):
         attributes = build_attributes(event, self.related_event_columns["log"])
 
         result = {
-            "id": f"{event_qualifier}_grade_{event["id"]}",
+            "id": f'{event_qualifier}_grade_{event["id"]}',
             "type": f"{event_type.value.name}_grade",
             "time": format_date(event["timecreated"]),
             "attributes": attributes,

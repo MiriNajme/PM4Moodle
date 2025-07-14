@@ -229,9 +229,7 @@ class Base(ABC):
 
             result["types"] = [
                 get_module_event_type_name(self.object_type, EventType.VIEWED),
-                f"{get_module_event_type_name(
-                    self.object_type, EventType.COMPLETED
-                )}_automatic",
+                f"{get_module_event_type_name(self.object_type, EventType.COMPLETED)}_automatic",
             ]
 
             qualifier = "Viewed and completed by user"

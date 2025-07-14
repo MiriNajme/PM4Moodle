@@ -797,7 +797,7 @@ class Forum(Base):
                 attributes.append({"name": "grade", "value": final_grade})
 
         result = {
-            "id": f"{event_qualifier}_{event["id"]}",
+            "id": f'{event_qualifier}_{event["id"]}',
             "type": f"{event_type.value.name}",
             "time": format_date(event["timecreated"]),
             "attributes": attributes,

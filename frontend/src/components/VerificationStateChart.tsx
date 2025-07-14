@@ -41,9 +41,8 @@ export const VerificationStateChart: React.FC = () => {
             <Tabs.Content key={module} value={module}>
               <div className='p-4 flex flex-col gap-2'>
                 <div className='w-full h-[500px] flex items-center justify-center'>
-                  {chartData &&
-                  chartData.states &&
-                  chartData.states.length > 0 ? (
+                  {chartData?.states?.length > 2 ? (
+                    // By default it has 2 points, Start and End
                     <StateChart chartData={chartData} />
                   ) : (
                     <span className='text-gray-400'>

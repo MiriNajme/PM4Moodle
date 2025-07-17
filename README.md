@@ -146,7 +146,7 @@ The frontend requires **Node.js**.
 
 ### 1. Install Node.js
 
-Download and install Node.js from the [official website](https://nodejs.org/).
+Download and install Node.js from the [official website](https://nodejs.org/en/download).
 
 ### 2. Install Frontend Dependencies
 

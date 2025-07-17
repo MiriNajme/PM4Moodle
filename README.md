@@ -153,7 +153,7 @@ Download and install Node.js from the [official website](https://nodejs.org/en/d
 Navigate to the `frontend/` folder and run:
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
 
 ### 3. Start the Frontend Development Server

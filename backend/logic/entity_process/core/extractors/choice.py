@@ -56,20 +56,6 @@ class Choice(Base):
         if "deleted_answer" in events:
             self.add_delete_choice_answer_events()
 
-    def add_complete_events(self):
-        # manually completed
-        super().add_complete_events()
-
-        # automatically completed
-        filter_conditions = []
-
-        events = self.fetch_completed_events(2, filter_conditions)
-        if events:
-            for event in events:
-                converted = self.get_completed_automatically_choice_event_object(event)
-                if converted:
-                    self.ocel_event_log["events"].append(converted)
-
     def add_create_choice_answer_events(self):
         events = self.fetch_choice_answer_events("created")
         if events:
@@ -224,7 +210,7 @@ class Choice(Base):
                 get_formatted_relationship(
                     ObjectEnum.USER,
                     event["userid"],
-                    "Completed by user",
+                    "Created answer by user",
                 ),
                 get_formatted_relationship(
                     ObjectEnum.OPTION,

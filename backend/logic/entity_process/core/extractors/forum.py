@@ -232,7 +232,7 @@ class Forum(Base):
     def add_grade_rate_events(self):
         object_ids = []
         events = self.fetch_grade_events()
-        # first objectid is set others are update
+        
         if events:
             for event in events:
                 if event["objectid"] in object_ids:

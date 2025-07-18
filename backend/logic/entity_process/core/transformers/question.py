@@ -38,7 +38,6 @@ class Question(Base):
     def get_relationship(self, row):
         relationships = super().get_relationship(row)
 
-        # Always related: Answers and Hints
         self.append_relationships(
             ObjectEnum.QUESTION_ANSWER,
             self.fetch_answers(row["id"]),
@@ -55,7 +54,7 @@ class Question(Base):
 
         qtype = row["qtype"]
         qtype_qualifier = f"Is a {qtype}"
-        # Type-based relationships
+        
         if qtype == "multichoice":
             self.append_relationships(
                 ObjectEnum.MULTI_CHOICE_QUESTION,

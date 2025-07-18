@@ -1,5 +1,4 @@
 import copy
-# from app import write_ocel_to_file
 from logic.utils.ocel_tools import write_ocel_to_file
 
 def convert_objects(ocel_json):

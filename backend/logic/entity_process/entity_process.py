@@ -110,16 +110,6 @@ class EntityProcess:
         )
         self.related_event_columns["task_adhoc"] = task_adhoc_attributes
 
-        CourseModuleCompletion = (
-            self.db_service.Base.classes.mdl_course_modules_completion
-        )
-        course_module_completion_attributes = (
-            self.db_service.get_column_names_and_types(CourseModuleCompletion.__table__)
-        )
-        self.related_event_columns["course_module_completion"] = (
-            course_module_completion_attributes
-        )
-
         QuizAttempt = self.db_service.Base.classes.mdl_quiz_attempts
         quiz_attempt_attributes = self.db_service.get_column_names_and_types(
             QuizAttempt.__table__

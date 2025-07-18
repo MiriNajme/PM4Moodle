@@ -15,7 +15,6 @@ class Base(ABC):
         self.has_relationships = None
         self.has_relation_to_calendar_events = True
 
-    # Main method to be called for processing
     def transform(self):
         records = self.db_service.query_object(self.object_class, sort_by=self.sort_by)
 

@@ -99,7 +99,7 @@ export function ocelToFullRelationStateChart(
           const key = `${seq[i]}->${seq[i + 1]}`;
           transitionsMap.set(key, (transitionsMap.get(key) ?? 0) + 1);
         }
-        // // Optionally connect Start/End
+        
         if (seq.length) {
           // Start -> first
           const startKey = `Start->${seq[0]}`;
@@ -110,7 +110,6 @@ export function ocelToFullRelationStateChart(
         }
       }
 
-      // Build arrays for state chart
       const states = ["Start", ...Array.from(statesSet), "End"];
       const transitions: Transition[] = Array.from(
         transitionsMap.entries()

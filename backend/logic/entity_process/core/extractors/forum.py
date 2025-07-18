@@ -66,9 +66,6 @@ class Forum(Base):
         if "view_forum" in events:
             self.add_view_events()
 
-        if "complete_forum_manually" in events or "complete_forum_automatic" in events:
-            self.add_complete_events()
-
         if "subscribe_to_forum" in events:
             self.subscribe_to_forum_events()
 

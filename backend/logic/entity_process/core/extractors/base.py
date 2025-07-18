@@ -27,8 +27,7 @@ class Base(ABC):
         self.has_view_events = False
         self.has_course_relation = False
         self.deleted_items = {}
-        self.view_filter_conditions = None
-
+        
         self.CourseModule = self.db_service.Base.classes.mdl_course_modules
         self.Calendar_Event = self.db_service.Base.classes.mdl_event
         self.Log = self.db_service.Base.classes.mdl_logstore_standard_log
@@ -42,8 +41,6 @@ class Base(ABC):
 
         if self.has_view_events:
             self.add_view_events()
-
-        self.add_complete_events()
 
     def extractBy(self, events: list = None):
         if not events:
@@ -103,15 +100,6 @@ class Base(ABC):
         if events:
             for event in events:
                 list_of_objects.append(self.get_deleted_module_event_object(event))
-
-        self.ocel_event_log["events"].extend(list_of_objects)
-
-    def add_complete_events(self):
-        list_of_objects = []
-        events = self.fetch_completed_events()
-        if events:
-            for event in events:
-                list_of_objects.append(self.get_completed_module_event_object(event))
 
         self.ocel_event_log["events"].extend(list_of_objects)
 
@@ -198,19 +186,13 @@ class Base(ABC):
 
     def process_viewed_events(self, events):
         result = []
-        ids = {}
-        course_modules = self.fetch_course_modules_by_completion_setting(
-            2, self.object_type.value.module_id, self.view_filter_conditions
-        )
-        if course_modules:
-            ids = {course_module["instance"]: False for course_module in course_modules}
-
+        
         for event in events:
-            result.append(self.get_viewed_event_object(event, ids))
-
+            result.append(self.get_viewed_event_object(event))
+        
         return result
 
-    def get_viewed_event_object(self, event, ids):
+    def get_viewed_event_object(self, event):
         attributes = build_attributes(event, self.related_event_columns["log"])
         relationships = []
         id = event["objectid"]
@@ -223,32 +205,6 @@ class Base(ABC):
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
-
-        if id in ids and not ids[id]:
-            ids[id] = True
-
-            result["types"] = [
-                get_module_event_type_name(self.object_type, EventType.VIEWED),
-                f"{get_module_event_type_name(self.object_type, EventType.COMPLETED)}_automatic",
-            ]
-
-            qualifier = "Viewed and completed by user"
-            rule_filters = [
-                {"name": "must_be_viewed", "value": 1},
-                {"name": "must_be_submitted", "value": 0},
-                {"name": "must_be_graded", "value": None},
-                {"name": "must_be_passed", "value": 0},
-            ]
-            rules = self.get_rule_by_filters(rule_filters)
-            if rules:
-                for rule in rules:
-                    relationships.append(
-                        get_formatted_relationship(
-                            ObjectEnum.COMPLETION_RULE,
-                            rule["id"],
-                            "Completed according to",
-                        )
-                    )
 
         relationships.append(
             get_formatted_relationship(
@@ -340,59 +296,6 @@ class Base(ABC):
 
         return result
 
-    def get_completed_module_event_object(self, event):
-        attributes = build_attributes(
-            event, self.related_event_columns["course_module_completion"]
-        )
-        result = {
-            "id": get_formatted_event_id(
-                EventType.COMPLETED, self.object_type, event["id"]
-            ),
-            "type": f"{get_module_event_type_name(self.object_type, EventType.COMPLETED)}_manually",
-            "time": format_date(event["timemodified"]),
-            "attributes": attributes,
-        }
-
-        # region RELATIONSHIPS
-        relationships = [
-            get_formatted_relationship(
-                self.object_type,
-                event[f"{self.object_type.value.name}id"],
-                f"{EventType.COMPLETED.value.qualifier} {self.object_type.value.name}",
-            ),
-            get_formatted_relationship(
-                ObjectEnum.USER,
-                event["userid"],
-                "Completed by user",
-            ),
-        ]
-
-        if self.has_course_relation:
-            course_relationships = self.get_course_relation(
-                EventType.COMPLETED,
-                event[f"{self.object_type.value.name}id"],
-            )
-            if course_relationships:
-                relationships.append(course_relationships)
-
-        rule_filters = [
-            {"name": "is_manual", "value": 1},
-        ]
-        rules = self.get_rule_by_filters(rule_filters)
-
-        if rules:
-            for rule in rules:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.COMPLETION_RULE, rule["id"], "Completed according to"
-                    )
-                )
-
-        result["relationships"] = relationships
-        # endregion RELATIONSHIPS
-
-        return result
-
     # endregion Event object construction
 
     # region Data fetching helpers
@@ -437,38 +340,6 @@ class Base(ABC):
         )
         return events if events else None
 
-    def fetch_completed_events(self, completion=1, extra_condition=None):
-        events = []
-        course_modules = self.fetch_course_modules_by_completion_setting(
-            completion, self.object_type.value.module_id, extra_condition
-        )
-
-        if course_modules:
-            course_module_ids = [
-                course_module["id"] for course_module in course_modules
-            ]
-            course_module_instance_map = {
-                course_module["id"]: course_module["instance"]
-                for course_module in course_modules
-            }
-
-            event_filter_conditions = [
-                self.CourseModuleCompletion.completionstate == completion,
-                self.CourseModuleCompletion.coursemoduleid.in_(course_module_ids),
-            ]
-            events = self.db_service.query_object(
-                self.CourseModuleCompletion,
-                event_filter_conditions,
-                sort_by=[("timemodified", "asc")],
-            )
-
-            for event in events:
-                event[f"{self.object_type.value.name}id"] = (
-                    course_module_instance_map.get(event["coursemoduleid"])
-                )
-
-        return events if events else None
-
     def fetch_module_by_id(self, module_id):
         filter_conditions = [self.object_class.id == module_id]
         rows = self.db_service.query_object(self.object_class, filter_conditions)
@@ -481,22 +352,6 @@ class Base(ABC):
         ]
         events = self.db_service.query_object(self.Calendar_Event, filter_conditions)
         return events if events else None
-
-    def fetch_course_modules_by_completion_setting(
-        self, completion, module, extra_condition=None
-    ):
-        filter_conditions = [
-            self.CourseModule.completion == completion,
-            self.CourseModule.module == module,
-        ]
-
-        if extra_condition:
-            filter_conditions.extend(extra_condition)
-
-        course_modules = self.db_service.query_object(
-            self.CourseModule, filter_conditions
-        )
-        return course_modules if course_modules else None
 
     def fetch_course_module_tag_instances(self, course_module_id):
         added_tags = self.fetch_from_log_event(
@@ -529,231 +384,6 @@ class Base(ABC):
             self.Log, filter_conditions, sort_by=sort_by
         )
         return result
-
-    def get_rule_by_filters(self, filters):
-        return [
-            rule
-            for rule in self.get_rules()
-            if all(
-                any(
-                    attr["name"] == f["name"] and attr["value"] == f["value"]
-                    for attr in rule["attributes"]
-                )
-                for f in filters
-            )
-        ]
-
-    def get_rules(self):
-        return [
-            {
-                "id": get_object_key(ObjectEnum.COMPLETION_RULE, 1),
-                "type": ObjectEnum.COMPLETION_RULE.value.name,
-                "attributes": [
-                    {
-                        "name": "id",
-                        "value": get_object_key(ObjectEnum.COMPLETION_RULE, 1),
-                    },
-                    {"name": "is_manual", "value": 1},
-                    {"name": "must_be_viewed", "value": 0},
-                    {"name": "must_be_submitted", "value": 0},
-                    {"name": "must_be_graded", "value": None},
-                    {"name": "must_be_passed", "value": 0},
-                    {"name": "make_a_choice", "value": 0},
-                ],
-            },
-            {
-                "id": get_object_key(ObjectEnum.COMPLETION_RULE, 2),
-                "type": ObjectEnum.COMPLETION_RULE.value.name,
-                "attributes": [
-                    {
-                        "name": "id",
-                        "value": get_object_key(ObjectEnum.COMPLETION_RULE, 2),
-                    },
-                    {"name": "is_manual", "value": 0},
-                    {"name": "must_be_viewed", "value": 1},
-                    {"name": "must_be_submitted", "value": 0},
-                    {"name": "must_be_graded", "value": None},
-                    {"name": "must_be_passed", "value": 0},
-                    {"name": "make_a_choice", "value": 0},
-                ],
-            },
-            {
-                "id": get_object_key(ObjectEnum.COMPLETION_RULE, 3),
-                "type": ObjectEnum.COMPLETION_RULE.value.name,
-                "attributes": [
-                    {
-                        "name": "id",
-                        "value": get_object_key(ObjectEnum.COMPLETION_RULE, 3),
-                    },
-                    {"name": "is_manual", "value": 0},
-                    {"name": "must_be_viewed", "value": 0},
-                    {"name": "must_be_submitted", "value": 1},
-                    {"name": "must_be_graded", "value": None},
-                    {"name": "must_be_passed", "value": 0},
-                    {"name": "make_a_choice", "value": 0},
-                ],
-            },
-            {
-                "id": get_object_key(ObjectEnum.COMPLETION_RULE, 4),
-                "type": ObjectEnum.COMPLETION_RULE.value.name,
-                "attributes": [
-                    {
-                        "name": "id",
-                        "value": get_object_key(ObjectEnum.COMPLETION_RULE, 4),
-                    },
-                    {"name": "is_manual", "value": 0},
-                    {"name": "must_be_viewed", "value": 0},
-                    {"name": "must_be_submitted", "value": 0},
-                    {"name": "must_be_graded", "value": 0},
-                    {"name": "must_be_passed", "value": 0},
-                    {"name": "make_a_choice", "value": 0},
-                ],
-            },
-            {
-                "id": get_object_key(ObjectEnum.COMPLETION_RULE, 5),
-                "type": ObjectEnum.COMPLETION_RULE.value.name,
-                "attributes": [
-                    {
-                        "name": "id",
-                        "value": get_object_key(ObjectEnum.COMPLETION_RULE, 5),
-                    },
-                    {"name": "is_manual", "value": 0},
-                    {"name": "must_be_viewed", "value": 0},
-                    {"name": "must_be_submitted", "value": 0},
-                    {"name": "must_be_graded", "value": 0},
-                    {"name": "must_be_passed", "value": 1},
-                    {"name": "make_a_choice", "value": 0},
-                ],
-            },
-            {
-                "id": get_object_key(ObjectEnum.COMPLETION_RULE, 6),
-                "type": ObjectEnum.COMPLETION_RULE.value.name,
-                "attributes": [
-                    {
-                        "name": "id",
-                        "value": get_object_key(ObjectEnum.COMPLETION_RULE, 6),
-                    },
-                    {"name": "is_manual", "value": 0},
-                    {"name": "must_be_viewed", "value": 1},
-                    {"name": "must_be_submitted", "value": 1},
-                    {"name": "must_be_graded", "value": None},
-                    {"name": "must_be_passed", "value": 0},
-                    {"name": "make_a_choice", "value": 0},
-                ],
-            },
-            {
-                "id": get_object_key(ObjectEnum.COMPLETION_RULE, 7),
-                "type": ObjectEnum.COMPLETION_RULE.value.name,
-                "attributes": [
-                    {
-                        "name": "id",
-                        "value": get_object_key(ObjectEnum.COMPLETION_RULE, 7),
-                    },
-                    {"name": "is_manual", "value": 0},
-                    {"name": "must_be_viewed", "value": 1},
-                    {"name": "must_be_submitted", "value": 0},
-                    {"name": "must_be_graded", "value": 0},
-                    {"name": "must_be_passed", "value": 0},
-                    {"name": "make_a_choice", "value": 0},
-                ],
-            },
-            {
-                "id": get_object_key(ObjectEnum.COMPLETION_RULE, 8),
-                "type": ObjectEnum.COMPLETION_RULE.value.name,
-                "attributes": [
-                    {
-                        "name": "id",
-                        "value": get_object_key(ObjectEnum.COMPLETION_RULE, 8),
-                    },
-                    {"name": "is_manual", "value": 0},
-                    {"name": "must_be_viewed", "value": 1},
-                    {"name": "must_be_submitted", "value": 0},
-                    {"name": "must_be_graded", "value": 0},
-                    {"name": "must_be_passed", "value": 1},
-                    {"name": "make_a_choice", "value": 0},
-                ],
-            },
-            {
-                "id": get_object_key(ObjectEnum.COMPLETION_RULE, 9),
-                "type": ObjectEnum.COMPLETION_RULE.value.name,
-                "attributes": [
-                    {
-                        "name": "id",
-                        "value": get_object_key(ObjectEnum.COMPLETION_RULE, 9),
-                    },
-                    {"name": "is_manual", "value": 0},
-                    {"name": "must_be_viewed", "value": 0},
-                    {"name": "must_be_submitted", "value": 1},
-                    {"name": "must_be_graded", "value": 0},
-                    {"name": "must_be_passed", "value": 0},
-                    {"name": "make_a_choice", "value": 0},
-                ],
-            },
-            {
-                "id": get_object_key(ObjectEnum.COMPLETION_RULE, 10),
-                "type": ObjectEnum.COMPLETION_RULE.value.name,
-                "attributes": [
-                    {
-                        "name": "id",
-                        "value": get_object_key(ObjectEnum.COMPLETION_RULE, 10),
-                    },
-                    {"name": "is_manual", "value": 0},
-                    {"name": "must_be_viewed", "value": 0},
-                    {"name": "must_be_submitted", "value": 1},
-                    {"name": "must_be_graded", "value": 0},
-                    {"name": "must_be_passed", "value": 1},
-                    {"name": "make_a_choice", "value": 0},
-                ],
-            },
-            {
-                "id": get_object_key(ObjectEnum.COMPLETION_RULE, 11),
-                "type": ObjectEnum.COMPLETION_RULE.value.name,
-                "attributes": [
-                    {
-                        "name": "id",
-                        "value": get_object_key(ObjectEnum.COMPLETION_RULE, 11),
-                    },
-                    {"name": "is_manual", "value": 0},
-                    {"name": "must_be_viewed", "value": 1},
-                    {"name": "must_be_submitted", "value": 1},
-                    {"name": "must_be_graded", "value": 0},
-                    {"name": "must_be_passed", "value": 1},
-                    {"name": "make_a_choice", "value": 0},
-                ],
-            },
-            {
-                "id": get_object_key(ObjectEnum.COMPLETION_RULE, 12),
-                "type": ObjectEnum.COMPLETION_RULE.value.name,
-                "attributes": [
-                    {
-                        "name": "id",
-                        "value": get_object_key(ObjectEnum.COMPLETION_RULE, 12),
-                    },
-                    {"name": "is_manual", "value": 0},
-                    {"name": "must_be_viewed", "value": 0},
-                    {"name": "must_be_submitted", "value": 0},
-                    {"name": "must_be_graded", "value": None},
-                    {"name": "must_be_passed", "value": 0},
-                    {"name": "make_a_choice", "value": 1},
-                ],
-            },
-            {
-                "id": get_object_key(ObjectEnum.COMPLETION_RULE, 13),
-                "type": ObjectEnum.COMPLETION_RULE.value.name,
-                "attributes": [
-                    {
-                        "name": "id",
-                        "value": get_object_key(ObjectEnum.COMPLETION_RULE, 13),
-                    },
-                    {"name": "is_manual", "value": 0},
-                    {"name": "must_be_viewed", "value": 1},
-                    {"name": "must_be_submitted", "value": 0},
-                    {"name": "must_be_graded", "value": None},
-                    {"name": "must_be_passed", "value": 0},
-                    {"name": "make_a_choice", "value": 1},
-                ],
-            },
-        ]
 
     # endregion Data fetching helpers
 

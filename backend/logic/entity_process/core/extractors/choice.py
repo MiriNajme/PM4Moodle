@@ -27,12 +27,7 @@ class Choice(Base):
         self.object_class = self.db_service.Base.classes.mdl_choice
         self.has_view_events = True
         self.has_course_relation = True
-        self.view_filter_conditions = [
-            self.CourseModule.completionview == 1,
-            self.CourseModule.completion == 2,
-            self.CourseModule.module == 5,
-        ]
-
+        
     def extract(self):
         super().extract()
         self.add_create_choice_answer_events()
@@ -54,12 +49,6 @@ class Choice(Base):
 
         if "view_choice" in events:
             self.add_view_events()
-
-        if (
-            "complete_choice_manually" in events
-            or "complete_choice_automatic" in events
-        ):
-            self.add_complete_events()
 
         if "created_answer" in events:
             self.add_create_choice_answer_events()
@@ -97,7 +86,7 @@ class Choice(Base):
                     self.get_deleted_choice_answer_event_object(event)
                 )
 
-    def get_viewed_event_object(self, event, ids):
+    def get_viewed_event_object(self, event):
         attributes = build_attributes(event, self.related_event_columns["log"])
         relationships = []
         id = event["objectid"]
@@ -111,35 +100,7 @@ class Choice(Base):
             "attributes": attributes,
         }
         choice = self.fetch_module_by_id(id)
-        is_just_completed_by_view = False
-        if choice is not None and choice["completionsubmit"] == 0:
-            is_just_completed_by_view = True
-
-        if id in ids and ids[id] is False and is_just_completed_by_view:
-            ids[id] = True
-
-            result["types"] = [
-                get_module_event_type_name(self.object_type, EventType.VIEWED),
-                f"{get_module_event_type_name(self.object_type, EventType.COMPLETED)}_automatic",
-            ]
-
-            qualifier = "Viewed and completed by user"
-            rule_filters = [
-                {"name": "must_be_viewed", "value": 1},
-                {"name": "make_a_choice", "value": 0},
-            ]
-            rules = self.get_rule_by_filters(rule_filters)
-
-            if rules:
-                for rule in rules:
-                    relationships.append(
-                        get_formatted_relationship(
-                            ObjectEnum.COMPLETION_RULE,
-                            rule["id"],
-                            "Completed according to",
-                        )
-                    )
-
+        
         # region RELATIONSHIPS
         relationships.append(
             get_formatted_relationship(
@@ -235,117 +196,6 @@ class Choice(Base):
 
         if relationships:
             result["relationships"] = relationships
-        # endregion RELATIONSHIPS
-
-        return result
-
-    def get_completed_module_event_object(self, event):
-        attributes = build_attributes(
-            event, self.related_event_columns["course_module_completion"]
-        )
-        result = {
-            "id": get_formatted_event_id(
-                EventType.COMPLETED, self.object_type, event["id"]
-            ),
-            "type": f"{get_module_event_type_name(self.object_type, EventType.COMPLETED)}_manually",
-            "time": format_date(event["timemodified"]),
-            "attributes": attributes,
-        }
-
-        # region RELATIONSHIPS
-        relationships = [
-            get_formatted_relationship(
-                self.object_type,
-                event[f"{self.object_type.value.name}id"],
-                f"{EventType.COMPLETED.value.qualifier} {self.object_type.value.name}",
-            ),
-            get_formatted_relationship(
-                ObjectEnum.USER,
-                event["userid"],
-                "Completed by user",
-            ),
-        ]
-
-        choice = self.fetch_module_by_id(event["choiceid"])
-        if choice:
-            course_relationships = self.get_course_relation(
-                EventType.COMPLETED, choice["course"]
-            )
-            if course_relationships:
-                relationships.append(course_relationships)
-
-        rule_filters = [
-            {"name": "is_manual", "value": 1},
-        ]
-        rules = self.get_rule_by_filters(rule_filters)
-
-        if rules:
-            for rule in rules:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.COMPLETION_RULE, rule["id"], "with completion_rule"
-                    )
-                )
-
-        result["relationships"] = relationships
-        # endregion RELATIONSHIPS
-
-        return result
-
-    def get_completed_automatically_choice_event_object(self, event):
-        choice = self.fetch_module_by_id(event["choiceid"])
-        course_module = self.fetch_course_module_by_id(event["coursemoduleid"])
-        if choice is None or (
-            choice["completionsubmit"] == 0 and course_module["completionview"] == 1
-        ):
-            return None
-
-        attributes = build_attributes(
-            event, self.related_event_columns["course_module_completion"]
-        )
-        result = {
-            "id": get_formatted_event_id(
-                EventType.COMPLETED, self.object_type, event["id"]
-            ),
-            "type": f"{get_module_event_type_name(self.object_type, EventType.COMPLETED)}_automatic",
-            "time": format_date(event["timemodified"]),
-            "attributes": attributes,
-        }
-
-        # region RELATIONSHIPS
-        relationships = [
-            get_formatted_relationship(
-                self.object_type,
-                event[f"{self.object_type.value.name}id"],
-                f"{EventType.COMPLETED.value.qualifier} {self.object_type.value.name}",
-            ),
-            get_formatted_relationship(
-                ObjectEnum.USER,
-                event["userid"],
-                "Completed by user",
-            ),
-            get_formatted_relationship(
-                ObjectEnum.COURSE,
-                choice["course"],
-                "Completed in course",
-            ),
-        ]
-
-        rule_filters = [
-            {"name": "make_a_choice", "value": choice["completionsubmit"]},
-            {"name": "must_be_viewed", "value": course_module["completionview"]},
-        ]
-        rules = self.get_rule_by_filters(rule_filters)
-
-        if rules:
-            for rule in rules:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.COMPLETION_RULE, rule["id"], "Completed according to"
-                    )
-                )
-
-        result["relationships"] = relationships
         # endregion RELATIONSHIPS
 
         return result

@@ -15,8 +15,7 @@ class EventType(Enum):
     IMPORTED = EventValue("imported", "imp", "import", "Imports")
     UPDATED = EventValue("updated", "upd", "update", "Updates")
     VIEWED = EventValue("viewed", "vew", "view", "Views")
-    COMPLETED = EventValue("completed", "cpt", "complete", "Completes")
-
+    
     # Folder events
     DOWNLOADED = EventValue("downloaded", "dld", "download", "Downloaded")
 

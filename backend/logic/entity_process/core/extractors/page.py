@@ -33,6 +33,3 @@ class Page(Base):
 
         if "view_page" in events:
             self.add_view_events()
-
-        if "complete_page_manually" in events or "complete_page_automatic" in events:
-            self.add_complete_events()

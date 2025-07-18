@@ -36,12 +36,8 @@ class File(Base):
         if "view_file" in events:
             self.add_view_events()
 
-        if "complete_file_manually" in events or \
-            "complete_file_automatic" in events:
-            self.add_complete_events()
-
-    def get_viewed_event_object(self, event, ids):
-        result = super().get_viewed_event_object(event, ids)
+    def get_viewed_event_object(self, event):
+        result = super().get_viewed_event_object(event)
 
         course_relationships = self.get_course_relation(
             EventType.VIEWED, event["objectid"]

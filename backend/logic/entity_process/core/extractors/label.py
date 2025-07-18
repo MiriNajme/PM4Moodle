@@ -30,6 +30,3 @@ class Label(Base):
 
         if "update_label" in events:
             self.add_update_events()
-
-        if "complete_label_manually" in events or "complete_label_automatic" in events:
-            self.add_complete_events()

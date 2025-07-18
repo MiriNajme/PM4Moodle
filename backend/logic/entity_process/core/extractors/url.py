@@ -33,6 +33,3 @@ class Url(Base):
 
         if "view_url" in events:
             self.add_view_events()
-
-        if "complete_url_manually" in events or "complete_url_automatic" in events:
-            self.add_complete_events()

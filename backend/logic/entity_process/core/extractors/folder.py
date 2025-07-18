@@ -46,12 +46,6 @@ class Folder(Base):
         if "view_folder" in events:
             self.add_view_events()
 
-        if (
-            "complete_folder_manually" in events
-            or "complete_folder_automatic" in events
-        ):
-            self.add_complete_events()
-
         if "download_folder" in events:
             self.add_download_events()
 

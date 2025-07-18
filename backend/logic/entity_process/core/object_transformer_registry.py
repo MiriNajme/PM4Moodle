@@ -1,6 +1,3 @@
-from logic.entity_process.core.transformers.completion_rule import (
-    CompletionRule,
-)
 from logic.entity_process.core.transformers.calendar_event import (
     CalendarEvent,
 )
@@ -76,7 +73,6 @@ class ObjectTransformerRegistry:
         self.ocel_event_log = ocel_event_log
 
         self.transformer = [
-            CompletionRule(db_service, related_object_columns, ocel_event_log),
             CalendarEvent(db_service, related_object_columns, ocel_event_log),
             ChoiceOption(db_service, related_object_columns, ocel_event_log),
             Course(db_service, related_object_columns, ocel_event_log),
@@ -105,7 +101,6 @@ class ObjectTransformerRegistry:
             QuestionBankEntry(db_service, related_object_columns, ocel_event_log),
             QuestionDataset(db_service, related_object_columns, ocel_event_log),
             DatasetDefinition(db_service, related_object_columns, ocel_event_log),
-            # QuestionSlot(db_service, related_object_columns, ocel_event_log),
             MultiChoiceQustion(db_service, related_object_columns, ocel_event_log),
             TrueFalseQustion(db_service, related_object_columns, ocel_event_log),
             MatchQuestionSubQuestion(

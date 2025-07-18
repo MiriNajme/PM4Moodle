@@ -83,15 +83,6 @@ class EntityProcess:
         ]
         result[ObjectEnum.USER.value.name] = user_attributes
 
-        result[ObjectEnum.COMPLETION_RULE.value.name] = [
-            {"name": "id", "type": "string"},
-            {"name": "is_manual", "type": "integer"},
-            {"name": "must_be_viewed", "type": "integer"},
-            {"name": "must_be_submitted", "type": "integer"},
-            {"name": "must_be_graded", "type": "integer"},
-            {"name": "must_be_passed", "type": "integer"},
-        ]
-
         return result
 
     def create_objects_type(self, objects: list = None):
@@ -152,116 +143,76 @@ class EntityProcess:
                 "name": "update_grade",
                 "attributes": grade_attributes,
             },
+            
             # region ASSIGN
             {"name": "create_assign", "attributes": log_attributes},
             {"name": "import_assign", "attributes": []},
             {"name": "update_assign", "attributes": log_attributes},
             {"name": "delete_assign", "attributes": task_adhoc_attributes},
             {"name": "view_assign", "attributes": log_attributes},
-            {
-                "name": "complete_assign_manually",
-                "attributes": course_module_completion_attributes,
-            },
-            {
-                "name": "complete_assign_automatic",
-                "attributes": course_module_completion_attributes,
-            },
             {"name": "submit_group_assign", "attributes": log_attributes},
             {"name": "submit_individual_assign", "attributes": log_attributes},
-            {"name": "draft_group_assign", "attributes": log_attributes},
-            {"name": "draft_individual_assign", "attributes": log_attributes},
             {"name": "resubmit_group_assign", "attributes": log_attributes},
             {"name": "resubmit_individual_assign", "attributes": log_attributes},
-            {"name": "redraft_group_assign", "attributes": log_attributes},
-            {"name": "redraft_individual_assign", "attributes": log_attributes},
-            {"name": "edit_assign_submission", "attributes": log_attributes},
             {"name": "remove_assign_submission", "attributes": log_attributes},
             # endregion ASSIGN
+            
             # region CHOICE
             {"name": "create_choice", "attributes": log_attributes},
             {"name": "import_choice", "attributes": []},
             {"name": "update_choice", "attributes": log_attributes},
             {"name": "delete_choice", "attributes": task_adhoc_attributes},
             {"name": "view_choice", "attributes": log_attributes},
-            {
-                "name": "complete_choice_manually",
-                "attributes": course_module_completion_attributes,
-            },
-            {"name": "complete_choice_automatic", "attributes": log_attributes},
             {"name": "created_answer", "attributes": log_attributes},
             {"name": "deleted_answer", "attributes": log_attributes},
             # endregion CHOICE
+            
             # region FILE
             {"name": "create_file", "attributes": log_attributes},
             {"name": "import_file", "attributes": []},
             {"name": "update_file", "attributes": log_attributes},
             {"name": "delete_file", "attributes": task_adhoc_attributes},
             {"name": "view_file", "attributes": log_attributes},
-            {
-                "name": "complete_file_manually",
-                "attributes": course_module_completion_attributes,
-            },
-            {"name": "complete_file_automatic", "attributes": log_attributes},
             # endregion FILE
+            
             # region FOLDER
             {"name": "create_folder", "attributes": log_attributes},
             {"name": "import_folder", "attributes": []},
             {"name": "update_folder", "attributes": log_attributes},
             {"name": "delete_folder", "attributes": task_adhoc_attributes},
             {"name": "view_folder", "attributes": log_attributes},
-            {
-                "name": "complete_folder_manually",
-                "attributes": course_module_completion_attributes,
-            },
-            {"name": "complete_folder_automatic", "attributes": log_attributes},
             {"name": "download_folder", "attributes": log_attributes},
             # endregion FOLDER
+            
             # region LABEL
             {"name": "create_label", "attributes": log_attributes},
             {"name": "import_label", "attributes": []},
             {"name": "update_label", "attributes": log_attributes},
             {"name": "delete_label", "attributes": task_adhoc_attributes},
-            {
-                "name": "complete_label_manually",
-                "attributes": course_module_completion_attributes,
-            },
-            {"name": "complete_label_automatic", "attributes": log_attributes},
             # endregion LABEL
+            
             # region PAGE
             {"name": "create_page", "attributes": log_attributes},
             {"name": "import_page", "attributes": []},
             {"name": "update_page", "attributes": log_attributes},
             {"name": "delete_page", "attributes": task_adhoc_attributes},
             {"name": "view_page", "attributes": log_attributes},
-            {
-                "name": "complete_page_manually",
-                "attributes": course_module_completion_attributes,
-            },
-            {"name": "complete_page_automatic", "attributes": log_attributes},
             # endregion PAGE
+            
             # region URL
             {"name": "create_url", "attributes": log_attributes},
             {"name": "import_url", "attributes": []},
             {"name": "update_url", "attributes": log_attributes},
             {"name": "delete_url", "attributes": task_adhoc_attributes},
             {"name": "view_url", "attributes": log_attributes},
-            {
-                "name": "complete_url_manually",
-                "attributes": course_module_completion_attributes,
-            },
-            {"name": "complete_url_automatic", "attributes": log_attributes},
             # endregion URL
+            
             # region FORUM
             {"name": "create_forum", "attributes": log_attributes},
             {"name": "import_forum", "attributes": []},
             {"name": "update_forum", "attributes": log_attributes},
             {"name": "delete_forum", "attributes": task_adhoc_attributes},
             {"name": "view_forum", "attributes": log_attributes},
-            {
-                "name": "complete_forum_manually",
-                "attributes": course_module_completion_attributes,
-            },
-            {"name": "complete_forum_automatic", "attributes": log_attributes},
             {"name": "subscribe_to_forum", "attributes": log_attributes},
             {"name": "unsubscribe_from_forum", "attributes": log_attributes},
             {"name": "add_discussion", "attributes": log_attributes},
@@ -276,17 +227,13 @@ class EntityProcess:
             {"name": "rate_user_forum", "attributes": log_attributes},
             {"name": "update_rate_user_forum", "attributes": log_attributes},
             # endregion FORUM
+            
             # region QUIZ
             {"name": "create_quiz", "attributes": log_attributes},
             {"name": "import_quiz", "attributes": []},
             {"name": "update_quiz", "attributes": log_attributes},
             {"name": "delete_quiz", "attributes": task_adhoc_attributes},
             {"name": "view_quiz", "attributes": log_attributes},
-            {
-                "name": "complete_quiz_manually",
-                "attributes": course_module_completion_attributes,
-            },
-            {"name": "complete_quiz_automatic", "attributes": log_attributes},
             {"name": "create_question", "attributes": log_attributes},
             {"name": "delete_question", "attributes": log_attributes},
             {"name": "add_question_slot", "attributes": log_attributes},
@@ -308,7 +255,6 @@ class EntityProcess:
         if selected is not None:
             modules_map = get_module_event_objects_map()
             objects = set([
-                ObjectEnum.COMPLETION_RULE.value.name,
                 ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.CALENDAR.value.name,

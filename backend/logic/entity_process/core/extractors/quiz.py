@@ -54,9 +54,6 @@ class Quiz(Base):
         if "view_quiz" in events:
             self.add_view_events()
 
-        if "complete_quiz_manually" in events or "complete_quiz_automatic" in events:
-            self.add_complete_events()
-
         if "create_question" in events:
             self.get_question_events(EventType.CREATE_QUESTION)
 

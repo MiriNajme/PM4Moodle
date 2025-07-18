@@ -15,7 +15,7 @@ class EventType(Enum):
     IMPORTED = EventValue("imported", "imp", "import", "Imports")
     UPDATED = EventValue("updated", "upd", "update", "Updates")
     VIEWED = EventValue("viewed", "vew", "view", "Views")
-    
+
     # Folder events
     DOWNLOADED = EventValue("downloaded", "dld", "download", "Downloaded")
 
@@ -23,11 +23,11 @@ class EventType(Enum):
     SET = EventValue("set", "set", "set", "Sets")
 
     # Choice events
-    CREATED_ANSWER = EventValue(
-        "created_answer", "crt_answer", "select_option", "Related to"
+    MAKE_A_CHOICE = EventValue(
+        "make_a_choice", "mak_a_choice", "make_a_choice", "Related to"
     )
-    DELETED_ANSWER = EventValue(
-        "deleted_answer", "del_answer", "remove_selection", "Related to"
+    REMOVE_A_CHOICE = EventValue(
+        "remove_a_choice", "rmv_a_choice", "remove_a_choice", "Related to"
     )
 
     # region Forum events
@@ -84,10 +84,10 @@ class EventType(Enum):
 
     # region QUIZ
     CREATE_QUESTION = EventValue("create_question", "crt_ques", "create", "Creates")
-    DELETE_QUESTION = EventValue(
-        "delete_question", "del_ques", "delete", "Deletes"
+    DELETE_QUESTION = EventValue("delete_question", "del_ques", "delete", "Deletes")
+    ADD_QUESTION_SLOT = EventValue(
+        "add_question_to_quiz", "add_ques_slt", "add", "Adds"
     )
-    ADD_QUESTION_SLOT = EventValue("add_question_to_quiz", "add_ques_slt", "add", "Adds")
     DELETE_QUESTION_SLOT = EventValue(
         "delete_question_from_quiz", "del_ques_slt", "del", "Deletes"
     )

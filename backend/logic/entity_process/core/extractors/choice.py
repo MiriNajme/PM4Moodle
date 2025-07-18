@@ -27,7 +27,7 @@ class Choice(Base):
         self.object_class = self.db_service.Base.classes.mdl_choice
         self.has_view_events = True
         self.has_course_relation = True
-        
+
     def extract(self):
         super().extract()
         self.add_create_choice_answer_events()
@@ -50,10 +50,10 @@ class Choice(Base):
         if "view_choice" in events:
             self.add_view_events()
 
-        if "created_answer" in events:
+        if "make_a_choice" in events:
             self.add_create_choice_answer_events()
 
-        if "deleted_answer" in events:
+        if "remove_a_choice" in events:
             self.add_delete_choice_answer_events()
 
     def add_create_choice_answer_events(self):
@@ -86,7 +86,7 @@ class Choice(Base):
             "attributes": attributes,
         }
         choice = self.fetch_module_by_id(id)
-        
+
         # region RELATIONSHIPS
         relationships.append(
             get_formatted_relationship(
@@ -190,9 +190,9 @@ class Choice(Base):
         attributes = build_attributes(event, self.related_event_columns["log"])
         result = {
             "id": get_formatted_event_id(
-                EventType.CREATED_ANSWER, self.object_type, event["id"]
+                EventType.MAKE_A_CHOICE, self.object_type, event["id"]
             ),
-            "type": EventType.CREATED_ANSWER.value.type,
+            "type": EventType.MAKE_A_CHOICE.value.type,
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
@@ -205,12 +205,12 @@ class Choice(Base):
                 get_formatted_relationship(
                     self.object_type,
                     instance[f"{self.object_type.value.name}id"],
-                    f"{EventType.CREATED_ANSWER.value.qualifier} {self.object_type.value.name}",
+                    f"{EventType.MAKE_A_CHOICE.value.qualifier} {self.object_type.value.name}",
                 ),
                 get_formatted_relationship(
                     ObjectEnum.USER,
                     event["userid"],
-                    "Created answer by user",
+                    "Made a choice by user",
                 ),
                 get_formatted_relationship(
                     ObjectEnum.OPTION,
@@ -255,9 +255,9 @@ class Choice(Base):
         attributes = build_attributes(event, self.related_event_columns["log"])
         result = {
             "id": get_formatted_event_id(
-                EventType.DELETED_ANSWER, self.object_type, event["id"]
+                EventType.REMOVE_A_CHOICE, self.object_type, event["id"]
             ),
-            "type": EventType.DELETED_ANSWER.value.type,
+            "type": EventType.REMOVE_A_CHOICE.value.type,
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
@@ -270,7 +270,7 @@ class Choice(Base):
                 get_formatted_relationship(
                     self.object_type,
                     instance[f"{self.object_type.value.name}id"],
-                    f"{EventType.DELETED_ANSWER.value.qualifier} {self.object_type.value.name}",
+                    f"{EventType.REMOVE_A_CHOICE.value.qualifier} {self.object_type.value.name}",
                 ),
                 get_formatted_relationship(
                     ObjectEnum.OPTION,

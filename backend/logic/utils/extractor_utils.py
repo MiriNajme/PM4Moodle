@@ -56,8 +56,8 @@ def get_module_events_map():
             "update_choice": "Updated",
             "delete_choice": "Deleted",
             "view_choice": "Viewed",
-            "created_answer": "answered",
-            "deleted_answer": "Answer deleted",
+            "make_a_choice": "Made a choice",
+            "remove_a_choice": "Removed a choice",
         },
         ObjectEnum.FILE.value.name: {
             "create_file": "Created",
@@ -103,7 +103,8 @@ def get_module_events_map():
             "subscribe_to_forum": "Subscribed",
             "unsubscribe_from_forum": "Unsubscribed",
             "add_discussion": "Added",
-            "delete_discussion": "Deleted",            "lock_discussion": "Locked",
+            "delete_discussion": "Deleted",
+            "lock_discussion": "Locked",
             "unlock_discussion": "Unlocked",
             "subscribe_to_discussion": "Subscribed",
             "unsubscribe_from_discussion": "Unsubscribed",
@@ -260,8 +261,8 @@ def get_module_event_objects_map():
                 ObjectEnum.OPTION.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.COURSE.value.name,
-            ],           
-            "created_answer": [
+            ],
+            "make_a_choice": [
                 ObjectEnum.CHOICE.value.name,
                 ObjectEnum.OPTION.value.name,
                 ObjectEnum.COURSE_MODULE.value.name,
@@ -269,7 +270,7 @@ def get_module_event_objects_map():
                 ObjectEnum.USER.value.name,
                 ObjectEnum.OPTION.value.name,
             ],
-            "deleted_answer": [
+            "remove_a_choice": [
                 ObjectEnum.CHOICE.value.name,
                 ObjectEnum.OPTION.value.name,
                 ObjectEnum.COURSE_MODULE.value.name,

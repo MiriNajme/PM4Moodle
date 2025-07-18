@@ -1,7 +1,10 @@
-from logic.entity_process.core.object_transformer_registry import ObjectTransformerRegistry
+from logic.entity_process.core.object_transformer_registry import (
+    ObjectTransformerRegistry,
+)
 from logic.entity_process.core.event_extractor_registry import EventExtractorRegistry
 from logic.model.object_enum import ObjectEnum
 from logic.utils.extractor_utils import get_module_event_objects_map
+
 
 class EntityProcess:
     def __init__(self, db_service, file_service, config_service):
@@ -41,9 +44,9 @@ class EntityProcess:
         if module_events is None:
             process_all()
             return
-            
+
         objects, events = self.get_selected_events_and_objects(module_events)
-        
+
         self.create_objects_type(objects)
 
         registry = ObjectTransformerRegistry(
@@ -98,7 +101,7 @@ class EntityProcess:
                     self.ocel_event_log["objectTypes"].append(
                         {"name": obj_name, "attributes": columns}
                     )
-                    
+
     def create_events_type(self, events: list = None):
         Log = self.db_service.Base.classes.mdl_logstore_standard_log
         log_attributes = self.db_service.get_column_names_and_types(Log.__table__)
@@ -133,7 +136,6 @@ class EntityProcess:
                 "name": "update_grade",
                 "attributes": grade_attributes,
             },
-            
             # region ASSIGN
             {"name": "create_assign", "attributes": log_attributes},
             {"name": "import_assign", "attributes": []},
@@ -146,17 +148,15 @@ class EntityProcess:
             {"name": "resubmit_individual_assign", "attributes": log_attributes},
             {"name": "remove_assign_submission", "attributes": log_attributes},
             # endregion ASSIGN
-            
             # region CHOICE
             {"name": "create_choice", "attributes": log_attributes},
             {"name": "import_choice", "attributes": []},
             {"name": "update_choice", "attributes": log_attributes},
             {"name": "delete_choice", "attributes": task_adhoc_attributes},
             {"name": "view_choice", "attributes": log_attributes},
-            {"name": "created_answer", "attributes": log_attributes},
-            {"name": "deleted_answer", "attributes": log_attributes},
+            {"name": "make_a_choice", "attributes": log_attributes},
+            {"name": "remove_a_choice", "attributes": log_attributes},
             # endregion CHOICE
-            
             # region FILE
             {"name": "create_file", "attributes": log_attributes},
             {"name": "import_file", "attributes": []},
@@ -164,7 +164,6 @@ class EntityProcess:
             {"name": "delete_file", "attributes": task_adhoc_attributes},
             {"name": "view_file", "attributes": log_attributes},
             # endregion FILE
-            
             # region FOLDER
             {"name": "create_folder", "attributes": log_attributes},
             {"name": "import_folder", "attributes": []},
@@ -173,14 +172,12 @@ class EntityProcess:
             {"name": "view_folder", "attributes": log_attributes},
             {"name": "download_folder", "attributes": log_attributes},
             # endregion FOLDER
-            
             # region LABEL
             {"name": "create_label", "attributes": log_attributes},
             {"name": "import_label", "attributes": []},
             {"name": "update_label", "attributes": log_attributes},
             {"name": "delete_label", "attributes": task_adhoc_attributes},
             # endregion LABEL
-            
             # region PAGE
             {"name": "create_page", "attributes": log_attributes},
             {"name": "import_page", "attributes": []},
@@ -188,7 +185,6 @@ class EntityProcess:
             {"name": "delete_page", "attributes": task_adhoc_attributes},
             {"name": "view_page", "attributes": log_attributes},
             # endregion PAGE
-            
             # region URL
             {"name": "create_url", "attributes": log_attributes},
             {"name": "import_url", "attributes": []},
@@ -196,7 +192,6 @@ class EntityProcess:
             {"name": "delete_url", "attributes": task_adhoc_attributes},
             {"name": "view_url", "attributes": log_attributes},
             # endregion URL
-            
             # region FORUM
             {"name": "create_forum", "attributes": log_attributes},
             {"name": "import_forum", "attributes": []},
@@ -217,7 +212,6 @@ class EntityProcess:
             {"name": "rate_user_forum", "attributes": log_attributes},
             {"name": "update_rate_user_forum", "attributes": log_attributes},
             # endregion FORUM
-            
             # region QUIZ
             {"name": "create_quiz", "attributes": log_attributes},
             {"name": "import_quiz", "attributes": []},
@@ -235,66 +229,72 @@ class EntityProcess:
         ]
 
         if events is not None and len(events) > 0:
-            event_types = [
-                event for event in event_types if event["name"] in events
-            ]
-        
+            event_types = [event for event in event_types if event["name"] in events]
+
         self.ocel_event_log["eventTypes"].extend(event_types)
-    
+
     def get_selected_events_and_objects(self, selected: dict = None):
         if selected is not None:
             modules_map = get_module_event_objects_map()
-            objects = set([
-                ObjectEnum.COURSE_MODULE.value.name,
-                ObjectEnum.COURSE.value.name,
-                ObjectEnum.CALENDAR.value.name,
-                ObjectEnum.TAG_INSTANCE.value.name,
-                ObjectEnum.TAG.value.name,
-                ObjectEnum.SECTION.value.name,
-                ObjectEnum.GROUP.value.name,
-                ObjectEnum.USER.value.name,
-            ])
+            objects = set(
+                [
+                    ObjectEnum.COURSE_MODULE.value.name,
+                    ObjectEnum.COURSE.value.name,
+                    ObjectEnum.CALENDAR.value.name,
+                    ObjectEnum.TAG_INSTANCE.value.name,
+                    ObjectEnum.TAG.value.name,
+                    ObjectEnum.SECTION.value.name,
+                    ObjectEnum.GROUP.value.name,
+                    ObjectEnum.USER.value.name,
+                ]
+            )
             events = []
 
             for module, event_list in selected.items():
                 if module in modules_map:
                     module_map = modules_map[module]
-                    if module == ObjectEnum.QUESTION.value.name or \
-                        module == ObjectEnum.QUIZ.value.name:
-                        objects.update([
-                            ObjectEnum.QUESTION.value.name,
-                            ObjectEnum.QUIZ.value.name,
-                            ObjectEnum.QUESTION_ANSWER.value.name,
-                            ObjectEnum.QUESTION_HINT.value.name,
-                            ObjectEnum.MULTI_CHOICE_QUESTION.value.name,
-                            ObjectEnum.TRUE_FALSE_QUESTION.value.name,
-                            ObjectEnum.SHORT_ANSWER_QUESTION.value.name,
-                            ObjectEnum.NUMERICAL_QUESTION.value.name,
-                            ObjectEnum.NUMERICAL_OPTION.value.name,
-                            ObjectEnum.NUMERICAL_UNIT.value.name,
-                            ObjectEnum.MATCH_QUESTION_SUB_QUESTION.value.name, 
-                            ObjectEnum.MATCH_QUESTION_OPTION.value.name,
-                            ObjectEnum.ESSAY_OPTION.value.name,
-                            ObjectEnum.CALCULATED_QUESTION.value.name,
-                            ObjectEnum.CALCULATED_OPTION.value.name,
-                            ObjectEnum.NUMERICAL_OPTION.value.name,
-                            ObjectEnum.NUMERICAL_UNIT.value.name,
-                            ObjectEnum.QUESTION_DATASET.value.name,
-                            ObjectEnum.DATASET_DEFINITION.value.name,
-                        ])
+                    if (
+                        module == ObjectEnum.QUESTION.value.name
+                        or module == ObjectEnum.QUIZ.value.name
+                    ):
+                        objects.update(
+                            [
+                                ObjectEnum.QUESTION.value.name,
+                                ObjectEnum.QUIZ.value.name,
+                                ObjectEnum.QUESTION_ANSWER.value.name,
+                                ObjectEnum.QUESTION_HINT.value.name,
+                                ObjectEnum.MULTI_CHOICE_QUESTION.value.name,
+                                ObjectEnum.TRUE_FALSE_QUESTION.value.name,
+                                ObjectEnum.SHORT_ANSWER_QUESTION.value.name,
+                                ObjectEnum.NUMERICAL_QUESTION.value.name,
+                                ObjectEnum.NUMERICAL_OPTION.value.name,
+                                ObjectEnum.NUMERICAL_UNIT.value.name,
+                                ObjectEnum.MATCH_QUESTION_SUB_QUESTION.value.name,
+                                ObjectEnum.MATCH_QUESTION_OPTION.value.name,
+                                ObjectEnum.ESSAY_OPTION.value.name,
+                                ObjectEnum.CALCULATED_QUESTION.value.name,
+                                ObjectEnum.CALCULATED_OPTION.value.name,
+                                ObjectEnum.NUMERICAL_OPTION.value.name,
+                                ObjectEnum.NUMERICAL_UNIT.value.name,
+                                ObjectEnum.QUESTION_DATASET.value.name,
+                                ObjectEnum.DATASET_DEFINITION.value.name,
+                            ]
+                        )
                     elif module == ObjectEnum.ASSIGN.value.name:
-                        objects.update([
-                            ObjectEnum.GRADE_ITEM.value.name,
-                        ])
-                    
+                        objects.update(
+                            [
+                                ObjectEnum.GRADE_ITEM.value.name,
+                            ]
+                        )
+
                     for event in event_list:
                         if event in module_map:
                             objects.update(module_map[event])
                             events.append(event)
-            
+
             return sorted(objects), sorted(events)
         return [], []
-    
+
     def write_output(self):
         self.file_service.write_ocel(
             event_type="all_objects", data=self.ocel_event_log, copy_to_last=True

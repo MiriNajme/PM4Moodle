@@ -1,7 +1,12 @@
 import json
 from logic.model.object_enum import ObjectEnum
 from logic.utils.date_utils import format_date
-from logic.utils.object_utils import get_object_key, relation_formatter
+from logic.utils.object_utils import (
+    get_object_key,
+    relation_formatter,
+    check_key_existence,
+)
+
 from logic.entity_process.core.transformers.base import Base
 
 
@@ -132,9 +137,7 @@ class Course(Base):
                 continue
 
             for key in new_other.keys():
-                if not self.check_key_existence(
-                    key, self.related_object_columns["course"]
-                ):
+                if not check_key_existence(key, self.related_object_columns["course"]):
                     continue
 
                 if key in create_row:

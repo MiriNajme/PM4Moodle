@@ -76,6 +76,36 @@ class Choice(Base):
                     self.get_deleted_choice_answer_event_object(event)
                 )
 
+    def get_module_event_object(self, event, event_type_enum: EventType):
+        result = super().get_module_event_object(event, event_type_enum)
+        choice_options = self.fetch_choice_options_by_choice_id(event["objectid"])
+
+        for option in choice_options:
+            result["relationships"].append(
+                get_formatted_relationship(
+                    ObjectEnum.OPTION,
+                    option["id"],
+                    "Choice option",
+                )
+            )
+
+        return result
+
+    def get_module_import_event_object(self, row):
+        result = super().get_module_import_event_object(row)
+        choice_options = self.fetch_choice_options_by_choice_id(row["id"])
+
+        for option in choice_options:
+            result["relationships"].append(
+                get_formatted_relationship(
+                    ObjectEnum.OPTION,
+                    option["id"],
+                    "Imported option",
+                )
+            )
+
+        return result
+
     def get_viewed_event_object(self, event):
         attributes = build_attributes(event, self.related_event_columns["log"])
         relationships = []

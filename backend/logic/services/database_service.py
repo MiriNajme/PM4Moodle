@@ -167,4 +167,14 @@ class DatabaseService:
         rows = self.query_object(Files, filter_conditions)
         return rows if rows else None
 
+    def fetch_module_id(self, module_name):
+        moduleTypeTable = self.Base.classes.mdl_modules
+        filter_conditions = [moduleTypeTable.name.like(f"%{module_name}%")]
+        result = self.query_object(moduleTypeTable, filter_conditions)
+
+        if result:
+            return result[0].get("id")
+
+        return None
+
     # endregion SHARED METHODS

@@ -21,7 +21,7 @@ class Assign(Base):
         relationships = []
         # region RELATED TO COURSE MODULE
         course_modules = self.db_service.fetch_course_modules_by_ids(
-            row["id"], self.object_type.value.module_id
+            row["id"], self.module_id
         )
 
         if course_modules:

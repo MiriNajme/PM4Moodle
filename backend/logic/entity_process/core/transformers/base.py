@@ -14,8 +14,12 @@ class Base(ABC):
         self.sort_by = None
         self.has_relationships = None
         self.has_relation_to_calendar_events = True
+        self.module_id = 0
 
     def transform(self):
+        self.module_id = self.db_service.fetch_module_id(
+            self.object_type.value.module_name
+        )
         records = self.db_service.query_object(self.object_class, sort_by=self.sort_by)
 
         if not records:
@@ -53,8 +57,8 @@ class Base(ABC):
         return [
             {
                 "name": col["name"],
-                "time": "1970-01-01T00:00:00Z",  
-                "value": row.get(col["name"], None)
+                "time": "1970-01-01T00:00:00Z",
+                "value": row.get(col["name"], None),
             }
             for col in columns
         ]
@@ -74,7 +78,7 @@ class Base(ABC):
         relationships = []
 
         course_modules = self.db_service.fetch_course_modules_by_ids(
-            row["id"], self.object_type.value.module_id
+            row["id"], self.module_id
         )
 
         if course_modules:

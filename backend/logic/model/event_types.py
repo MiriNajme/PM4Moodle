@@ -31,37 +31,43 @@ class EventType(Enum):
     )
 
     # region Forum events
-    ADD_DISCUSSION = EventValue("add_discussion", "add_disc", "add", "Adds discussion")
+    ADD_DISCUSSION = EventValue(
+        "add_discussion", "add_disc", "add_discussion", "Adds discussion"
+    )
+    VIEW_DISCUSSION = EventValue("view_discussion", "vew_disc", "view_discussion", "Views discussion")
     DELETE_DISCUSSION = EventValue(
-        "delete_discussion", "del_disc", "delete", "Deletes discussion"
+        "delete_discussion", "del_disc", "delete_discussion", "Deletes discussion"
     )
     LOCK_DISCUSSION = EventValue(
-        "lock_discussion", "lock_disc", "lock", "Locks discussion"
+        "lock_discussion", "lock_disc", "lock_discussion", "Locks discussion"
     )
     UNLOCK_DISCUSSION = EventValue(
-        "unlock_discussion", "unlock_disc", "unlock", "Unlocks discussion"
+        "unlock_discussion", "unlock_disc", "unlock_discussion", "Unlocks discussion"
     )
     SUBSCRIBE_TO_FORUM = EventValue(
-        "subscribe_to_forum", "sub_frm", "subscribe_to", "Subscribes in"
+        "subscribe_to_forum", "sub_frm", "subscribe_to_forum", "Subscribes in"
     )
     UNSUBSCRIBE_FROM_FORUM = EventValue(
         "unsubscribe_from_forum",
         "unsub_frm",
-        "unsubscribe_from",
+        "unsubscribe_from_forum",
         "Unsubscribes from",
     )
     SUBSCRIBE_TO_DISCUSSION = EventValue(
-        "subscribe_to_discussion", "sub_disc", "subscribe_to", "Subscribes in"
+        "subscribe_to_discussion",
+        "sub_disc",
+        "subscribe_to_discussion",
+        "Subscribes in",
     )
     UNSUBSCRIBE_FROM_DISCUSSION = EventValue(
         "unsubscribe_from_discussion",
         "unsub_disc",
-        "unsubscribe_from",
+        "unsubscribe_from_discussion",
         "Unsubscribes from",
     )
-    UPLOAD_POST = EventValue("upload_post", "upl_post", "upload", "Uploads post")
-    EDIT_POST = EventValue("edit_post", "edt_post", "edit", "Edits post")
-    DELETE_POST = EventValue("delete_post", "del_post", "delete", "Deletes post")
+    UPLOAD_POST = EventValue("upload_post", "upl_post", "upload_post", "Uploads post")
+    EDIT_POST = EventValue("edit_post", "edt_post", "edit_post", "Edits post")
+    DELETE_POST = EventValue("delete_post", "del_post", "delete_post", "Deletes post")
     SET_GRADE_FORUM = EventValue(
         "set_grade", "set_grade", "set_grade", "Sets grade for"
     )
@@ -83,13 +89,13 @@ class EventType(Enum):
     # endregion Forum events
 
     # region QUIZ
-    CREATE_QUESTION = EventValue("create_question", "crt_ques", "create", "Creates")
-    DELETE_QUESTION = EventValue("delete_question", "del_ques", "delete", "Deletes")
+    CREATE_QUESTION = EventValue("create_question", "crt_ques", "create_question", "Creates")
+    DELETE_QUESTION = EventValue("delete_question", "del_ques", "delete_question", "Deletes")
     ADD_QUESTION_SLOT = EventValue(
-        "add_question_to_quiz", "add_ques_slt", "add", "Adds"
+        "add_question_to_quiz", "add_ques_slt", "add_question_to_quiz", "Adds"
     )
     DELETE_QUESTION_SLOT = EventValue(
-        "delete_question_from_quiz", "del_ques_slt", "del", "Deletes"
+        "delete_question_from_quiz", "del_ques_slt", "delete_question_from_quiz", "Deletes"
     )
     QUIZ_ATTEMPT = EventValue("attempt_quiz", "quz_atmp", "attempt_quiz", "Attempts")
     QUIZ_REATTEMPT = EventValue(

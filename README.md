@@ -48,12 +48,12 @@ To get started, you need to clone this repository to your local machine.
 3. Run the following command:
 
    ```bash
-   git clone https://github.com/MiriNajme/Ocpm2-extension.git
+   git clone https://github.com/MiriNajme/PM4Moodle.git
 
 4. Change into the project directory:
 
     ```bash
-   cd Ocpm2-extension
+   cd PM4Moodle
 
 You are now ready to set up the backend and frontend.
 
@@ -71,7 +71,7 @@ Make sure you have Python 3.8+ installed.
 We recommend using [Visual Studio Code (VS Code)](https://code.visualstudio.com/) for the best experience.
 
 1. Launch VS Code (or your preferred editor).
-2. Open the cloned project folder (`Ocpm2-extension`).
+2. Open the cloned project folder (`PM4Moodle`).
 
 
 ### 3. Create and Activate a Virtual Environment

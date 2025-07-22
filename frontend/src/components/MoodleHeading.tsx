@@ -1,7 +1,7 @@
 import React from "react";
 import { Heading } from "@radix-ui/themes";
 import DbConfigurationModal from "../components/DbConfigurationModal.tsx";
-import extractorLogo from "../assets/extractor-logo2.png";
+import extractorLogo from "../assets/extractor-logo3.png";
 
 const MoodleHeading = React.memo(() => {
   return (
@@ -13,7 +13,7 @@ const MoodleHeading = React.memo(() => {
             alt='Extractor Logo'
             className='inline-block w-32 h-32 mr-4'
           />
-          <span className='text-3xl font-bold'>Moodle OCEL 2.0 Extractor</span>
+          <span className='text-3xl font-bold'>PM4Moodle</span>
         </span>
         <DbConfigurationModal />
       </span>

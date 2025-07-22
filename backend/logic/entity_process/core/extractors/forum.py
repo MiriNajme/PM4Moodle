@@ -40,6 +40,7 @@ class Forum(Base):
         self.subscribe_to_forum_events()
         self.unsubscribe_from_forum_events()
         self.add_discussion_events()
+        self.view_discussion_events()
         self.delete_discussion_events()
         self.lock_unlock_discussion_events()
         self.subscribe_to_discussion_events()
@@ -78,6 +79,9 @@ class Forum(Base):
 
         if "add_discussion" in events:
             self.add_discussion_events()
+
+        if "view_discussion" in events:
+            self.view_discussion_events()
 
         if "delete_discussion" in events:
             self.delete_discussion_events()
@@ -145,6 +149,19 @@ class Forum(Base):
             for event in events:
                 self.ocel_event_log["events"].append(
                     self.get_add_discussion_event_object(event)
+                )
+
+    def view_discussion_events(self):
+        filter_conditions = [
+            self.Log.action == "viewed",
+            self.Log.target == "discussion",
+            self.Log.objecttable == "forum_discussions",
+        ]
+        events = self.fetch_related_events(filter_conditions)
+        if events:
+            for event in events:
+                self.ocel_event_log["events"].append(
+                    self.get_view_discussion_event_object(event)
                 )
 
     def delete_discussion_events(self):
@@ -261,9 +278,7 @@ class Forum(Base):
                 ObjectEnum.FORUM,
                 event["id"],
             ),
-            "type": get_module_event_type_name(
-                ObjectEnum.FORUM, EventType.SUBSCRIBE_TO_FORUM
-            ),
+            "type": EventType.SUBSCRIBE_TO_FORUM.value.type,
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
@@ -302,9 +317,7 @@ class Forum(Base):
                 ObjectEnum.FORUM,
                 event["id"],
             ),
-            "type": get_module_event_type_name(
-                ObjectEnum.FORUM, EventType.UNSUBSCRIBE_FROM_FORUM
-            ),
+            "type": EventType.UNSUBSCRIBE_FROM_FORUM.value.type,
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
@@ -341,9 +354,7 @@ class Forum(Base):
             "id": get_formatted_event_id(
                 EventType.ADD_DISCUSSION, ObjectEnum.FORUM_DISCUSSION, event["id"]
             ),
-            "type": get_module_event_type_name(
-                ObjectEnum.FORUM_DISCUSSION, EventType.ADD_DISCUSSION
-            ),
+            "type": EventType.ADD_DISCUSSION.value.type,
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
@@ -372,6 +383,55 @@ class Forum(Base):
                 ),
             )
 
+            if discussion["groupid"] > 0:
+                relationships.append(
+                    get_formatted_relationship(
+                        ObjectEnum.GROUP,
+                        discussion["groupid"],
+                        f"Added for group",
+                    ),
+                )
+
+        result["relationships"] = relationships
+        # endregion
+
+        return result
+
+    def get_view_discussion_event_object(self, event):
+        attributes = build_attributes(event, self.related_event_columns["log"])
+        result = {
+            "id": get_formatted_event_id(
+                EventType.VIEW_DISCUSSION, ObjectEnum.FORUM_DISCUSSION, event["id"]
+            ),
+            "type": EventType.VIEW_DISCUSSION.value.type,
+            "time": format_date(event["timecreated"]),
+            "attributes": attributes,
+        }
+
+        # region RELATIONSHIPS
+        relationships = [
+            get_formatted_relationship(
+                ObjectEnum.FORUM_DISCUSSION,
+                event["objectid"],
+                f"{EventType.VIEW_DISCUSSION.value.qualifier} {self.object_type.value.name}",
+            ),
+            get_formatted_relationship(
+                ObjectEnum.USER,
+                event["userid"],
+                f"{EventType.VIEW_DISCUSSION.value.qualifier} by user",
+            ),
+        ]
+
+        discussion = self.fetch_discussion_by_id(event["objectid"])
+        if discussion:
+            relationships.append(
+                get_formatted_relationship(
+                    ObjectEnum.FORUM,
+                    discussion["forum"],
+                    f"Viewed in forum",
+                ),
+            )
+
         result["relationships"] = relationships
         # endregion
 
@@ -383,9 +443,7 @@ class Forum(Base):
             "id": get_formatted_event_id(
                 EventType.DELETE_DISCUSSION, ObjectEnum.FORUM_DISCUSSION, event["id"]
             ),
-            "type": get_module_event_type_name(
-                ObjectEnum.FORUM_DISCUSSION, EventType.DELETE_DISCUSSION
-            ),
+            "type": EventType.DELETE_DISCUSSION.value.type,
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
@@ -409,12 +467,12 @@ class Forum(Base):
             ),
         ]
 
-        discussion = self.fetch_discussion_by_id(event["objectid"])
-        if discussion:
+        other = json.loads(event["other"]) if event.get("other") else {}
+        if other:
             relationships.append(
                 get_formatted_relationship(
                     ObjectEnum.FORUM,
-                    discussion["forum"],
+                    other["forumid"],
                     f"Deleted from forum",
                 ),
             )
@@ -438,7 +496,7 @@ class Forum(Base):
             "id": get_formatted_event_id(
                 event_type, ObjectEnum.FORUM_DISCUSSION, event["id"]
             ),
-            "type": get_module_event_type_name(event_type, EventType.LOCK_DISCUSSION),
+            "type": event_type.value.type,
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
@@ -464,6 +522,17 @@ class Forum(Base):
                 f"Pertains to forum",
             ),
         )
+
+        discussion = self.fetch_discussion_by_id(event["objectid"])
+        if discussion and discussion["groupid"] > 0:
+            relationships.append(
+                get_formatted_relationship(
+                    ObjectEnum.GROUP,
+                    discussion["groupid"],
+                    f"Added for group",
+                ),
+            )
+
         result["relationships"] = relationships
         # endregion
 
@@ -477,9 +546,7 @@ class Forum(Base):
                 ObjectEnum.FORUM_DISCUSSION,
                 event["id"],
             ),
-            "type": get_module_event_type_name(
-                ObjectEnum.FORUM_DISCUSSION, EventType.SUBSCRIBE_TO_DISCUSSION
-            ),
+            "type": EventType.SUBSCRIBE_TO_DISCUSSION.value.type,
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
@@ -526,9 +593,7 @@ class Forum(Base):
                 ObjectEnum.FORUM_DISCUSSION,
                 event["id"],
             ),
-            "type": get_module_event_type_name(
-                ObjectEnum.FORUM_DISCUSSION, EventType.UNSUBSCRIBE_FROM_DISCUSSION
-            ),
+            "type": EventType.UNSUBSCRIBE_FROM_DISCUSSION.value.type,
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
@@ -573,9 +638,7 @@ class Forum(Base):
             "id": get_formatted_event_id(
                 EventType.UPLOAD_POST, ObjectEnum.FORUM_POST, event["id"]
             ),
-            "type": get_module_event_type_name(
-                ObjectEnum.FORUM_POST, EventType.UPLOAD_POST
-            ),
+            "type": EventType.UPLOAD_POST.value.type,
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
@@ -636,9 +699,7 @@ class Forum(Base):
             "id": get_formatted_event_id(
                 EventType.DELETE_POST, ObjectEnum.FORUM_POST, event["id"]
             ),
-            "type": get_module_event_type_name(
-                ObjectEnum.FORUM_POST, EventType.DELETE_POST
-            ),
+            "type": EventType.DELETE_POST.value.type,
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
@@ -699,9 +760,7 @@ class Forum(Base):
             "id": get_formatted_event_id(
                 EventType.EDIT_POST, ObjectEnum.FORUM_POST, event["id"]
             ),
-            "type": get_module_event_type_name(
-                ObjectEnum.FORUM_POST, EventType.EDIT_POST
-            ),
+            "type": EventType.EDIT_POST.value.type,
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
@@ -799,7 +858,7 @@ class Forum(Base):
 
         result = {
             "id": f'{event_qualifier}_{event["id"]}',
-            "type": f"{event_type.value.name}",
+            "type": event_type.value.name,
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }

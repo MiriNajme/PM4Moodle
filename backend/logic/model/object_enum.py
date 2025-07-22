@@ -2,38 +2,37 @@ from enum import Enum
 
 
 class ObjectValue:
-    def __init__(self, name, abbr, table_name=None, module_name=None, module_id=None):
+    def __init__(self, name, abbr, table_name=None, module_name=None):
         self.name = name
         self.abbr = abbr
         self.table_name = table_name
-        self.module_id = module_id
         self.module_name = module_name
 
 
 class ObjectEnum(Enum):
-    ASSIGN = ObjectValue("assign", "asn", "mdl_assign", "assign", 1)
+    ASSIGN = ObjectValue("assign", "asn", "mdl_assign", "assign")
     CALENDAR = ObjectValue("calendar_event", "cal", "mdl_event")
-    CHOICE = ObjectValue("choice", "cho", "mdl_choice", "choice", 5)
+    CHOICE = ObjectValue("choice", "cho", "mdl_choice", "choice")
     OPTION = ObjectValue("option", "opt", "mdl_choice_options")
     COURSE = ObjectValue("course", "crs", "mdl_course")
     COURSE_MODULE = ObjectValue("course_module", "cmd", "mdl_course_modules")
-    FILE = ObjectValue("file", "fil", "mdl_resource", "resource", 18)
+    FILE = ObjectValue("file", "fil", "mdl_resource", "resource")
     FILES = ObjectValue("submission_file", "sfl", "mdl_files")
     FeedBack_FILE = ObjectValue("feedback_file", "ffl", "mdl_files")
-    FOLDER = ObjectValue("folder", "fld", "mdl_folder", "folder", 8)
+    FOLDER = ObjectValue("folder", "fld", "mdl_folder", "folder")
     GRADE_ITEM = ObjectValue("grade_item", "gri", "mdl_grade_items", "grade_item")
     GROUP = ObjectValue("group", "grp", "mdl_groups")
-    LABEL = ObjectValue("label", "lbl", "mdl_label", "label", 13)
-    PAGE = ObjectValue("page", "pag", "mdl_page", "page", 16)
+    LABEL = ObjectValue("label", "lbl", "mdl_label", "label")
+    PAGE = ObjectValue("page", "pag", "mdl_page", "page")
     SECTION = ObjectValue("section", "sec", "mdl_course_sections")
     TAG = ObjectValue("tag", "tag", "mdl_tag")
     TAG_INSTANCE = ObjectValue("tag_instance", "tgi", "mdl_tag_instance")
-    URL = ObjectValue("url", "url", "mdl_url", "url", 21)
+    URL = ObjectValue("url", "url", "mdl_url", "url")
     USER = ObjectValue("user", "usr", "mdl_user")
-    FORUM = ObjectValue("forum", "frm", "mdl_forum", "forum", 9)
+    FORUM = ObjectValue("forum", "frm", "mdl_forum", "forum")
     FORUM_DISCUSSION = ObjectValue("forum_discussion", "fdi", "mdl_forum_discussions")
     FORUM_POST = ObjectValue("forum_post", "fpo", "mdl_forum_posts")
-    QUIZ = ObjectValue("quiz", "quz", "mdl_quiz", "quiz", 17)
+    QUIZ = ObjectValue("quiz", "quz", "mdl_quiz", "quiz")
     QUESTION = ObjectValue("question", "qst", "mdl_question")
     QUESTION_ANSWER = ObjectValue("question_answers", "qan", "mdl_question_answers")
     QUESTION_HINT = ObjectValue("question_hints", "qhi", "mdl_question_hints")

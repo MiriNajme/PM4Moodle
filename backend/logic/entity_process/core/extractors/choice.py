@@ -78,16 +78,19 @@ class Choice(Base):
 
     def get_module_event_object(self, event, event_type_enum: EventType):
         result = super().get_module_event_object(event, event_type_enum)
-        choice_options = self.fetch_choice_options_by_choice_id(event["objectid"])
+        instance = json.loads(event["other"])
 
-        for option in choice_options:
-            result["relationships"].append(
-                get_formatted_relationship(
-                    ObjectEnum.OPTION,
-                    option["id"],
-                    "Choice option",
+        if instance:
+            choice_id = instance["instanceid"]
+            choice_options = self.fetch_choice_options_by_choice_id(choice_id)
+            for option in choice_options:
+                result["relationships"].append(
+                    get_formatted_relationship(
+                        ObjectEnum.OPTION,
+                        option["id"],
+                        "Choice option",
+                    )
                 )
-            )
 
         return result
 

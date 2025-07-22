@@ -269,6 +269,35 @@ class Forum(Base):
     # endregion Extra event extraction process
 
     # region Extra event object construction
+    def get_deleted_module_event_object(self, event):
+        result = super().get_deleted_module_event_object(event)
+        
+        # region RELATIONSHIPS
+        instance = json.loads(event["customdata"])
+        if instance:
+            forum_id = instance["cms"][0]["instance"]
+            forum_discussion = self.fetch_related_forum_discussions(forum_id)
+            
+            for discussion in forum_discussion:
+                result["relationships"].append(
+                    get_formatted_relationship(
+                        ObjectEnum.FORUM_DISCUSSION,
+                        discussion["id"],
+                        "Deletes discussion",
+                    )
+                )
+
+                posts = self.fetch_related_forum_posts(discussion["id"])
+                for post in posts:
+                    result["relationships"].append(
+                        get_formatted_relationship(
+                            ObjectEnum.FORUM_POST,
+                            post["id"],
+                            "Deletes post",
+                        )
+                    )
+
+        return result
 
     def get_subscribe_to_forum_event_object(self, event):
         attributes = build_attributes(event, self.related_event_columns["log"])
@@ -986,5 +1015,15 @@ class Forum(Base):
         ]
         rows = self.db_service.query_object(grade_grades_history, filter_conditions)
         return rows[0] if rows else None
+
+    def fetch_related_forum_discussions(self, forum_id):
+        filter_conditions = [self.Discussion.forum == forum_id]
+        rows = self.db_service.query_object(self.Discussion, filter_conditions)
+        return rows if rows else []
+
+    def fetch_related_forum_posts(self, discussion_id):
+        filter_conditions = [self.Post.discussion == discussion_id]
+        rows = self.db_service.query_object(self.Post, filter_conditions)
+        return rows if rows else []
 
     # endregion Data fetching helpers

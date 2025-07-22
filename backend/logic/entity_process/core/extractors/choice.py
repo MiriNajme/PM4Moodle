@@ -288,7 +288,7 @@ class Choice(Base):
                 get_formatted_relationship(
                     ObjectEnum.OPTION,
                     instance["optionid"],
-                    "Deselected option",
+                    "Removes selection",
                 ),
             ]
 

@@ -54,6 +54,10 @@ class Forum(Base):
             self.extract()
             return
 
+        self.module_id = self.db_service.fetch_module_id(
+            self.object_type.value.module_name
+        )
+
         if "create_forum" in events or "import_forum" in events:
             self.add_create_import_events()
 
@@ -232,7 +236,7 @@ class Forum(Base):
     def add_grade_rate_events(self):
         object_ids = []
         events = self.fetch_grade_events()
-        
+
         if events:
             for event in events:
                 if event["objectid"] in object_ids:

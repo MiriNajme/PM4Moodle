@@ -27,12 +27,12 @@ class Assign(Base):
         self.object_class = self.db_service.Base.classes.mdl_assign
         self.has_view_events = True
         self.has_course_relation = True
-        
+
         self.GradeItemsHistory = self.db_service.Base.classes.mdl_grade_items_history
         self.Context = self.db_service.Base.classes.mdl_context
         self.Files = self.db_service.Base.classes.mdl_files
         self.Assign_submission = self.db_service.Base.classes.mdl_assign_submission
-        
+
     def extract(self):
         super().extract()
 
@@ -43,6 +43,10 @@ class Assign(Base):
         if not events:
             self.extract()
             return
+
+        self.module_id = self.db_service.fetch_module_id(
+            self.object_type.value.module_name
+        )
 
         if "create_assign" in events or "import_assign" in events:
             self.add_create_import_events()
@@ -63,15 +67,16 @@ class Assign(Base):
             or "resubmit_individual_assign" in events
         ):
             self.add_submit_assignment_events()
-    
+
         if "set_grade" in events or "update_grade" in events:
             self.add_grade_assignment_events()
 
     def add_create_import_events(self):
         assigns = self.fetch_assigns()
+        
         for assign in assigns:
             course_module = self.fetch_course_module_by_instance(
-                assign["id"], ObjectEnum.ASSIGN.value.module_id
+                assign["id"], self.module_id
             )
             event = self.fetch_assign_event_by_ids(
                 course_module["id"], EventType.CREATED.value.name
@@ -430,7 +435,7 @@ class Assign(Base):
 
         if submission["status"] == "draft":
             return None
-        
+
         attributes = build_attributes(event, self.related_event_columns["log"])
         result = {
             "id": f'evt_assign_{type_abbr}_{event["id"]}',
@@ -531,7 +536,7 @@ class Assign(Base):
 
         if submission["status"] == "draft":
             return None
-        
+
         attributes = build_attributes(event, self.related_event_columns["log"])
         result = {
             "id": f'evt_assign_{type_abbr}_{event["id"]}',

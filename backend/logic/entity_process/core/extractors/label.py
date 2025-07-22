@@ -22,6 +22,10 @@ class Label(Base):
             self.extract()
             return
 
+        self.module_id = self.db_service.fetch_module_id(
+            self.object_type.value.module_name
+        )
+
         if "create_label" in events or "import_label" in events:
             self.add_create_import_events()
 

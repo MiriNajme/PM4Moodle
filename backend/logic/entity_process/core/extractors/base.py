@@ -27,7 +27,7 @@ class Base(ABC):
         self.has_view_events = False
         self.has_course_relation = False
         self.deleted_items = {}
-        
+        self.module_id = 0
         self.CourseModule = self.db_service.Base.classes.mdl_course_modules
         self.Calendar_Event = self.db_service.Base.classes.mdl_event
         self.Log = self.db_service.Base.classes.mdl_logstore_standard_log
@@ -35,6 +35,10 @@ class Base(ABC):
 
     # region Main extraction process
     def extract(self):
+        self.module_id = self.db_service.fetch_module_id(
+            self.object_type.value.module_name
+        )
+        
         self.add_create_import_events()
         self.add_delete_events()
         self.add_update_events()
@@ -43,15 +47,13 @@ class Base(ABC):
             self.add_view_events()
 
     def extractBy(self, events: list = None):
-        if not events:
-            self.extract()
-            return
-
+        pass
+    
     def add_create_import_events(self):
         list_of_objects = []
         events_map = None
         course_modules = self.fetch_all_course_modules_by_module(
-            self.object_type.value.module_id
+            self.module_id
         )
         events = self.fetch_module_events(EventType.CREATED.value.name)
 
@@ -186,10 +188,10 @@ class Base(ABC):
 
     def process_viewed_events(self, events):
         result = []
-        
+
         for event in events:
             result.append(self.get_viewed_event_object(event))
-        
+
         return result
 
     def get_viewed_event_object(self, event):
@@ -273,7 +275,7 @@ class Base(ABC):
                     )
 
         course_modules = self.db_service.fetch_course_modules_by_ids(
-            item_id, self.object_type.value.module_id
+            item_id, self.module_id
         )
         if course_modules:
             for course_module in course_modules:
@@ -330,7 +332,7 @@ class Base(ABC):
         return events if events else None
 
     def fetch_deleted_events(self):
-        module = f'%"module":"{self.object_type.value.module_id}"%'
+        module = f'%"module":"{self.module_id}"%'
         filter_conditions = [
             self.TaskAdhoc.classname.like("%course_delete_modules%"),
             self.TaskAdhoc.customdata.like(module),

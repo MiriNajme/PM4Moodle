@@ -38,6 +38,10 @@ class Quiz(Base):
         self.get_set_grade_quiz_events()
 
     def extractBy(self, events: list = None):
+        self.module_id = self.db_service.fetch_module_id(
+            self.object_type.value.module_name
+        )
+
         if not events:
             self.extract()
             return

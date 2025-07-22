@@ -22,6 +22,10 @@ class Url(Base):
             self.extract()
             return
 
+        self.module_id = self.db_service.fetch_module_id(
+            self.object_type.value.module_name
+        )
+
         if "create_url" in events or "import_url" in events:
             self.add_create_import_events()
 

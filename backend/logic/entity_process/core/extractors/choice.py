@@ -38,6 +38,10 @@ class Choice(Base):
             self.extract()
             return
 
+        self.module_id = self.db_service.fetch_module_id(
+            self.object_type.value.module_name
+        )
+
         if "create_choice" in events or "import_choice" in events:
             self.add_create_import_events()
 
@@ -163,7 +167,7 @@ class Choice(Base):
                     )
 
         course_modules = self.db_service.fetch_course_modules_by_ids(
-            item_id, self.object_type.value.module_id
+            item_id, self.module_id
         )
         if course_modules:
             for course_module in course_modules:

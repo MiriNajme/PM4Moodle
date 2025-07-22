@@ -549,6 +549,8 @@ def get_module_event_objects_map():
             "create_question": [
                 ObjectEnum.QUIZ.value.name,
                 ObjectEnum.QUESTION.value.name,
+                ObjectEnum.QUESTION_BANK_ENTRY.value.name,
+                ObjectEnum.QUESTION_ANSWER.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "delete_question": [

@@ -174,6 +174,17 @@ class Quiz(Base):
 
         self.set_quiz_relationship(event["objectid"], event_type_enum, relationships)
 
+        if event_type_enum is EventType.CREATE_QUESTION:
+            answers = self.fetch_question_answers(event["objectid"])
+            for answer in answers:
+                relationships.append(
+                    get_formatted_relationship(
+                        ObjectEnum.QUESTION_ANSWER,
+                        answer["id"],
+                        "Creates answer",
+                    )
+                )
+
         if relationships:
             result["relationships"] = relationships
         return result
@@ -320,6 +331,21 @@ class Quiz(Base):
         if question_version is None:
             return
 
+        if event_type is EventType.CREATE_QUESTION:
+            qualifier = "Creates bank entry"
+        elif event_type is EventType.DELETE_QUESTION:
+            qualifier = "Deletes bank entry"
+        else:
+            qualifier = ""
+
+        relationships.append(
+            get_formatted_relationship(
+                ObjectEnum.QUESTION_BANK_ENTRY,
+                question_version["questionbankentryid"],
+                qualifier,
+            )
+        )
+
         question_refrence = self.fetch_question_refrence(
             question_version["questionbankentryid"], "questionbankentryid"
         )
@@ -336,10 +362,10 @@ class Quiz(Base):
 
         if event_type is EventType.CREATE_QUESTION:
             qualifier = "Created in the quiz"
-        elif event_type is EventType.CREATE_QUESTION:
+        elif event_type is EventType.DELETE_QUESTION:
             qualifier = "Deleted from the quiz"
         else:
-            qualifier = " in the quiz"
+            qualifier = ""
 
         relationships.append(
             get_formatted_relationship(
@@ -392,3 +418,9 @@ class Quiz(Base):
         TABLE = self.db_service.Base.classes.mdl_quiz_grades
         rows = self.db_service.query_object(TABLE)
         return rows if rows else None
+
+    def fetch_question_answers(self, question_id):
+        TABLE = self.db_service.Base.classes.mdl_question_answers
+        filter_conditions = [TABLE.question == question_id]
+        rows = self.db_service.query_object(TABLE, filter_conditions)
+        return rows if rows else []

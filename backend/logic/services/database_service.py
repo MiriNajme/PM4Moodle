@@ -146,17 +146,6 @@ class DatabaseService:
         course_modules = self.query_object(CourseModule, filters)
         return course_modules if course_modules else None
 
-    def fetch_related_calendar_events(self, module_name, instance_id):
-        Calendar_Event = self.Base.classes.mdl_event
-
-        filter_conditions = [
-            Calendar_Event.modulename == module_name,
-            Calendar_Event.instance == instance_id,
-        ]
-
-        events = self.query_object(Calendar_Event, filter_conditions)
-        return events if events else None
-
     def fetch_assignment_files_by_context_id(self, context_id):
         Files = self.Base.classes.mdl_files
         filter_conditions = [

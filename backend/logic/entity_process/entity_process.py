@@ -241,9 +241,6 @@ class EntityProcess:
                 [
                     ObjectEnum.COURSE_MODULE.value.name,
                     ObjectEnum.COURSE.value.name,
-                    ObjectEnum.CALENDAR.value.name,
-                    ObjectEnum.TAG_INSTANCE.value.name,
-                    ObjectEnum.TAG.value.name,
                     ObjectEnum.SECTION.value.name,
                     ObjectEnum.GROUP.value.name,
                     ObjectEnum.USER.value.name,

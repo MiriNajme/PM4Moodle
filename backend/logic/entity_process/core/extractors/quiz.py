@@ -137,7 +137,7 @@ class Quiz(Base):
                     self.ocel_event_log["events"].append(formated_event_object)
 
     def get_question_event_object(self, event, event_type_enum: EventType):
-        event_type = get_module_event_type_name(ObjectEnum.QUESTION, event_type_enum)
+        event_type = event_type_enum.value.type
         attributes = build_attributes(event, self.related_event_columns["log"])
 
         result = {
@@ -152,7 +152,7 @@ class Quiz(Base):
         if event_type_enum is EventType.CREATE_QUESTION:
             user_qualifier = "Added by user"
             question_qualifier = "Creates question"
-        elif event_type_enum is EventType.CREATE_QUESTION:
+        elif event_type_enum is EventType.DELETE_QUESTION:
             user_qualifier = "Deleted by user"
             question_qualifier = "Deletes question"
         else:
@@ -179,9 +179,7 @@ class Quiz(Base):
         return result
 
     def get_question_slot_event_object(self, event, event_type_enum: EventType):
-        event_type = get_module_event_type_name(
-            ObjectEnum.QUESTION_SLOT, event_type_enum
-        )
+        event_type = event_type_enum.value.type
         attributes = build_attributes(event, self.related_event_columns["log"])
 
         result = {
@@ -193,11 +191,11 @@ class Quiz(Base):
             "attributes": attributes,
         }
 
-        if event_type_enum is EventType.CREATE_QUESTION:
+        if event_type_enum is EventType.ADD_QUESTION_SLOT:
             user_qualifier = "Added by user"
             question_qualifier = "Adds question bank entry"
             quiz_qualifier = "Added to the quiz"
-        elif event_type_enum is EventType.CREATE_QUESTION:
+        elif event_type_enum is EventType.DELETE_QUESTION_SLOT:
             user_qualifier = "Deleted by user"
             question_qualifier = "Deletes question bank entry"
             quiz_qualifier = "Deleted from the quiz"

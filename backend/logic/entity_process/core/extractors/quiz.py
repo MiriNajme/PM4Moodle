@@ -64,10 +64,10 @@ class Quiz(Base):
         if "delete_question" in events:
             self.get_question_events(EventType.DELETE_QUESTION)
 
-        if "add_question_slot" in events:
+        if "add_question_to_quiz" in events:
             self.get_question_slot_events(EventType.ADD_QUESTION_SLOT)
 
-        if "delete_question_slot" in events:
+        if "delete_question_from_quiz" in events:
             self.get_question_slot_events(EventType.DELETE_QUESTION_SLOT)
 
         if "attempt_quiz" in events or "reattempt_quiz" in events:

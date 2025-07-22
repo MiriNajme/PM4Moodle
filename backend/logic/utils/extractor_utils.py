@@ -125,8 +125,8 @@ def get_module_events_map():
             "view_quiz": "Viewed",
             "create_question": "Create question",
             "delete_question": "Delete question",
-            "add_question_slot": "Add question slot",
-            "delete_question_slot": "Delete question slot",
+            "add_question_to_quiz": "Add question to quiz",
+            "delete_question_from_quiz": "Delete question from quiz",
             "attempt_quiz": "Attempted",
             "reattempt_quiz": "Reattempted",
             "set_grade_quiz": "Graded",
@@ -631,13 +631,13 @@ def get_module_event_objects_map():
                 ObjectEnum.QUESTION.value.name,
                 ObjectEnum.USER.value.name,
             ],
-            "add_question_slot": [
+            "add_question_to_quiz": [
                 ObjectEnum.QUIZ.value.name,
                 ObjectEnum.QUESTION.value.name,
                 ObjectEnum.QUESTION_BANK_ENTRY.value.name,
                 ObjectEnum.USER.value.name,
             ],
-            "delete_question_slot": [
+            "delete_question_from_quiz": [
                 ObjectEnum.QUIZ.value.name,
                 ObjectEnum.QUESTION.value.name,
                 ObjectEnum.USER.value.name,

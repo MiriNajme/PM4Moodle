@@ -1,6 +1,6 @@
-# Moodle OCEL 2.0 Extractor
+# PM4Moodle
 
-**Moodle OCEL 2.0 Extractor** is a specialized tool for extracting [OCEL 2.0](https://www.ocel-standard.org/) event logs from Moodle, covering the most common and important Moodle modules. It offers an intuitive interface for users to connect directly to their Moodle database and extract OCEL 2.0 logs effortlessly.
+**PM4Moodle** is a specialized tool for extracting [OCEL 2.0](https://www.ocel-standard.org/) event logs from Moodle, covering the most common and important Moodle modules. It offers an intuitive interface for users to connect directly to their Moodle database and extract OCEL 2.0 logs effortlessly.
 
 Key features include:
 

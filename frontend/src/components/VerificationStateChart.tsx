@@ -8,9 +8,15 @@ export const VerificationStateChart: React.FC = () => {
   const { jsonContent, selectedModules, modules } = useAppContext();
 
   const moduleCharts = useMemo(() => {
-    if (!jsonContent || !selectedModules) return [];
+    if (!jsonContent) return [];
 
-    return ocelToFullRelationStateChart(jsonContent, selectedModules, modules);
+    const selectedModulesList = selectedModules?.length ? selectedModules : Object.keys(modules);
+    
+    return ocelToFullRelationStateChart(
+      jsonContent,
+      selectedModulesList,
+      modules
+    );
   }, [jsonContent, selectedModules, modules]);
 
   if (!jsonContent || moduleCharts?.length === 0) {

@@ -159,30 +159,6 @@ class Assign(Base):
                 if course_relation:
                     relationships.append(course_relation)
 
-            calendar_events = self.fetch_related_calendar_events(
-                self.object_type.value.module_name, instance_id
-            )
-            if calendar_events:
-                for calendar_event in calendar_events:
-                    relationships.append(
-                        get_formatted_relationship(
-                            ObjectEnum.CALENDAR,
-                            calendar_event["id"],
-                            "potentially creates calendar event",
-                        )
-                    )
-
-        tag_instances = self.fetch_course_module_tag_instances(event["objectid"])
-        if tag_instances:
-            for tag_instance in tag_instances:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.TAG_INSTANCE,
-                        tag_instance["id"],
-                        "potentially creates tag instance",
-                    )
-                )
-
         qualifier = (
             "Created by user"
             if event_type_enum == EventType.CREATED
@@ -244,30 +220,6 @@ class Assign(Base):
             )
         )
 
-        calendar_events = self.fetch_related_calendar_events(
-            ObjectEnum.ASSIGN.value.module_name, assign["id"]
-        )
-        if calendar_events:
-            for calendar_event in calendar_events:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.CALENDAR,
-                        calendar_event["id"],
-                        "potentially creates calendar event",
-                    )
-                )
-
-        tag_instances = self.fetch_course_module_tag_instances(event["objectid"])
-        if tag_instances:
-            for tag_instance in tag_instances:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.TAG_INSTANCE,
-                        tag_instance["id"],
-                        "potentially creates tag instance",
-                    )
-                )
-
         relationships.append(
             get_formatted_relationship(
                 ObjectEnum.USER,
@@ -318,30 +270,6 @@ class Assign(Base):
             )
             if course_relationship:
                 relationships.append(course_relationship)
-
-        calendar_events = self.fetch_related_calendar_events(
-            self.object_type.value.module_name, row["instance"]
-        )
-        if calendar_events:
-            for calendar_event in calendar_events:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.CALENDAR,
-                        calendar_event["id"],
-                        "potentially creates calendar event",
-                    )
-                )
-
-        tag_instances = self.fetch_course_module_tag_instances(row["id"])
-        if tag_instances:
-            for tag_instance in tag_instances:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.TAG_INSTANCE,
-                        tag_instance["id"],
-                        "potentially creates tag instance",
-                    )
-                )
 
         user_row = self.fetch_import_assign_user_log(row["instance"])
         if user_row:

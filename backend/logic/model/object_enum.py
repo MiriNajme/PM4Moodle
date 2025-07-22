@@ -11,7 +11,6 @@ class ObjectValue:
 
 class ObjectEnum(Enum):
     ASSIGN = ObjectValue("assign", "asn", "mdl_assign", "assign")
-    CALENDAR = ObjectValue("calendar_event", "cal", "mdl_event")
     CHOICE = ObjectValue("choice", "cho", "mdl_choice", "choice")
     OPTION = ObjectValue("option", "opt", "mdl_choice_options")
     COURSE = ObjectValue("course", "crs", "mdl_course")
@@ -25,8 +24,6 @@ class ObjectEnum(Enum):
     LABEL = ObjectValue("label", "lbl", "mdl_label", "label")
     PAGE = ObjectValue("page", "pag", "mdl_page", "page")
     SECTION = ObjectValue("section", "sec", "mdl_course_sections")
-    TAG = ObjectValue("tag", "tag", "mdl_tag")
-    TAG_INSTANCE = ObjectValue("tag_instance", "tgi", "mdl_tag_instance")
     URL = ObjectValue("url", "url", "mdl_url", "url")
     USER = ObjectValue("user", "usr", "mdl_user")
     FORUM = ObjectValue("forum", "frm", "mdl_forum", "forum")

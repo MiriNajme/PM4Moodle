@@ -29,7 +29,6 @@ class Base(ABC):
         self.deleted_items = {}
         self.module_id = 0
         self.CourseModule = self.db_service.Base.classes.mdl_course_modules
-        self.Calendar_Event = self.db_service.Base.classes.mdl_event
         self.Log = self.db_service.Base.classes.mdl_logstore_standard_log
         self.TaskAdhoc = self.db_service.Base.classes.mdl_task_adhoc
 
@@ -150,30 +149,6 @@ class Base(ABC):
             if course_relationship:
                 relationships.append(course_relationship)
 
-        calendar_events = self.fetch_related_calendar_events(
-            self.object_type.value.module_name, row["instance"]
-        )
-        if calendar_events:
-            for calendar_event in calendar_events:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.CALENDAR,
-                        calendar_event["id"],
-                        "potentially creates calendar event",
-                    )
-                )
-
-        tag_instances = self.fetch_course_module_tag_instances(row["id"])
-        if tag_instances:
-            for tag_instance in tag_instances:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.TAG_INSTANCE,
-                        tag_instance["id"],
-                        "potentially creates tag instance",
-                    )
-                )
-
         relationships.append(
             get_formatted_relationship(ObjectEnum.USER, "unknown", "Imported by user")
         )
@@ -259,37 +234,6 @@ class Base(ABC):
                 if course_relationships:
                     relationships.append(course_relationships)
 
-            calendar_events = self.fetch_related_calendar_events(
-                self.object_type.value.module_name, item_id
-            )
-            if calendar_events:
-                for calendar_event in calendar_events:
-                    relationships.append(
-                        get_formatted_relationship(
-                            ObjectEnum.CALENDAR,
-                            calendar_event["id"],
-                            "Deactivates calendar event",
-                        )
-                    )
-
-        course_modules = self.db_service.fetch_course_modules_by_ids(
-            item_id, self.module_id
-        )
-        if course_modules:
-            for course_module in course_modules:
-                tag_instances = self.fetch_course_module_tag_instances(
-                    course_module["id"]
-                )
-                if tag_instances:
-                    for tag_instance in tag_instances:
-                        relationships.append(
-                            get_formatted_relationship(
-                                ObjectEnum.TAG_INSTANCE,
-                                tag_instance["id"],
-                                "Deactivates tag instance",
-                            )
-                        )
-
         if relationships:
             result["relationships"] = relationships
         # endregion RELATIONSHIPS
@@ -345,24 +289,6 @@ class Base(ABC):
         rows = self.db_service.query_object(self.object_class, filter_conditions)
         return rows[0] if rows else None
 
-    def fetch_related_calendar_events(self, module_name, instance_id):
-        filter_conditions = [
-            self.Calendar_Event.modulename == module_name,
-            self.Calendar_Event.instance == instance_id,
-        ]
-        events = self.db_service.query_object(self.Calendar_Event, filter_conditions)
-        return events if events else None
-
-    def fetch_course_module_tag_instances(self, course_module_id):
-        added_tags = self.fetch_from_log_event(
-            course_module_id, objecttable="tag_instance", action="added"
-        )
-        removed_tags = self.fetch_from_log_event(
-            course_module_id, objecttable="tag_instance", action="removed"
-        )
-        instances = relation_formatter(added_tags, removed_tags, "objectid")
-        return instances if instances else None
-
     def fetch_from_log_event(
         self,
         event_id,
@@ -417,30 +343,6 @@ class Base(ABC):
                 course_relation = self.get_course_relation(event_type_enum, instance_id)
                 if course_relation:
                     relationships.append(course_relation)
-
-            calendar_events = self.fetch_related_calendar_events(
-                self.object_type.value.module_name, instance_id
-            )
-            if calendar_events:
-                for calendar_event in calendar_events:
-                    relationships.append(
-                        get_formatted_relationship(
-                            ObjectEnum.CALENDAR,
-                            calendar_event["id"],
-                            "potentially creates calendar event",
-                        )
-                    )
-
-        tag_instances = self.fetch_course_module_tag_instances(event["objectid"])
-        if tag_instances:
-            for tag_instance in tag_instances:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.TAG_INSTANCE,
-                        tag_instance["id"],
-                        "potentially creates tag instance",
-                    )
-                )
 
         qualifier = (
             "Created by user"

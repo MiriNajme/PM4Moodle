@@ -706,17 +706,6 @@ class Forum(Base):
                     ),
                 )
 
-        tag_instances = self.fetch_tag_instances(event["objectid"])
-        if tag_instances:
-            for tag_instance in tag_instances:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.TAG_INSTANCE,
-                        tag_instance["id"],
-                        "potentially creates tag instance",
-                    )
-                )
-
         result["relationships"] = relationships
         # endregion
 
@@ -767,17 +756,6 @@ class Forum(Base):
                     ),
                 )
 
-        tag_instances = self.fetch_tag_instances(event["objectid"])
-        if tag_instances:
-            for tag_instance in tag_instances:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.TAG_INSTANCE,
-                        tag_instance["id"],
-                        "Deactivates tag instance",
-                    )
-                )
-
         result["relationships"] = relationships
         # endregion
 
@@ -826,17 +804,6 @@ class Forum(Base):
                         discussion["forum"],
                         f"Edited in forum",
                     ),
-                )
-
-        tag_instances = self.fetch_tag_instances(event["objectid"])
-        if tag_instances:
-            for tag_instance in tag_instances:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.TAG_INSTANCE,
-                        tag_instance["id"],
-                        "Creates tag instance",
-                    )
                 )
 
         result["relationships"] = relationships
@@ -952,22 +919,6 @@ class Forum(Base):
         filter_conditions = [self.Post.id == post_id]
         rows = self.db_service.query_object(self.Post, filter_conditions)
         return rows[0] if rows else None
-
-    def fetch_tag_instances(self, object_id):
-        added_tags = self.fetch_from_log_event(
-            object_id,
-            objecttable="tag_instance",
-            action="added",
-            itemtype="forum_posts",
-        )
-        removed_tags = self.fetch_from_log_event(
-            object_id,
-            objecttable="tag_instance",
-            action="removed",
-            itemtype="forum_posts",
-        )
-        instances = relation_formatter(added_tags, removed_tags, "objectid")
-        return instances if instances else None
 
     def fetch_files_by_context_id(self, context_id):
         filter_conditions = [

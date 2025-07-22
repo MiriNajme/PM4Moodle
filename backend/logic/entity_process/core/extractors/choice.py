@@ -163,37 +163,6 @@ class Choice(Base):
                     )
                 )
 
-            calendar_events = self.fetch_related_calendar_events(
-                self.object_type.value.module_name, item_id
-            )
-            if calendar_events:
-                for calendar_event in calendar_events:
-                    relationships.append(
-                        get_formatted_relationship(
-                            ObjectEnum.CALENDAR,
-                            calendar_event["id"],
-                            "Deactivates calendar event",
-                        )
-                    )
-
-        course_modules = self.db_service.fetch_course_modules_by_ids(
-            item_id, self.module_id
-        )
-        if course_modules:
-            for course_module in course_modules:
-                tag_instances = self.fetch_course_module_tag_instances(
-                    course_module["id"]
-                )
-                if tag_instances:
-                    for tag_instance in tag_instances:
-                        relationships.append(
-                            get_formatted_relationship(
-                                ObjectEnum.TAG_INSTANCE,
-                                tag_instance["id"],
-                                "Deactivates tag instance",
-                            )
-                        )
-
         if relationships:
             result["relationships"] = relationships
         # endregion RELATIONSHIPS

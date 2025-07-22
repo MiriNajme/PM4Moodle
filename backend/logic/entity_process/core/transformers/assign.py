@@ -56,25 +56,6 @@ class Assign(Base):
                             )
         # endregion RELATED TO COURSE MODULE
 
-        # region CALENDAR
-        calendar_events = self.db_service.fetch_related_calendar_events(
-            self.object_type.value.module_name, row["id"]
-        )
-
-        if calendar_events:
-            for calendar_event in calendar_events:
-                relationships.append(
-                    {
-                        "objectId": get_object_key(
-                            ObjectEnum.CALENDAR, calendar_event["id"]
-                        ),
-                        "qualifier": "assign has calendar event",
-                        "from": format_date(calendar_event["timestart"]),
-                        "to": "9999-12-31T23:59:59.999Z",
-                    }
-                )
-        # endregion CALENDAR
-
         # region GRADE ITEM
         grade_items = self.fetch_assign_grade_item(row["id"])
         if grade_items:

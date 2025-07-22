@@ -9,8 +9,7 @@ class QuestionHint(Base):
         self.object_type = ObjectEnum.QUESTION_HINT
         self.object_class = self.db_service.Base.classes.mdl_question_hints
         self.has_relationships = True
-        self.has_relation_to_calendar_events = False
-
+        
     def get_attributes(self, row, columns):
         attributes = []
 

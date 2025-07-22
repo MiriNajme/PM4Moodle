@@ -13,7 +13,6 @@ class Base(ABC):
         self.object_class = None
         self.sort_by = None
         self.has_relationships = None
-        self.has_relation_to_calendar_events = True
         self.module_id = 0
 
     def transform(self):
@@ -93,23 +92,5 @@ class Base(ABC):
                         "to": "9999-12-31T23:59:59.999Z",
                     }
                 )
-
-        if self.has_relation_to_calendar_events:
-            calendar_events = self.db_service.fetch_related_calendar_events(
-                self.object_type.value.module_name, row["id"]
-            )
-
-            if calendar_events:
-                for calendar_event in calendar_events:
-                    relationships.append(
-                        {
-                            "objectId": get_object_key(
-                                ObjectEnum.CALENDAR, calendar_event["id"]
-                            ),
-                            "qualifier": f"'{self.object_type.value.name}' has calendar event",
-                            "from": format_date(calendar_event["timestart"]),
-                            "to": "9999-12-31T23:59:59.999Z",
-                        }
-                    )
 
         return relationships

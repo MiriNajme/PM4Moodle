@@ -9,8 +9,7 @@ class QuestionSlot(Base):
         self.object_type = ObjectEnum.QUESTION_SLOT
         self.object_class = self.db_service.Base.classes.mdl_quiz_slots
         self.has_relationships = True
-        self.has_relation_to_calendar_events = False
-
+        
     def get_attributes(self, row, columns):
         attributes = []
 

@@ -1,6 +1,3 @@
-from logic.entity_process.core.transformers.calendar_event import (
-    CalendarEvent,
-)
 from logic.entity_process.core.transformers.forum_discussion import (
     ForumDiscussion,
 )
@@ -17,8 +14,6 @@ from logic.entity_process.core.transformers.files import Files
 from logic.entity_process.core.transformers.grade_item import GradeItem
 from logic.entity_process.core.transformers.group import Group
 from logic.entity_process.core.transformers.section import Section
-from logic.entity_process.core.transformers.tag import Tag
-from logic.entity_process.core.transformers.tag_instance import TagInstance
 from logic.entity_process.core.transformers.user import User
 from logic.entity_process.core.transformers.assign import Assign
 from logic.entity_process.core.transformers.choice import Choice
@@ -73,7 +68,6 @@ class ObjectTransformerRegistry:
         self.ocel_event_log = ocel_event_log
 
         self.transformer = [
-            CalendarEvent(db_service, related_object_columns, ocel_event_log),
             ChoiceOption(db_service, related_object_columns, ocel_event_log),
             Course(db_service, related_object_columns, ocel_event_log),
             CourseModule(db_service, related_object_columns, ocel_event_log),
@@ -81,8 +75,6 @@ class ObjectTransformerRegistry:
             GradeItem(db_service, related_object_columns, ocel_event_log),
             Group(db_service, related_object_columns, ocel_event_log),
             Section(db_service, related_object_columns, ocel_event_log),
-            Tag(db_service, related_object_columns, ocel_event_log),
-            TagInstance(db_service, related_object_columns, ocel_event_log),
             User(db_service, related_object_columns, ocel_event_log),
             Assign(db_service, related_object_columns, ocel_event_log),
             Choice(db_service, related_object_columns, ocel_event_log),

@@ -11,7 +11,6 @@ class Question(Base):
         self.object_class = self.db_service.Base.classes.mdl_question
         self.sort_by = [("timecreated", "asc")]
         self.has_relationships = True
-        self.has_relation_to_calendar_events = False
 
     def get_attributes(self, row, columns):
         return [
@@ -54,7 +53,7 @@ class Question(Base):
 
         qtype = row["qtype"]
         qtype_qualifier = f"Is a {qtype}"
-        
+
         if qtype == "multichoice":
             self.append_relationships(
                 ObjectEnum.MULTI_CHOICE_QUESTION,
@@ -146,7 +145,7 @@ class Question(Base):
                 "Has datasets",
                 relationships,
             )
-        
+
         return relationships
 
     def fetch_answers(self, question_id):
@@ -190,7 +189,7 @@ class Question(Base):
         filter_conditions = [TABLE.questionid == question_id]
         rows = self.db_service.query_object(TABLE, filter_conditions)
         return rows or []
-    
+
     def fetch_essay_questions(self, question_id):
         TABLE = self.db_service.Base.classes.mdl_qtype_essay_options
         filter_conditions = [TABLE.questionid == question_id]
@@ -220,13 +219,13 @@ class Question(Base):
         filter_conditions = [TABLE.question == question_id]
         rows = self.db_service.query_object(TABLE, filter_conditions)
         return rows or []
-    
+
     def fetch_calculated_options(self, question_id):
         TABLE = self.db_service.Base.classes.mdl_question_calculated_options
         filter_conditions = [TABLE.question == question_id]
         rows = self.db_service.query_object(TABLE, filter_conditions)
         return rows or []
-    
+
     def fetch_question_datasets(self, question_id):
         TABLE = self.db_service.Base.classes.mdl_question_datasets
         filter_conditions = [TABLE.question == question_id]

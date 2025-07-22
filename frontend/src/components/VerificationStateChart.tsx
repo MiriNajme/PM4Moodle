@@ -13,12 +13,13 @@ export const VerificationStateChart: React.FC = () => {
     return ocelToFullRelationStateChart(jsonContent, selectedModules, modules);
   }, [jsonContent, selectedModules, modules]);
 
-  if (!jsonContent)
+  if (!jsonContent || moduleCharts?.length === 0) {
     return (
       <Text className='text-center text-gray-500'>
         No extracted log found. Run extraction first.
       </Text>
     );
+  }
 
   return (
     <div className='w-full'>

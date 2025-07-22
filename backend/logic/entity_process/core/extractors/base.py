@@ -38,7 +38,7 @@ class Base(ABC):
         self.module_id = self.db_service.fetch_module_id(
             self.object_type.value.module_name
         )
-        
+
         self.add_create_import_events()
         self.add_delete_events()
         self.add_update_events()
@@ -48,13 +48,11 @@ class Base(ABC):
 
     def extractBy(self, events: list = None):
         pass
-    
+
     def add_create_import_events(self):
         list_of_objects = []
         events_map = None
-        course_modules = self.fetch_all_course_modules_by_module(
-            self.module_id
-        )
+        course_modules = self.fetch_all_course_modules_by_module(self.module_id)
         events = self.fetch_module_events(EventType.CREATED.value.name)
 
         if events:

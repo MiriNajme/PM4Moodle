@@ -153,6 +153,16 @@ class Choice(Base):
                 if course_relationships:
                     relationships.append(course_relationships)
 
+            choice_options = self.fetch_choice_options_by_choice_id(item_id)
+            for option in choice_options:
+                relationships.append(
+                    get_formatted_relationship(
+                        ObjectEnum.OPTION,
+                        option["id"],
+                        "Deletes option",
+                    )
+                )
+
             calendar_events = self.fetch_related_calendar_events(
                 self.object_type.value.module_name, item_id
             )
@@ -331,3 +341,9 @@ class Choice(Base):
             sort_by=[("timemodified", "asc")],
         )
         return choices[0] if choices else None
+
+    def fetch_choice_options_by_choice_id(self, choice_id):
+        option_table = self.db_service.Base.classes.mdl_choice_options
+        filter_conditions = [option_table.choiceid == choice_id]
+        rows = self.db_service.query_object(option_table, filter_conditions)
+        return rows if rows else []

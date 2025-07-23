@@ -20,7 +20,7 @@ const Home = React.memo(() => {
   }
 
   return (
-    <div className='w-full mx-auto md:max-w-2/3 lg:max-w-1/2'>
+    <div className='w-full mx-auto lg:max-w-2/3'>
       <div className='min-h-screen flex justify-center py-4 px-1'>
         <div className='w-full bg-white shadow-xl rounded-xl p-8'>
           <MoodleHeading />

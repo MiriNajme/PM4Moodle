@@ -7,8 +7,8 @@ export interface OcelPivotTable {
 }
 
 export function buildPivotTable(ocelData: OcelJsonContent): OcelPivotTable {
-  const objectTypes = ocelData.objectTypes.map((o) => o.name).sort();
-  const eventTypes = ocelData.eventTypes.map((e) => e.name).sort();
+  const objectTypes = ocelData.objectTypes.map((o) => o.name)//.sort();
+  const eventTypes = ocelData.eventTypes.map((e) => e.name)//.sort();
 
   const objectIdToType: Record<string, string> = {};
   ocelData.objects.forEach((obj: any) => {

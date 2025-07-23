@@ -42,7 +42,7 @@ def get_module_events_map():
             "create_assign": "Created",
             "import_assign": "Imported",
             "update_assign": "Updated",
-            "delete_assign ": "Deleted",
+            "delete_assign": "Deleted",
             "view_assign": "Viewed",
             "submit_assignment": "Submitted",
             "resubmit_assignment": "Resubmitted",

@@ -60,10 +60,7 @@ class Assign(Base):
         if "view_assign" in events:
             self.add_view_events()
 
-        if (
-            "submit_assignment" in events
-            or "resubmit_assignment" in events
-        ):
+        if "submit_assign" in events or "resubmit_assign" in events:
             self.add_submit_assignment_events()
 
         if "set_grade" in events or "update_grade" in events:
@@ -170,18 +167,6 @@ class Assign(Base):
             ),
         )
 
-        if event_type_enum == EventType.CREATED:
-            files = self.fetch_assignment_files_by_context_id(event["contextid"])
-            if files:
-                for file in files:
-                    relationships.append(
-                        get_formatted_relationship(
-                            ObjectEnum.FILES,
-                            file["id"],
-                            "Contains file",
-                        )
-                    )
-
         if relationships:
             result["relationships"] = relationships
         # endregion RELATIONSHIPS
@@ -226,17 +211,6 @@ class Assign(Base):
             )
         )
 
-        files = self.fetch_assignment_files_by_context_id(event["contextid"])
-        if files:
-            for file in files:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.FILES,
-                        file["id"],
-                        "Contains file",
-                    )
-                )
-
         if relationships:
             result["relationships"] = relationships
         # endregion RELATIONSHIPS
@@ -276,17 +250,6 @@ class Assign(Base):
                     ObjectEnum.USER, user_row["loggeduser"], "Imported by user"
                 )
             )
-
-        context = self.fetch_assignment_context_id(row["id"])
-        if context:
-            files = self.fetch_assignment_files_by_context_id(context["id"])
-            if files:
-                for file in files:
-                    relationships.append(
-                        get_formatted_relationship(
-                            ObjectEnum.FILES, file["id"], "Contains file"
-                        )
-                    )
 
         if relationships:
             result["relationships"] = relationships
@@ -359,7 +322,7 @@ class Assign(Base):
         attributes = build_attributes(event, self.related_event_columns["log"])
         result = {
             "id": f'evt_assign_sub_asn_{event["id"]}',
-            "type": "submit_assignment",
+            "type": "submit_assign",
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
@@ -382,17 +345,6 @@ class Assign(Base):
                 course_qualifier,
             ),
         ]
-
-        files = self.fetch_assignment_files(event["objectid"])
-        if files:
-            for file in files:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.FILES,
-                        file["id"],
-                        file_qualifier,
-                    )
-                )
 
         if assign["teamsubmission"] == 1:
             relationships.append(
@@ -454,7 +406,7 @@ class Assign(Base):
         attributes = build_attributes(event, self.related_event_columns["log"])
         result = {
             "id": f'evt_assign_resub_asn_{event["id"]}',
-            "type": "resubmit_assignment",
+            "type": "resubmit_assign",
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
@@ -477,17 +429,6 @@ class Assign(Base):
                 course_qualifier,
             ),
         ]
-
-        files = self.fetch_assignment_files(event["objectid"])
-        if files:
-            for file in files:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.FILES,
-                        file["id"],
-                        file_qualifier,
-                    )
-                )
 
         if assign["teamsubmission"] == 1:
             relationships.append(
@@ -580,17 +521,6 @@ class Assign(Base):
                 if final_grade is not None:
                     result["attributes"].append({"name": "grade", "value": final_grade})
 
-        feedback_files = self.fetch_feedback_file_by_grade(event["objectid"])
-        if feedback_files:
-            for feedback_file in feedback_files:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.FILES,
-                        feedback_file["id"],
-                        "Contains feedback file",
-                    )
-                )
-
         result["relationships"] = relationships
         # endregion RELATIONSHIPS
 
@@ -650,25 +580,6 @@ class Assign(Base):
         filter_conditions = [self.object_class.id == assignment]
         assigns = self.db_service.query_object(self.object_class, filter_conditions)
         return assigns[0] if assigns else None
-
-    def fetch_assignment_files(self, object_id):
-        filter_conditions = [
-            self.Files.itemid == object_id,
-            self.Files.component == "assignsubmission_file",
-            self.Files.filearea == "submission_files",
-            not_((self.Files.filename.like(".")) | (self.Files.filename.like(""))),
-        ]
-        rows = self.db_service.query_object(self.Files, filter_conditions)
-        return rows if rows else None
-
-    def fetch_assignment_files_by_context_id(self, context_id):
-        filter_conditions = [
-            self.Files.contextid == context_id,
-            self.Files.component == "mod_assign",
-            not_((self.Files.filename.like(".")) | (self.Files.filename.like(""))),
-        ]
-        rows = self.db_service.query_object(self.Files, filter_conditions)
-        return rows if rows else None
 
     def fetch_assignment_context_id(self, instance_id):
         filter_conditions = [
@@ -754,21 +665,6 @@ class Assign(Base):
         ]
         rows = self.db_service.query_object(grade_grades_history, filter_conditions)
         return rows[0] if rows else None
-
-    def fetch_feedback_file_by_grade(self, assign_grade_id):
-        filter_conditions = [
-            self.Files.itemid == assign_grade_id,
-            self.Files.component == "assignfeedback_file",
-            self.Files.filearea == "feedback_files",
-            not_(
-                or_(
-                    self.Files.filename.like("."),
-                    self.Files.filename.like(""),
-                )
-            ),
-        ]
-        rows = self.db_service.query_object(self.Files, filter_conditions)
-        return rows if rows else None
 
     def fetch_assigns(self):
         assigns = self.db_service.query_object(

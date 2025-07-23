@@ -10,7 +10,6 @@ from logic.entity_process.core.transformers.course import Course
 from logic.entity_process.core.transformers.course_module import (
     CourseModule,
 )
-from logic.entity_process.core.transformers.files import Files
 from logic.entity_process.core.transformers.grade_item import GradeItem
 from logic.entity_process.core.transformers.group import Group
 from logic.entity_process.core.transformers.section import Section
@@ -26,10 +25,16 @@ from logic.entity_process.core.transformers.question_answer import QuestionAnswe
 from logic.entity_process.core.transformers.question_hint import QuestionHint
 from logic.entity_process.core.transformers.question_bank_entry import QuestionBankEntry
 from logic.entity_process.core.transformers.question_slot import QuestionSlot
-from logic.entity_process.core.transformers.multichoice_question import MultiChoiceQustion
+from logic.entity_process.core.transformers.multichoice_question import (
+    MultiChoiceQustion,
+)
 from logic.entity_process.core.transformers.trufalse_question import TrueFalseQustion
-from logic.entity_process.core.transformers.match_question_options import MatchQuestionOption
-from logic.entity_process.core.transformers.match_question_subquestion import MatchQuestionSubQuestion
+from logic.entity_process.core.transformers.match_question_options import (
+    MatchQuestionOption,
+)
+from logic.entity_process.core.transformers.match_question_subquestion import (
+    MatchQuestionSubQuestion,
+)
 from logic.entity_process.core.transformers.short_asnwer_question import (
     ShortAnswerQuestion,
 )
@@ -68,29 +73,28 @@ class ObjectTransformerRegistry:
         self.ocel_event_log = ocel_event_log
 
         self.transformer = [
-            ChoiceOption(db_service, related_object_columns, ocel_event_log),
-            Course(db_service, related_object_columns, ocel_event_log),
-            CourseModule(db_service, related_object_columns, ocel_event_log),
-            Files(db_service, related_object_columns, ocel_event_log),
-            GradeItem(db_service, related_object_columns, ocel_event_log),
-            Group(db_service, related_object_columns, ocel_event_log),
-            Section(db_service, related_object_columns, ocel_event_log),
             User(db_service, related_object_columns, ocel_event_log),
-            Assign(db_service, related_object_columns, ocel_event_log),
-            Choice(db_service, related_object_columns, ocel_event_log),
             File(db_service, related_object_columns, ocel_event_log),
-            Folder(db_service, related_object_columns, ocel_event_log),
-            Label(db_service, related_object_columns, ocel_event_log),
             Page(db_service, related_object_columns, ocel_event_log),
+            Folder(db_service, related_object_columns, ocel_event_log),
+            Course(db_service, related_object_columns, ocel_event_log),
+            Label(db_service, related_object_columns, ocel_event_log),
             Url(db_service, related_object_columns, ocel_event_log),
+            Assign(db_service, related_object_columns, ocel_event_log),
+            Group(db_service, related_object_columns, ocel_event_log),
+            Choice(db_service, related_object_columns, ocel_event_log),
+            Quiz(db_service, related_object_columns, ocel_event_log),
             Forum(db_service, related_object_columns, ocel_event_log),
+            ChoiceOption(db_service, related_object_columns, ocel_event_log),
             ForumDiscussion(db_service, related_object_columns, ocel_event_log),
             ForumPost(db_service, related_object_columns, ocel_event_log),
-            Quiz(db_service, related_object_columns, ocel_event_log),
-            Question(db_service, related_object_columns, ocel_event_log),
-            QuestionAnswer(db_service, related_object_columns, ocel_event_log),
-            QuestionHint(db_service, related_object_columns, ocel_event_log),
             QuestionBankEntry(db_service, related_object_columns, ocel_event_log),
+            Question(db_service, related_object_columns, ocel_event_log),
+            QuestionHint(db_service, related_object_columns, ocel_event_log),
+            QuestionAnswer(db_service, related_object_columns, ocel_event_log),
+            CourseModule(db_service, related_object_columns, ocel_event_log),
+            GradeItem(db_service, related_object_columns, ocel_event_log),
+            Section(db_service, related_object_columns, ocel_event_log),
             QuestionDataset(db_service, related_object_columns, ocel_event_log),
             DatasetDefinition(db_service, related_object_columns, ocel_event_log),
             MultiChoiceQustion(db_service, related_object_columns, ocel_event_log),

@@ -13,7 +13,6 @@ class Assign(Base):
         self.sort_by = [("timemodified", "asc")]
         self.has_relationships = True
 
-        self.Files = self.db_service.Base.classes.mdl_files
         self.GradeItems = self.db_service.Base.classes.mdl_grade_items
         self.Context = self.db_service.Base.classes.mdl_context
 
@@ -36,24 +35,6 @@ class Assign(Base):
                         "to": "9999-12-31T23:59:59.999Z",
                     }
                 )
-
-                context = self.fetch_assignment_context_id(course_module["id"])
-                if context:
-                    files = self.db_service.fetch_assignment_files_by_context_id(
-                        context["id"]
-                    )
-                    if files:
-                        for file in files:
-                            relationships.append(
-                                {
-                                    "objectId": get_object_key(
-                                        ObjectEnum.FILES, file["id"]
-                                    ),
-                                    "qualifier": "Contains " + file["filearea"],
-                                    "from": format_date(file["timecreated"]),
-                                    "to": "9999-12-31T23:59:59.999Z",
-                                }
-                            )
         # endregion RELATED TO COURSE MODULE
 
         # region GRADE ITEM
@@ -72,20 +53,6 @@ class Assign(Base):
                 )
         # endregion GRADE ITEM
 
-        # region SUBMISSION FILES
-        submission_files = self.fetch_submission_files(row["id"])
-        if submission_files:
-            for file in submission_files:
-                relationships.append(
-                    {
-                        "objectId": get_object_key(ObjectEnum.FILES, file["id"]),
-                        "qualifier": "Contains submission file",
-                        "from": format_date(file["timecreated"]),
-                        "to": "9999-12-31T23:59:59.999Z",
-                    }
-                )
-        # endregion SUBMISSION FILES
-
         return relationships
 
     def fetch_assign_grade_item(self, assign_id):
@@ -97,36 +64,3 @@ class Assign(Base):
             ],
         )
         return grade_items if grade_items else None
-
-    def fetch_submission_files(self, assign_id):
-        assign_submission = self.db_service.Base.classes.mdl_assign_submission
-        filter_conditions = [assign_submission.assignment == assign_id]
-        submission_row = self.db_service.query_object(
-            assign_submission, filter_conditions
-        )
-        if submission_row:
-            filter_conditions = [
-                self.Files.itemid == submission_row[0]["id"],
-                self.Files.component == "assignsubmission_file",
-                self.Files.filearea == "submission_files",
-                not_(
-                    or_(
-                        self.Files.filename.like("."),
-                        self.Files.filename.like(""),
-                    )
-                ),
-            ]
-            rows = self.db_service.query_object(
-                self.Files, filter_conditions, sort_by=[("timecreated", "asc")]
-            )
-            return rows if rows else None
-
-        return None
-
-    def fetch_assignment_context_id(self, instance_id):
-        filter_conditions = [
-            self.Context.instanceid == instance_id,
-            self.Context.contextlevel == 70,
-        ]
-        rows = self.db_service.query_object(self.Context, filter_conditions)
-        return rows[0] if rows else None

@@ -29,11 +29,9 @@ class ObjectEnum(Enum):
         "question_bank_entry", "qbe", "mdl_question_bank_entries"
     )
     QUESTION = ObjectValue("question", "qst", "mdl_question")
-    QUESTION_HINT = ObjectValue("question_hints", "qhi", "mdl_question_hints")
-    QUESTION_ANSWER = ObjectValue("question_answers", "qan", "mdl_question_answers")
+    QUESTION_HINT = ObjectValue("hint", "qhi", "mdl_question_hints")
+    QUESTION_ANSWER = ObjectValue("answer", "qan", "mdl_question_answers")
     COURSE_MODULE = ObjectValue("course_module", "cmd", "mdl_course_modules")
-    FILES = ObjectValue("submission_file", "sfl", "mdl_files")
-    FeedBack_FILE = ObjectValue("feedback_file", "ffl", "mdl_files")
     GRADE_ITEM = ObjectValue("grade_item", "gri", "mdl_grade_items", "grade_item")
     SECTION = ObjectValue("section", "sec", "mdl_course_sections")
     QUESTION_SLOT = ObjectValue("question_slots", "qsl", "mdl_quiz_slots")

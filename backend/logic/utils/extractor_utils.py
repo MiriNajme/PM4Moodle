@@ -44,8 +44,8 @@ def get_module_events_map():
             "update_assign": "Updated",
             "delete_assign": "Deleted",
             "view_assign": "Viewed",
-            "submit_assignment": "Submitted",
-            "resubmit_assignment": "Resubmitted",
+            "submit_assign": "Submitted",
+            "resubmit_assign": "Resubmitted",
             "set_grade": "graded",
             "update_grade": "Updated",
         },
@@ -143,21 +143,18 @@ def get_module_event_objects_map():
                 ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
-                ObjectEnum.FILES.value.name,
             ],
             "import_assign": [
                 ObjectEnum.ASSIGN.value.name,
                 ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
-                ObjectEnum.FILES.value.name,
             ],
             "update_assign": [
                 ObjectEnum.ASSIGN.value.name,
                 ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
-                ObjectEnum.FILES.value.name,
             ],
             "delete_assign": [
                 ObjectEnum.ASSIGN.value.name,
@@ -170,31 +167,27 @@ def get_module_event_objects_map():
                 ObjectEnum.USER.value.name,
                 ObjectEnum.COURSE.value.name,
             ],
-            "submit_assignment": [
+            "submit_assign": [
                 ObjectEnum.ASSIGN.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.COURSE.value.name,
-                ObjectEnum.FILES.value.name,
                 ObjectEnum.GROUP.value.name,
             ],
-            "resubmit_assignment": [
+            "resubmit_assign": [
                 ObjectEnum.ASSIGN.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.COURSE.value.name,
-                ObjectEnum.FILES.value.name,
                 ObjectEnum.GROUP.value.name,
             ],
             "set_grade": [
                 ObjectEnum.ASSIGN.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.COURSE.value.name,
-                ObjectEnum.FILES.value.name,
             ],
             "update_grade": [
                 ObjectEnum.ASSIGN.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.COURSE.value.name,
-                ObjectEnum.FILES.value.name,
             ],
         },
         ObjectEnum.CHOICE.value.name: {

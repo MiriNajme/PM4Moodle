@@ -16,6 +16,7 @@ class Page(Base):
         self.object_type = ObjectEnum.PAGE
         self.object_class = self.db_service.Base.classes.mdl_page
         self.has_view_events = True
+        self.has_course_relation = True
 
     def extractBy(self, events: list = None):
         if not events:

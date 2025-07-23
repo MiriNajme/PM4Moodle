@@ -39,14 +39,3 @@ class File(Base):
 
         if "view_file" in events:
             self.add_view_events()
-
-    def get_viewed_event_object(self, event):
-        result = super().get_viewed_event_object(event)
-
-        course_relationships = self.get_course_relation(
-            EventType.VIEWED, event["objectid"]
-        )
-        if course_relationships:
-            result["relationships"].append(course_relationships)
-
-        return result

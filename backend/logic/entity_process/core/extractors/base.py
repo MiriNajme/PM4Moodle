@@ -192,6 +192,14 @@ class Base(ABC):
         relationships.append(
             get_formatted_relationship(ObjectEnum.USER, event["userid"], qualifier)
         )
+
+        if self.has_course_relation:
+            course_relationship = self.get_course_relation(
+                EventType.VIEWED, event["objectid"]
+            )
+            if course_relationship:
+                relationships.append(course_relationship)
+
         result["relationships"] = relationships
         return result
 

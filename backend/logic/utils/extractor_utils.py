@@ -329,6 +329,7 @@ def get_module_event_objects_map():
             "download_folder": [
                 ObjectEnum.FOLDER.value.name,
                 ObjectEnum.USER.value.name,
+                ObjectEnum.COURSE.value.name,
             ],
         },
         ObjectEnum.LABEL.value.name: {
@@ -361,25 +362,30 @@ def get_module_event_objects_map():
             "create_page": [
                 ObjectEnum.PAGE.value.name,
                 ObjectEnum.COURSE_MODULE.value.name,
+                ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "import_page": [
                 ObjectEnum.PAGE.value.name,
                 ObjectEnum.COURSE_MODULE.value.name,
+                ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "update_page": [
                 ObjectEnum.PAGE.value.name,
                 ObjectEnum.COURSE_MODULE.value.name,
+                ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "delete_page": [
                 ObjectEnum.PAGE.value.name,
                 ObjectEnum.COURSE_MODULE.value.name,
+                ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "view_page": [
                 ObjectEnum.PAGE.value.name,
+                ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
         },
@@ -387,25 +393,30 @@ def get_module_event_objects_map():
             "create_url": [
                 ObjectEnum.URL.value.name,
                 ObjectEnum.COURSE_MODULE.value.name,
+                ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "import_url": [
                 ObjectEnum.URL.value.name,
                 ObjectEnum.COURSE_MODULE.value.name,
+                ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "update_url": [
                 ObjectEnum.URL.value.name,
                 ObjectEnum.COURSE_MODULE.value.name,
+                ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "delete_url": [
                 ObjectEnum.URL.value.name,
                 ObjectEnum.COURSE_MODULE.value.name,
+                ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "view_url": [
                 ObjectEnum.URL.value.name,
+                ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
         },

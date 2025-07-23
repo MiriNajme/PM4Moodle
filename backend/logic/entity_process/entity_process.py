@@ -144,7 +144,6 @@ class EntityProcess:
             {"name": "view_assign", "attributes": log_attributes},
             {"name": "submit_assign", "attributes": log_attributes},
             {"name": "resubmit_assign", "attributes": log_attributes},
-            {"name": "remove_assign_submission", "attributes": log_attributes},
             # endregion ASSIGN
             # region CHOICE
             {"name": "create_choice", "attributes": log_attributes},
@@ -209,7 +208,6 @@ class EntityProcess:
             {"name": "delete_post", "attributes": log_attributes},
             {"name": "edit_post", "attributes": log_attributes},
             {"name": "rate_user_forum", "attributes": log_attributes},
-            {"name": "update_rate_user_forum", "attributes": log_attributes},
             # endregion FORUM
             # region QUIZ
             {"name": "create_quiz", "attributes": log_attributes},

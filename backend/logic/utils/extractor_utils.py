@@ -114,7 +114,6 @@ def get_module_events_map():
             "set_grade": "Graded",
             "update_grade": "Grade Updated",
             "rate_user_forum": "Rated",
-            "update_rate_user_forum": "Rating Updated",
         },
         ObjectEnum.QUIZ.value.name: {
             "create_quiz": "Created",
@@ -497,10 +496,6 @@ def get_module_event_objects_map():
                 ObjectEnum.USER.value.name,
             ],
             "rate_user_forum": [
-                ObjectEnum.FORUM.value.name,
-                ObjectEnum.USER.value.name,
-            ],
-            "update_rate_user_forum": [
                 ObjectEnum.FORUM.value.name,
                 ObjectEnum.USER.value.name,
             ],

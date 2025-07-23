@@ -8,7 +8,7 @@ from logic.utils.object_utils import get_object_key
 from logic.utils.extractor_utils import (
     build_attributes,
     get_formatted_event_id,
-    get_formatted_relationship
+    get_formatted_relationship,
 )
 
 
@@ -107,7 +107,6 @@ class Forum(Base):
             "set_grade" in events
             or "update_grade" in events
             or "rate_user_forum" in events
-            or "update_rate_user_forum" in events
         ):
             self.add_grade_rate_events()
 
@@ -261,9 +260,9 @@ class Forum(Base):
                     object_ids.append(event["objectid"])
                     event_type = EventType.SET
 
-                self.ocel_event_log["events"].append(
-                    self.get_grade_rate_event_object(event, event_type)
-                )
+                result = self.get_grade_rate_event_object(event, event_type)
+                if result:
+                    self.ocel_event_log["events"].append(result)
 
     # endregion Extra event extraction process
 
@@ -321,7 +320,7 @@ class Forum(Base):
             {
                 "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
                 "qualifier": "Related to course",
-            }
+            },
         ]
 
         instance = json.loads(event["other"])
@@ -463,7 +462,7 @@ class Forum(Base):
             {
                 "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
                 "qualifier": "Related to course",
-            }
+            },
         ]
 
         discussion = self.fetch_discussion_by_id(event["objectid"])
@@ -512,7 +511,7 @@ class Forum(Base):
             {
                 "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
                 "qualifier": "Related to course",
-            }
+            },
         ]
 
         other = json.loads(event["other"]) if event.get("other") else {}
@@ -664,7 +663,7 @@ class Forum(Base):
             {
                 "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
                 "qualifier": "Related to course",
-            }
+            },
         ]
 
         instance = json.loads(event["other"])
@@ -772,7 +771,7 @@ class Forum(Base):
             {
                 "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
                 "qualifier": "Related to course",
-            }
+            },
         ]
 
         post = self.fetch_post_by_id(event["objectid"])
@@ -826,7 +825,7 @@ class Forum(Base):
             {
                 "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
                 "qualifier": "Related to course",
-            }
+            },
         ]
 
         post = self.fetch_post_by_id(event["objectid"])
@@ -863,7 +862,7 @@ class Forum(Base):
 
         instance = json.loads(event["other"])
         if instance is None:
-            return
+            return None
 
         grade_item = self.fetch_grade_item_by_id(instance["itemid"])
         is_rating = False
@@ -871,8 +870,7 @@ class Forum(Base):
         if "rating" in grade_item["itemname"]:
             is_rating = True
             if event_type == EventType.UPDATED:
-                event_qualifier = f"evt_{EventType.UPDATE_RATE_USER_FORUM.value.abbr}"
-                event_type = EventType.UPDATE_RATE_USER_FORUM
+                return None
             else:
                 event_qualifier = f"evt_{EventType.RATE_USER_FORUM.value.abbr}"
                 event_type = EventType.RATE_USER_FORUM

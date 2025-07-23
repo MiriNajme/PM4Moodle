@@ -80,12 +80,6 @@ class EventType(Enum):
     RATE_USER_FORUM = EventValue(
         "rate_user_forum", "rat_usr_frm", "rate_user_forum", "Rates user in forum"
     )
-    UPDATE_RATE_USER_FORUM = EventValue(
-        "update_rate_user_forum",
-        "upd_rat_usr_frm",
-        "update_rate_user_forum",
-        "Updates user rate in forum",
-    )
     # endregion Forum events
 
     # region QUIZ

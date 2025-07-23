@@ -174,6 +174,16 @@ class Quiz(Base):
 
         self.set_quiz_relationship(event["objectid"], event_type_enum, relationships)
 
+        hints = self.fetch_question_hints(event["objectid"])
+        for hint in hints:
+            relationships.append(
+                get_formatted_relationship(
+                    ObjectEnum.QUESTION_HINT,
+                    hint["id"],
+                    "Creates hint",
+                )
+            )
+
         if event_type_enum is EventType.CREATE_QUESTION:
             answers = self.fetch_question_answers(event["objectid"])
             for answer in answers:
@@ -422,5 +432,11 @@ class Quiz(Base):
     def fetch_question_answers(self, question_id):
         TABLE = self.db_service.Base.classes.mdl_question_answers
         filter_conditions = [TABLE.question == question_id]
+        rows = self.db_service.query_object(TABLE, filter_conditions)
+        return rows if rows else []
+
+    def fetch_question_hints(self, question_id):
+        TABLE = self.db_service.Base.classes.mdl_question_hints
+        filter_conditions = [TABLE.questionid == question_id]
         rows = self.db_service.query_object(TABLE, filter_conditions)
         return rows if rows else []

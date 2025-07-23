@@ -3,7 +3,7 @@ from logic.model.event_types import EventType
 from logic.model.object_enum import ObjectEnum
 from logic.entity_process.core.extractors.base import Base
 from logic.utils.date_utils import format_date
-from logic.utils.object_utils import convert_value_type
+from logic.utils.object_utils import convert_value_type, get_object_key
 from logic.utils.extractor_utils import (
     build_attributes,
     get_formatted_event_id,
@@ -170,6 +170,10 @@ class Quiz(Base):
                 event["objectid"],
                 question_qualifier,
             ),
+            {
+                "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
+                "qualifier": "Related to course",
+            },
         ]
 
         self.set_quiz_relationship(event["objectid"], event_type_enum, relationships)
@@ -229,6 +233,10 @@ class Quiz(Base):
             get_formatted_relationship(
                 ObjectEnum.USER, event["userid"], user_qualifier
             ),
+            {
+                "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
+                "qualifier": "Related to course",
+            },
         ]
 
         question_refrence = self.fetch_question_refrence(event["objectid"], "itemid")
@@ -298,6 +306,14 @@ class Quiz(Base):
             ),
         ]
 
+        quiz = self.fetch_quiz_by_id(event["quiz"])
+        if quiz is not None:
+            relationships.append(
+                get_formatted_relationship(
+                    ObjectEnum.COURSE, quiz["course"], "Related to course"
+                )
+            )
+
         if relationships:
             result["relationships"] = relationships
         return result
@@ -331,6 +347,14 @@ class Quiz(Base):
                 ObjectEnum.QUIZ, event["quiz"], EventType.QUIZ_SET_GRADE.value.qualifier
             ),
         ]
+
+        quiz = self.fetch_quiz_by_id(event["quiz"])
+        if quiz is not None:
+            relationships.append(
+                get_formatted_relationship(
+                    ObjectEnum.COURSE, quiz["course"], "Related to course"
+                )
+            )
 
         if relationships:
             result["relationships"] = relationships
@@ -440,3 +464,9 @@ class Quiz(Base):
         filter_conditions = [TABLE.questionid == question_id]
         rows = self.db_service.query_object(TABLE, filter_conditions)
         return rows if rows else []
+
+    def fetch_quiz_by_id(self, quiz_id):
+        TABLE = self.db_service.Base.classes.mdl_quiz
+        filter_conditions = [TABLE.id == quiz_id]
+        rows = self.db_service.query_object(TABLE, filter_conditions)
+        return rows[0] if rows else None

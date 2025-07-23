@@ -4,12 +4,11 @@ from logic.model.event_types import EventType
 from logic.model.object_enum import ObjectEnum
 from logic.entity_process.core.extractors.base import Base
 from logic.utils.date_utils import format_date
-from logic.utils.object_utils import relation_formatter
+from logic.utils.object_utils import get_object_key
 from logic.utils.extractor_utils import (
     build_attributes,
     get_formatted_event_id,
-    get_formatted_relationship,
-    get_module_event_type_name,
+    get_formatted_relationship
 )
 
 
@@ -271,13 +270,13 @@ class Forum(Base):
     # region Extra event object construction
     def get_deleted_module_event_object(self, event):
         result = super().get_deleted_module_event_object(event)
-        
+
         # region RELATIONSHIPS
         instance = json.loads(event["customdata"])
         if instance:
             forum_id = instance["cms"][0]["instance"]
             forum_discussion = self.fetch_related_forum_discussions(forum_id)
-            
+
             for discussion in forum_discussion:
                 result["relationships"].append(
                     get_formatted_relationship(
@@ -319,6 +318,10 @@ class Forum(Base):
                 event["userid"],
                 f"{EventType.SUBSCRIBE_TO_FORUM.value.qualifier} by user",
             ),
+            {
+                "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
+                "qualifier": "Related to course",
+            }
         ]
 
         instance = json.loads(event["other"])
@@ -358,6 +361,10 @@ class Forum(Base):
                 event["userid"],
                 f"{EventType.UNSUBSCRIBE_FROM_FORUM.value.qualifier} by user",
             ),
+            {
+                "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
+                "qualifier": "Related to course",
+            },
         ]
 
         instance = json.loads(event["other"])
@@ -400,6 +407,10 @@ class Forum(Base):
                 event["userid"],
                 f"{EventType.ADD_DISCUSSION.value.qualifier} by user",
             ),
+            {
+                "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
+                "qualifier": "Related to course",
+            },
         ]
 
         discussion = self.fetch_discussion_by_id(event["objectid"])
@@ -449,6 +460,10 @@ class Forum(Base):
                 event["userid"],
                 f"{EventType.VIEW_DISCUSSION.value.qualifier} by user",
             ),
+            {
+                "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
+                "qualifier": "Related to course",
+            }
         ]
 
         discussion = self.fetch_discussion_by_id(event["objectid"])
@@ -494,6 +509,10 @@ class Forum(Base):
                 "system",
                 f"{EventType.DELETE_DISCUSSION.value.qualifier} by system",
             ),
+            {
+                "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
+                "qualifier": "Related to course",
+            }
         ]
 
         other = json.loads(event["other"]) if event.get("other") else {}
@@ -542,6 +561,10 @@ class Forum(Base):
                 event["userid"],
                 f"{event_type.value.qualifier} by user",
             ),
+            {
+                "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
+                "qualifier": "Related to course",
+            },
         ]
 
         relationships.append(
@@ -587,6 +610,10 @@ class Forum(Base):
                 event["userid"],
                 f"{EventType.SUBSCRIBE_TO_DISCUSSION.value.qualifier} by user",
             ),
+            {
+                "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
+                "qualifier": "Related to course",
+            },
         ]
 
         instance = json.loads(event["other"])
@@ -634,6 +661,10 @@ class Forum(Base):
                 event["userid"],
                 f"{EventType.UNSUBSCRIBE_FROM_DISCUSSION.value.qualifier} by user",
             ),
+            {
+                "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
+                "qualifier": "Related to course",
+            }
         ]
 
         instance = json.loads(event["other"])
@@ -684,6 +715,10 @@ class Forum(Base):
                 event["userid"],
                 f"{EventType.UPLOAD_POST.value.qualifier} by user",
             ),
+            {
+                "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
+                "qualifier": "Related to course",
+            },
         ]
 
         post = self.fetch_post_by_id(event["objectid"])
@@ -734,6 +769,10 @@ class Forum(Base):
                 event["userid"],
                 f"{EventType.DELETE_POST.value.qualifier} by user",
             ),
+            {
+                "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
+                "qualifier": "Related to course",
+            }
         ]
 
         post = self.fetch_post_by_id(event["objectid"])
@@ -784,6 +823,10 @@ class Forum(Base):
                 event["userid"],
                 f"{EventType.EDIT_POST.value.qualifier} by user",
             ),
+            {
+                "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
+                "qualifier": "Related to course",
+            }
         ]
 
         post = self.fetch_post_by_id(event["objectid"])
@@ -871,6 +914,10 @@ class Forum(Base):
                 event["relateduserid"],
                 "Rated for user" if is_rating else "Graded for user",
             ),
+            {
+                "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
+                "qualifier": "Related to course",
+            },
         ]
 
         relationships.append(

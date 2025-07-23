@@ -142,10 +142,8 @@ class EntityProcess:
             {"name": "update_assign", "attributes": log_attributes},
             {"name": "delete_assign", "attributes": task_adhoc_attributes},
             {"name": "view_assign", "attributes": log_attributes},
-            {"name": "submit_group_assign", "attributes": log_attributes},
-            {"name": "submit_individual_assign", "attributes": log_attributes},
-            {"name": "resubmit_group_assign", "attributes": log_attributes},
-            {"name": "resubmit_individual_assign", "attributes": log_attributes},
+            {"name": "submit_assignment", "attributes": log_attributes},
+            {"name": "resubmit_assignment", "attributes": log_attributes},
             {"name": "remove_assign_submission", "attributes": log_attributes},
             # endregion ASSIGN
             # region CHOICE

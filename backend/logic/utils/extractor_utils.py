@@ -44,10 +44,8 @@ def get_module_events_map():
             "update_assign": "Updated",
             "delete_assign ": "Deleted",
             "view_assign": "Viewed",
-            "submit_group_assign": "Submitted",
-            "submit_individual_assign": "Submitted",
-            "resubmit_group_assign": "Resubmitted",
-            "resubmit_individual_assign": "Resubmitted",
+            "submit_assignment": "Submitted",
+            "resubmit_assignment": "Resubmitted",
             "set_grade": "graded",
             "update_grade": "Updated",
         },
@@ -172,28 +170,14 @@ def get_module_event_objects_map():
                 ObjectEnum.USER.value.name,
                 ObjectEnum.COURSE.value.name,
             ],
-            "submit_group_assign": [
+            "submit_assignment": [
                 ObjectEnum.ASSIGN.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.FILES.value.name,
                 ObjectEnum.GROUP.value.name,
             ],
-            "submit_individual_assign": [
-                ObjectEnum.ASSIGN.value.name,
-                ObjectEnum.USER.value.name,
-                ObjectEnum.COURSE.value.name,
-                ObjectEnum.FILES.value.name,
-                ObjectEnum.GROUP.value.name,
-            ],
-            "resubmit_group_assign": [
-                ObjectEnum.ASSIGN.value.name,
-                ObjectEnum.USER.value.name,
-                ObjectEnum.COURSE.value.name,
-                ObjectEnum.FILES.value.name,
-                ObjectEnum.GROUP.value.name,
-            ],
-            "resubmit_individual_assign": [
+            "resubmit_assignment": [
                 ObjectEnum.ASSIGN.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.COURSE.value.name,

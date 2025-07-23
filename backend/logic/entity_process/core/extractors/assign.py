@@ -61,10 +61,8 @@ class Assign(Base):
             self.add_view_events()
 
         if (
-            "submit_group_assign" in events
-            or "submit_individual_assign" in events
-            or "resubmit_group_assign" in events
-            or "resubmit_individual_assign" in events
+            "submit_assignment" in events
+            or "resubmit_assignment" in events
         ):
             self.add_submit_assignment_events()
 
@@ -73,7 +71,7 @@ class Assign(Base):
 
     def add_create_import_events(self):
         assigns = self.fetch_assigns()
-        
+
         for assign in assigns:
             course_module = self.fetch_course_module_by_instance(
                 assign["id"], self.module_id
@@ -345,12 +343,6 @@ class Assign(Base):
         if assign["teamsubmission"] == 1 and submission["groupid"] == 0:
             return None
 
-        event_type = (
-            "submit_individual_assign"
-            if assign["teamsubmission"] == 0
-            else "submit_group_assign"
-        )
-        type_abbr = "sub_ind" if assign["teamsubmission"] == 0 else "sub_grp"
         user_qualifier = (
             "Submitted by"
             if assign["teamsubmission"] == 0
@@ -366,8 +358,8 @@ class Assign(Base):
 
         attributes = build_attributes(event, self.related_event_columns["log"])
         result = {
-            "id": f'evt_assign_{type_abbr}_{event["id"]}',
-            "type": event_type,
+            "id": f'evt_assign_sub_asn_{event["id"]}',
+            "type": "submit_assignment",
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
@@ -446,12 +438,6 @@ class Assign(Base):
         if assign["teamsubmission"] == 1 and submission["groupid"] == 0:
             return None
 
-        event_type = (
-            "resubmit_individual_assign"
-            if assign["teamsubmission"] == 0
-            else "resubmit_group_assign"
-        )
-        type_abbr = "resub_ind_" if assign["teamsubmission"] == 0 else "resub_grp_"
         user_qualifier = (
             "Resubmitted by"
             if assign["teamsubmission"] == 0
@@ -467,8 +453,8 @@ class Assign(Base):
 
         attributes = build_attributes(event, self.related_event_columns["log"])
         result = {
-            "id": f'evt_assign_{type_abbr}_{event["id"]}',
-            "type": event_type,
+            "id": f'evt_assign_resub_asn_{event["id"]}',
+            "type": "resubmit_assignment",
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }

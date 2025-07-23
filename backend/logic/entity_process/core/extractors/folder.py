@@ -1,7 +1,9 @@
+from logic.utils.object_utils import get_object_key
 from logic.model.event_types import EventType
 from logic.model.object_enum import ObjectEnum
 from logic.utils.extractor_utils import (
     build_attributes,
+    get_course_relationship_qualifier,
     get_formatted_event_id,
     get_formatted_relationship,
     get_module_event_type_name,
@@ -24,6 +26,7 @@ class Folder(Base):
         self.object_type = ObjectEnum.FOLDER
         self.object_class = self.db_service.Base.classes.mdl_folder
         self.has_view_events = True
+        self.has_course_relation = True
 
     def extract(self):
         super().extract()
@@ -84,6 +87,10 @@ class Folder(Base):
                 event["userid"],
                 "Downloaded by user",
             ),
+            {
+                "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),
+                "qualifier": get_course_relationship_qualifier(EventType.DOWNLOADED),
+            },
         ]
 
         result["relationships"] = relationships

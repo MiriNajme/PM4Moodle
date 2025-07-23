@@ -28,6 +28,7 @@ _event_type_to_qualifier = {
     EventType.VIEWED: "Viewed in course",
     EventType.IMPORTED: "Imported in course",
     EventType.DELETED: "Deleted in course",
+    EventType.DOWNLOADED: "Downloaded in course",
 }
 
 

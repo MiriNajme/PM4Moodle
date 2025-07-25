@@ -371,10 +371,14 @@ class Quiz(Base):
             bank_entry_qualifier = ""
             quiz_qualifier = ""
 
-        course_modules = None
-        question_version = self.fetch_question_version(event["objectid"])
+        course_modules = self.fetch_course_modules(event["contextinstanceid"])
+        
+        if course_modules is None:
+            question_version = self.fetch_question_version(event["objectid"])
 
-        if question_version is not None:
+            if question_version is None:
+                return
+
             relationships.append(
                 get_formatted_relationship(
                     ObjectEnum.QUESTION_BANK_ENTRY,
@@ -389,14 +393,13 @@ class Quiz(Base):
 
             if question_refrence is not None:
                 context = self.fetch_context(question_refrence["usingcontextid"])
+
                 if context is None:
                     return
 
                 course_modules = self.fetch_course_modules(context["instanceid"])
             else:
                 return
-        else:
-            course_modules = self.fetch_course_modules(event["contextinstanceid"])
 
         if course_modules is None:
             return

@@ -59,7 +59,7 @@ const OcelVerificationMatrix = React.memo(() => {
         Verification Matrix (Object counts per event)
       </Text>
       <div className='my-4 max-h-[55dvh] overflow-auto border border-gray-200 rounded-lg'>
-        <table>
+        <table className='w-full'>
           <thead>
             <tr>
               <th className='bg-white border-b border-r p-2 text-left sticky top-0 left-0 min-w-[140px]'>
@@ -69,7 +69,7 @@ const OcelVerificationMatrix = React.memo(() => {
                 <th
                   key={objType}
                   className={clsx(
-                    "bg-gray-100 border-b p-2 sticky top-0 z-20 text-center min-w-[120px]",
+                    "bg-gray-100 border-b p-2 sticky top-0 z-20 text-center",
                     hovered.col === colIdx ? "!bg-blue-100" : ""
                   )}
                 >
@@ -91,7 +91,7 @@ const OcelVerificationMatrix = React.memo(() => {
               >
                 <td
                   className={clsx(
-                    "bg-gray-100 border-b border-r p-2 font-semibold sticky left-0 z-20 min-w-[140px] border-gray-100 border-r-gray-500",
+                    "bg-gray-100 border-b border-r p-2 font-semibold sticky left-0 z-20 border-gray-100 border-r-gray-500",
                     rowIdx % 2 === 1 ? "bg-gray-200" : "",
                     hovered.row === rowIdx ? "!bg-blue-100" : ""
                   )}

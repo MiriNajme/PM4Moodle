@@ -24,9 +24,8 @@ This tool streamlines the extraction, validation, and analysis of object-centric
 - [Backend Setup](#backend-setup)
 - [Frontend Setup](#frontend-setup)
 - [Troubleshooting](#troubleshooting)
-- [License](#license)
 - [How to Use PM4Moodle](#how-to-use-pm4moodle)
-
+- [License](#license)
 ---
 
 ## Project Structure

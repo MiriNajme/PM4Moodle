@@ -361,53 +361,47 @@ class Quiz(Base):
         return result
 
     def set_quiz_relationship(self, event, event_type, relationships):
-        question_version = self.fetch_question_version(event["objectid"])
-        if question_version is None:
-            return
-
         if event_type is EventType.CREATE_QUESTION:
-            qualifier = "Creates bank entry"
+            bank_entry_qualifier = "Creates bank entry"
+            quiz_qualifier = "Created in the quiz"
         elif event_type is EventType.DELETE_QUESTION:
-            qualifier = "Deletes bank entry"
+            bank_entry_qualifier = "Deletes bank entry"
+            quiz_qualifier = "Deleted from the quiz"
         else:
-            qualifier = ""
+            bank_entry_qualifier = ""
+            quiz_qualifier = ""
 
-        relationships.append(
-            get_formatted_relationship(
-                ObjectEnum.QUESTION_BANK_ENTRY,
-                question_version["questionbankentryid"],
-                qualifier,
+        question_version = self.fetch_question_version(event["objectid"])
+        if question_version is not None:
+            relationships.append(
+                get_formatted_relationship(
+                    ObjectEnum.QUESTION_BANK_ENTRY,
+                    question_version["questionbankentryid"],
+                    bank_entry_qualifier,
+                )
             )
-        )
 
-        question_refrence = self.fetch_question_refrence(
-            question_version["questionbankentryid"], "questionbankentryid"
-        )
-        
-        if question_refrence is not None:
-            context = self.fetch_context(question_refrence["usingcontextid"])
-            if context is None:
-                return
+            question_refrence = self.fetch_question_refrence(
+                question_version["questionbankentryid"], "questionbankentryid"
+            )
 
-            course_modules = self.fetch_course_modules(context["instanceid"])
+            if question_refrence is not None:
+                context = self.fetch_context(question_refrence["usingcontextid"])
+                if context is None:
+                    return
+
+                course_modules = self.fetch_course_modules(context["instanceid"])
         else:
             course_modules = self.fetch_course_modules(event["contextinstanceid"])
-            
+
         if course_modules is None:
             return
-
-        if event_type is EventType.CREATE_QUESTION:
-            qualifier = "Created in the quiz"
-        elif event_type is EventType.DELETE_QUESTION:
-            qualifier = "Deleted from the quiz"
-        else:
-            qualifier = ""
 
         relationships.append(
             get_formatted_relationship(
                 ObjectEnum.QUIZ,
                 course_modules["instance"],
-                qualifier,
+                quiz_qualifier,
             )
         )
 

@@ -59,7 +59,7 @@ const OcelVerificationMatrix = React.memo(() => {
         Verification Matrix (Object counts per event)
       </Text>
       <div className='my-4 max-h-[55dvh] overflow-auto border border-gray-200 rounded-lg'>
-        <table>
+        <table className='w-full'>
           <thead>
             <tr>
               <th className='bg-white border-b border-r p-2 text-left sticky top-0 left-0 min-w-[140px]'>

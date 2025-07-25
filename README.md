@@ -9,6 +9,8 @@ Key features include:
 - **Object-Centric Directly-Follows Graph (OC-DFG):** Automatically generate OC-DFG visualizations for extracted logs.
 - **Verification Matrix:** Allows teachers to verify the extracted logs with a matrix showing the number of objects per event, supporting log quality checks.
 - **Lifecycle Diagrams:** For each supported module, generates a state chart (lifecycle diagram) based on the actual events for that module in the extracted file.
+- **Downloadable Outputs:** Download both the OCEL 2.0 JSON log and generated visualizations directly from the interface.
+
 
 This tool streamlines the extraction, validation, and analysis of object-centric event logs from Moodle, supporting object-centric process mining and educational analytics.
 
@@ -23,6 +25,7 @@ This tool streamlines the extraction, validation, and analysis of object-centric
 - [Frontend Setup](#frontend-setup)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
+- [How to Use PM4Moodle](#how-to-use-pm4moodle)
 
 ---
 
@@ -175,6 +178,21 @@ The frontend should now be running, typically on [[http://localhost:5173](http:/
 
 ---
 
+## how-to-use-pm4moodle
+PM4Moodle’s interface is organized into three main tabs.
+Here’s how to extract logs and generate visualizations:
+
+### Main Page
+
+#### 1. Set Up Database Connection
+
+- Click the **Settings** button in the top-right corner of the page.
+- Enter your Moodle database credentials (host, database name, username, password, port).
+- Save your settings.
+- _![Screenshot: Database Settings Dialog](screenshots/database_settings.png)_
+
+
+---
 ## License
 
  

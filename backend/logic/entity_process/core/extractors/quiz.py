@@ -343,6 +343,7 @@ class Quiz(Base):
             get_formatted_relationship(
                 ObjectEnum.USER, event["userid"], user_qualifier
             ),
+            get_formatted_relationship(ObjectEnum.USER, "system", "Graded by system"),
             get_formatted_relationship(
                 ObjectEnum.QUIZ, event["quiz"], EventType.QUIZ_SET_GRADE.value.qualifier
             ),
@@ -372,7 +373,7 @@ class Quiz(Base):
             quiz_qualifier = ""
 
         course_modules = self.fetch_course_modules(event["contextinstanceid"])
-        
+
         if course_modules is None:
             question_version = self.fetch_question_version(event["objectid"])
 

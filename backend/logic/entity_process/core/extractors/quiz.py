@@ -176,7 +176,7 @@ class Quiz(Base):
             },
         ]
 
-        self.set_quiz_relationship(event["objectid"], event_type_enum, relationships)
+        self.set_quiz_relationship(event, event_type_enum, relationships)
 
         hints = self.fetch_question_hints(event["objectid"])
         for hint in hints:
@@ -360,8 +360,8 @@ class Quiz(Base):
             result["relationships"] = relationships
         return result
 
-    def set_quiz_relationship(self, question_id, event_type, relationships):
-        question_version = self.fetch_question_version(question_id)
+    def set_quiz_relationship(self, event, event_type, relationships):
+        question_version = self.fetch_question_version(event["objectid"])
         if question_version is None:
             return
 
@@ -383,14 +383,16 @@ class Quiz(Base):
         question_refrence = self.fetch_question_refrence(
             question_version["questionbankentryid"], "questionbankentryid"
         )
-        if question_refrence is None:
-            return
+        
+        if question_refrence is not None:
+            context = self.fetch_context(question_refrence["usingcontextid"])
+            if context is None:
+                return
 
-        context = self.fetch_context(question_refrence["usingcontextid"])
-        if context is None:
-            return
-
-        course_modules = self.fetch_course_modules(context["instanceid"])
+            course_modules = self.fetch_course_modules(context["instanceid"])
+        else:
+            course_modules = self.fetch_course_modules(event["contextinstanceid"])
+            
         if course_modules is None:
             return
 

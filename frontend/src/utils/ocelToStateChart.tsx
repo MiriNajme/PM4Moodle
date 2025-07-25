@@ -11,6 +11,25 @@ import { Unknown } from "../components/icons/Unknown";
 import { Url } from "../components/icons/Url";
 import type React from "react";
 
+const excludedEvents = [
+  "make_a_choice",
+  "remove_a_choice",
+  "add_discussion",
+  "view_discussion",
+  "delete_discussion",
+  "lock_discussion",
+  "unlock_discussion",
+  "subscribe_to_discussion",
+  "unsubscribe_from_discussion",
+  "upload_post",
+  "delete_post",
+  "edit_post",
+  "create_question",
+  "delete_question",
+  "add_question_to_quiz",
+  "delete_question_from_quiz",
+];
+
 export function getModuleIcon(module: string) {
   switch (module) {
     case "assign":
@@ -73,7 +92,12 @@ export function ocelToFullRelationStateChart(
       const objTypeEvents: Record<string, OcelEventModel[]> = {};
 
       for (const event of ocel?.events ?? []) {
-        if (!event.type || !relevantEventTypes.includes(event.type)) continue;
+        if (
+          !event.type ||
+          !relevantEventTypes.includes(event.type) ||
+          excludedEvents.includes(event.type)
+        )
+          continue;
 
         const prefix = modulePrefixes[module];
         const objIds = (event.relationships ?? [])
@@ -99,7 +123,7 @@ export function ocelToFullRelationStateChart(
           const key = `${seq[i]}->${seq[i + 1]}`;
           transitionsMap.set(key, (transitionsMap.get(key) ?? 0) + 1);
         }
-        
+
         if (seq.length) {
           // Start -> first
           const startKey = `Start->${seq[0]}`;

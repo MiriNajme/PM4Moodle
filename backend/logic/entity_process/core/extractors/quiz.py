@@ -363,10 +363,10 @@ class Quiz(Base):
     def set_quiz_relationship(self, event, event_type, relationships):
         if event_type is EventType.CREATE_QUESTION:
             bank_entry_qualifier = "Creates bank entry"
-            quiz_qualifier = "Created in the quiz"
+            quiz_qualifier = "Created in the quiz question bank"
         elif event_type is EventType.DELETE_QUESTION:
             bank_entry_qualifier = "Deletes bank entry"
-            quiz_qualifier = "Deleted from the quiz"
+            quiz_qualifier = "Deleted from the quiz question bank"
         else:
             bank_entry_qualifier = ""
             quiz_qualifier = ""

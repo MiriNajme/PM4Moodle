@@ -189,7 +189,10 @@ Here’s how to extract logs and generate visualizations:
 - Click the **Settings** button in the top-right corner of the page.
 - Enter your Moodle database credentials (host, database name, username, password, port).
 - Save your settings.
-- _![Screenshot: Database Settings Dialog](screenshots/database_settings.png)_
+
+<img src="screenshots/Database_Settings.png" alt="Screenshot: Database Settings Dialog" width="500"/>
+
+
 
 
 ---

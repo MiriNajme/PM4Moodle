@@ -371,7 +371,9 @@ class Quiz(Base):
             bank_entry_qualifier = ""
             quiz_qualifier = ""
 
+        course_modules = None
         question_version = self.fetch_question_version(event["objectid"])
+
         if question_version is not None:
             relationships.append(
                 get_formatted_relationship(
@@ -391,6 +393,8 @@ class Quiz(Base):
                     return
 
                 course_modules = self.fetch_course_modules(context["instanceid"])
+            else:
+                return
         else:
             course_modules = self.fetch_course_modules(event["contextinstanceid"])
 

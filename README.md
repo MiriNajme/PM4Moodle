@@ -177,7 +177,7 @@ The frontend should now be running, typically on [[http://localhost:5173](http:/
 
 ---
 
-## how-to-use-pm4moodle
+## How to Use PM4Moodle
 PM4Moodle’s interface is organized into three main tabs.
 Here’s how to extract logs and generate visualizations:
 

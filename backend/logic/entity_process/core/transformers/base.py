@@ -74,23 +74,4 @@ class Base(ABC):
         return columns
 
     def get_relationship(self, row):
-        relationships = []
-
-        course_modules = self.db_service.fetch_course_modules_by_ids(
-            row["id"], self.module_id
-        )
-
-        if course_modules:
-            for course_module in course_modules:
-                relationships.append(
-                    {
-                        "objectId": get_object_key(
-                            ObjectEnum.COURSE_MODULE, course_module["id"]
-                        ),
-                        "qualifier": f"{self.object_type.value.name} is course module",
-                        "from": format_date(course_module["added"]),
-                        "to": "9999-12-31T23:59:59.999Z",
-                    }
-                )
-
-        return relationships
+        return []

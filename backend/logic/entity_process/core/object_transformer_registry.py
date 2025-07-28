@@ -7,9 +7,6 @@ from logic.entity_process.core.transformers.choice_option import (
     ChoiceOption,
 )
 from logic.entity_process.core.transformers.course import Course
-from logic.entity_process.core.transformers.course_module import (
-    CourseModule,
-)
 from logic.entity_process.core.transformers.grade_item import GradeItem
 from logic.entity_process.core.transformers.group import Group
 from logic.entity_process.core.transformers.user import User
@@ -91,7 +88,6 @@ class ObjectTransformerRegistry:
             Question(db_service, related_object_columns, ocel_event_log),
             QuestionHint(db_service, related_object_columns, ocel_event_log),
             QuestionAnswer(db_service, related_object_columns, ocel_event_log),
-            CourseModule(db_service, related_object_columns, ocel_event_log),
             GradeItem(db_service, related_object_columns, ocel_event_log),
             QuestionDataset(db_service, related_object_columns, ocel_event_log),
             DatasetDefinition(db_service, related_object_columns, ocel_event_log),

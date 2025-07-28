@@ -139,28 +139,24 @@ def get_module_event_objects_map():
         ObjectEnum.ASSIGN.value.name: {
             "create_assign": [
                 ObjectEnum.ASSIGN.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.GROUP.value.name,
             ],
             "import_assign": [
                 ObjectEnum.ASSIGN.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.GROUP.value.name,
             ],
             "update_assign": [
                 ObjectEnum.ASSIGN.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.GROUP.value.name,
             ],
             "delete_assign": [
                 ObjectEnum.ASSIGN.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.GROUP.value.name,
@@ -200,7 +196,6 @@ def get_module_event_objects_map():
             "create_choice": [
                 ObjectEnum.CHOICE.value.name,
                 ObjectEnum.OPTION.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.GROUP.value.name,
@@ -208,7 +203,6 @@ def get_module_event_objects_map():
             "import_choice": [
                 ObjectEnum.CHOICE.value.name,
                 ObjectEnum.OPTION.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.GROUP.value.name,
@@ -216,7 +210,6 @@ def get_module_event_objects_map():
             "update_choice": [
                 ObjectEnum.CHOICE.value.name,
                 ObjectEnum.OPTION.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.GROUP.value.name,
@@ -224,7 +217,6 @@ def get_module_event_objects_map():
             "delete_choice": [
                 ObjectEnum.CHOICE.value.name,
                 ObjectEnum.OPTION.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.GROUP.value.name,
@@ -239,7 +231,6 @@ def get_module_event_objects_map():
             "make_a_choice": [
                 ObjectEnum.CHOICE.value.name,
                 ObjectEnum.OPTION.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.OPTION.value.name,
@@ -248,7 +239,6 @@ def get_module_event_objects_map():
             "remove_a_choice": [
                 ObjectEnum.CHOICE.value.name,
                 ObjectEnum.OPTION.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.OPTION.value.name,
@@ -258,25 +248,21 @@ def get_module_event_objects_map():
         ObjectEnum.FILE.value.name: {
             "create_file": [
                 ObjectEnum.FILE.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "import_file": [
                 ObjectEnum.FILE.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "update_file": [
                 ObjectEnum.FILE.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "delete_file": [
                 ObjectEnum.FILE.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
@@ -289,25 +275,21 @@ def get_module_event_objects_map():
         ObjectEnum.FOLDER.value.name: {
             "create_folder": [
                 ObjectEnum.FOLDER.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "import_folder": [
                 ObjectEnum.FOLDER.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "update_folder": [
                 ObjectEnum.FOLDER.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "delete_folder": [
                 ObjectEnum.FOLDER.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
@@ -325,25 +307,21 @@ def get_module_event_objects_map():
         ObjectEnum.LABEL.value.name: {
             "create_label": [
                 ObjectEnum.LABEL.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "import_label": [
                 ObjectEnum.LABEL.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "update_label": [
                 ObjectEnum.LABEL.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "delete_label": [
                 ObjectEnum.LABEL.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
@@ -351,25 +329,21 @@ def get_module_event_objects_map():
         ObjectEnum.PAGE.value.name: {
             "create_page": [
                 ObjectEnum.PAGE.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "import_page": [
                 ObjectEnum.PAGE.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "update_page": [
                 ObjectEnum.PAGE.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "delete_page": [
                 ObjectEnum.PAGE.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
@@ -382,25 +356,21 @@ def get_module_event_objects_map():
         ObjectEnum.URL.value.name: {
             "create_url": [
                 ObjectEnum.URL.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "import_url": [
                 ObjectEnum.URL.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "update_url": [
                 ObjectEnum.URL.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
             "delete_url": [
                 ObjectEnum.URL.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
             ],
@@ -413,28 +383,24 @@ def get_module_event_objects_map():
         ObjectEnum.FORUM.value.name: {
             "create_forum": [
                 ObjectEnum.FORUM.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.GROUP.value.name,
             ],
             "import_forum": [
                 ObjectEnum.FORUM.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.GROUP.value.name,
             ],
             "update_forum": [
                 ObjectEnum.FORUM.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.GROUP.value.name,
             ],
             "delete_forum": [
                 ObjectEnum.FORUM.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.GROUP.value.name,
@@ -537,28 +503,24 @@ def get_module_event_objects_map():
         ObjectEnum.QUIZ.value.name: {
             "create_quiz": [
                 ObjectEnum.QUIZ.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.GROUP.value.name,
             ],
             "import_quiz": [
                 ObjectEnum.QUIZ.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.GROUP.value.name,
             ],
             "update_quiz": [
                 ObjectEnum.QUIZ.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.GROUP.value.name,
             ],
             "delete_quiz": [
                 ObjectEnum.QUIZ.value.name,
-                ObjectEnum.COURSE_MODULE.value.name,
                 ObjectEnum.COURSE.value.name,
                 ObjectEnum.USER.value.name,
                 ObjectEnum.GROUP.value.name,

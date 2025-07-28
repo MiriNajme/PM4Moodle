@@ -235,7 +235,6 @@ class EntityProcess:
             modules_map = get_module_event_objects_map()
             objects = set(
                 [
-                    ObjectEnum.COURSE_MODULE.value.name,
                     ObjectEnum.COURSE.value.name,
                     ObjectEnum.USER.value.name,
                 ]

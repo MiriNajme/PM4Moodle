@@ -136,16 +136,6 @@ class DatabaseService:
         return column_type
 
     # region SHARED METHODS
-    def fetch_course_modules_by_ids(self, object_id, module_id):
-        CourseModule = self.Base.classes.mdl_course_modules
-
-        filters = [
-            CourseModule.instance == object_id,
-            CourseModule.module == module_id,
-        ]
-        course_modules = self.query_object(CourseModule, filters)
-        return course_modules if course_modules else None
-
     def fetch_assignment_files_by_context_id(self, context_id):
         Files = self.Base.classes.mdl_files
         filter_conditions = [

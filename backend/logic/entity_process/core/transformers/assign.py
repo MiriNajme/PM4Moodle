@@ -18,24 +18,6 @@ class Assign(Base):
 
     def get_relationship(self, row):
         relationships = []
-        # region RELATED TO COURSE MODULE
-        course_modules = self.db_service.fetch_course_modules_by_ids(
-            row["id"], self.module_id
-        )
-
-        if course_modules:
-            for course_module in course_modules:
-                relationships.append(
-                    {
-                        "objectId": get_object_key(
-                            ObjectEnum.COURSE_MODULE, course_module["id"]
-                        ),
-                        "qualifier": "assign is course module",
-                        "from": format_date(course_module["added"]),
-                        "to": "9999-12-31T23:59:59.999Z",
-                    }
-                )
-        # endregion RELATED TO COURSE MODULE
 
         # region GRADE ITEM
         grade_items = self.fetch_assign_grade_item(row["id"])

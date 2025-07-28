@@ -33,7 +33,6 @@ class ObjectEnum(Enum):
     QUESTION_ANSWER = ObjectValue("answer", "qan", "mdl_question_answers")
     COURSE_MODULE = ObjectValue("course_module", "cmd", "mdl_course_modules")
     GRADE_ITEM = ObjectValue("grade_item", "gri", "mdl_grade_items", "grade_item")
-    SECTION = ObjectValue("section", "sec", "mdl_course_sections")
     QUESTION_SLOT = ObjectValue("question_slots", "qsl", "mdl_quiz_slots")
     QUESTION_DATASET = ObjectValue("question_dataset", "qds", "mdl_question_datasets")
     DATASET_DEFINITION = ObjectValue(

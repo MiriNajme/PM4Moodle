@@ -50,20 +50,6 @@ class Course(Base):
     def get_relationship(self, row):
         relationships = []
 
-        # region SECTION
-        sections = self.fetch_course_section_log(row["id"])
-        if sections:
-            for section in sections:
-                relationships.append(
-                    {
-                        "objectId": get_object_key(ObjectEnum.SECTION, section["id"]),
-                        "qualifier": "Course contains section",
-                        "from": section["from"],
-                        "to": section["to"],
-                    }
-                )
-        # endregion SECTION
-
         # region GROUP
         groups = self.fetch_course_groups(row["id"])
         if groups:
@@ -150,14 +136,6 @@ class Course(Base):
                 )
 
         return result
-
-    def fetch_course_section_log(self, course_id):
-        create_filters = self.fetch_from_log_event(course_id, target="course_section")
-        deleted_sections = self.fetch_from_log_event(
-            course_id, target="course_section", action="deleted"
-        )
-        sections = relation_formatter(create_filters, deleted_sections, "objectid")
-        return sections if sections else None
 
     def fetch_course_groups(self, course_id):
         all_groups = self.db_service.query_object(

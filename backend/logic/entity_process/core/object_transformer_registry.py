@@ -12,7 +12,6 @@ from logic.entity_process.core.transformers.course_module import (
 )
 from logic.entity_process.core.transformers.grade_item import GradeItem
 from logic.entity_process.core.transformers.group import Group
-from logic.entity_process.core.transformers.section import Section
 from logic.entity_process.core.transformers.user import User
 from logic.entity_process.core.transformers.assign import Assign
 from logic.entity_process.core.transformers.choice import Choice
@@ -94,7 +93,6 @@ class ObjectTransformerRegistry:
             QuestionAnswer(db_service, related_object_columns, ocel_event_log),
             CourseModule(db_service, related_object_columns, ocel_event_log),
             GradeItem(db_service, related_object_columns, ocel_event_log),
-            Section(db_service, related_object_columns, ocel_event_log),
             QuestionDataset(db_service, related_object_columns, ocel_event_log),
             DatasetDefinition(db_service, related_object_columns, ocel_event_log),
             MultiChoiceQustion(db_service, related_object_columns, ocel_event_log),

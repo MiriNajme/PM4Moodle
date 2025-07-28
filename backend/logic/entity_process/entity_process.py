@@ -237,7 +237,6 @@ class EntityProcess:
                 [
                     ObjectEnum.COURSE_MODULE.value.name,
                     ObjectEnum.COURSE.value.name,
-                    ObjectEnum.GROUP.value.name,
                     ObjectEnum.USER.value.name,
                 ]
             )

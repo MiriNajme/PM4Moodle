@@ -501,12 +501,7 @@ class Forum(Base):
             get_formatted_relationship(
                 ObjectEnum.USER,
                 event["userid"],
-                "Last post in the discussion deleted by user",
-            ),
-            get_formatted_relationship(
-                ObjectEnum.USER,
-                "system",
-                f"{EventType.DELETE_DISCUSSION.value.qualifier} by system",
+                "Deletes by user",
             ),
             {
                 "objectId": get_object_key(ObjectEnum.COURSE, event["courseid"]),

@@ -254,21 +254,6 @@ class EntityProcess:
                                 ObjectEnum.QUIZ.value.name,
                                 ObjectEnum.QUESTION_ANSWER.value.name,
                                 ObjectEnum.QUESTION_HINT.value.name,
-                                ObjectEnum.MULTI_CHOICE_QUESTION.value.name,
-                                ObjectEnum.TRUE_FALSE_QUESTION.value.name,
-                                ObjectEnum.SHORT_ANSWER_QUESTION.value.name,
-                                ObjectEnum.NUMERICAL_QUESTION.value.name,
-                                ObjectEnum.NUMERICAL_OPTION.value.name,
-                                ObjectEnum.NUMERICAL_UNIT.value.name,
-                                ObjectEnum.MATCH_QUESTION_SUB_QUESTION.value.name,
-                                ObjectEnum.MATCH_QUESTION_OPTION.value.name,
-                                ObjectEnum.ESSAY_OPTION.value.name,
-                                ObjectEnum.CALCULATED_QUESTION.value.name,
-                                ObjectEnum.CALCULATED_OPTION.value.name,
-                                ObjectEnum.NUMERICAL_OPTION.value.name,
-                                ObjectEnum.NUMERICAL_UNIT.value.name,
-                                ObjectEnum.QUESTION_DATASET.value.name,
-                                ObjectEnum.DATASET_DEFINITION.value.name,
                             ]
                         )
                     elif module == ObjectEnum.ASSIGN.value.name:

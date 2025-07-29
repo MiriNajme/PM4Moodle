@@ -32,43 +32,7 @@ class ObjectEnum(Enum):
     QUESTION_HINT = ObjectValue("hint", "qhi", "mdl_question_hints")
     QUESTION_ANSWER = ObjectValue("answer", "qan", "mdl_question_answers")
     GRADE_ITEM = ObjectValue("grade_item", "gri", "mdl_grade_items", "grade_item")
-    QUESTION_SLOT = ObjectValue("question_slots", "qsl", "mdl_quiz_slots")
-    QUESTION_DATASET = ObjectValue("question_dataset", "qds", "mdl_question_datasets")
-    DATASET_DEFINITION = ObjectValue(
-        "dataset_definition", "qdsdef", "mdl_question_dataset_definitions"
-    )
-    TRUE_FALSE_QUESTION = ObjectValue(
-        "truefalse_question", "qtf", "mdl_question_truefalse"
-    )
-    MULTI_CHOICE_QUESTION = ObjectValue(
-        "multichoice_question", "qtmco", "mdl_qtype_multichoice_options"
-    )
-    MATCH_QUESTION_SUB_QUESTION = ObjectValue(
-        "match_question_subquestion", "qtmsq", "mdl_qtype_match_subquestions"
-    )
-    MATCH_QUESTION_OPTION = ObjectValue(
-        "match_question_option", "qtmo", "mdl_qtype_match_options"
-    )
-    SHORT_ANSWER_QUESTION = ObjectValue(
-        "short_answer_question", "qtsaq", "mdl_qtype_shortanswer_options"
-    )
-    NUMERICAL_QUESTION = ObjectValue(
-        "numerical_question", "qtnuq", "mdl_question_numerical"
-    )
-    NUMERICAL_OPTION = ObjectValue(
-        "numerical_option", "nuopt", "mdl_question_numerical_options"
-    )
-    NUMERICAL_UNIT = ObjectValue(
-        "numerical_unit", "nuopt", "mdl_question_numerical_units"
-    )
-    ESSAY_OPTION = ObjectValue("essay_option", "qtesq", "mdl_qtype_essay_options")
-    CALCULATED_QUESTION = ObjectValue(
-        "calculated_question", "calq", "mdl_question_calculated"
-    )
-    CALCULATED_OPTION = ObjectValue(
-        "calculated_option", "calopt", "mdl_question_calculated_options"
-    )
-
+    
     @classmethod
     def all_values(cls):
         return [item.value for item in cls]

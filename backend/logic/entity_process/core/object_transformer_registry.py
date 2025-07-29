@@ -20,44 +20,6 @@ from logic.entity_process.core.transformers.question import Question
 from logic.entity_process.core.transformers.question_answer import QuestionAnswer
 from logic.entity_process.core.transformers.question_hint import QuestionHint
 from logic.entity_process.core.transformers.question_bank_entry import QuestionBankEntry
-from logic.entity_process.core.transformers.question_slot import QuestionSlot
-from logic.entity_process.core.transformers.multichoice_question import (
-    MultiChoiceQustion,
-)
-from logic.entity_process.core.transformers.trufalse_question import TrueFalseQustion
-from logic.entity_process.core.transformers.match_question_options import (
-    MatchQuestionOption,
-)
-from logic.entity_process.core.transformers.match_question_subquestion import (
-    MatchQuestionSubQuestion,
-)
-from logic.entity_process.core.transformers.short_asnwer_question import (
-    ShortAnswerQuestion,
-)
-from logic.entity_process.core.transformers.numerical_question import (
-    NumericalQuestion,
-)
-from logic.entity_process.core.transformers.numerical_option import (
-    NumericalOption,
-)
-from logic.entity_process.core.transformers.numerical_unit import (
-    NumericalUnit,
-)
-from logic.entity_process.core.transformers.essay_question import (
-    EssayQuestion,
-)
-from logic.entity_process.core.transformers.calculated_question import (
-    CalculatedQuestion,
-)
-from logic.entity_process.core.transformers.calculated_options import (
-    CalculatedOptions,
-)
-from logic.entity_process.core.transformers.question_dataset import (
-    QuestionDataset,
-)
-from logic.entity_process.core.transformers.dataset_definition import (
-    DatasetDefinition,
-)
 from logic.entity_process.core.transformers.quiz import Quiz
 from logic.entity_process.core.transformers.url import Url
 
@@ -89,21 +51,6 @@ class ObjectTransformerRegistry:
             QuestionHint(db_service, related_object_columns, ocel_event_log),
             QuestionAnswer(db_service, related_object_columns, ocel_event_log),
             GradeItem(db_service, related_object_columns, ocel_event_log),
-            QuestionDataset(db_service, related_object_columns, ocel_event_log),
-            DatasetDefinition(db_service, related_object_columns, ocel_event_log),
-            MultiChoiceQustion(db_service, related_object_columns, ocel_event_log),
-            TrueFalseQustion(db_service, related_object_columns, ocel_event_log),
-            MatchQuestionSubQuestion(
-                db_service, related_object_columns, ocel_event_log
-            ),
-            MatchQuestionOption(db_service, related_object_columns, ocel_event_log),
-            ShortAnswerQuestion(db_service, related_object_columns, ocel_event_log),
-            EssayQuestion(db_service, related_object_columns, ocel_event_log),
-            NumericalQuestion(db_service, related_object_columns, ocel_event_log),
-            NumericalOption(db_service, related_object_columns, ocel_event_log),
-            NumericalUnit(db_service, related_object_columns, ocel_event_log),
-            CalculatedQuestion(db_service, related_object_columns, ocel_event_log),
-            CalculatedOptions(db_service, related_object_columns, ocel_event_log),
         ]
 
     def transform_all(self, objects: list = None):

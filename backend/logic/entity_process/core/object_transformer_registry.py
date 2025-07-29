@@ -7,7 +7,6 @@ from logic.entity_process.core.transformers.choice_option import (
     ChoiceOption,
 )
 from logic.entity_process.core.transformers.course import Course
-from logic.entity_process.core.transformers.grade_item import GradeItem
 from logic.entity_process.core.transformers.group import Group
 from logic.entity_process.core.transformers.user import User
 from logic.entity_process.core.transformers.assign import Assign
@@ -50,7 +49,6 @@ class ObjectTransformerRegistry:
             Question(db_service, related_object_columns, ocel_event_log),
             QuestionHint(db_service, related_object_columns, ocel_event_log),
             QuestionAnswer(db_service, related_object_columns, ocel_event_log),
-            GradeItem(db_service, related_object_columns, ocel_event_log),
         ]
 
     def transform_all(self, objects: list = None):

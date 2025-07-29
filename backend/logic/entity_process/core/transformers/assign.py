@@ -13,36 +13,4 @@ class Assign(Base):
         self.sort_by = [("timemodified", "asc")]
         self.has_relationships = True
 
-        self.GradeItems = self.db_service.Base.classes.mdl_grade_items
         self.Context = self.db_service.Base.classes.mdl_context
-
-    def get_relationship(self, row):
-        relationships = []
-
-        # region GRADE ITEM
-        grade_items = self.fetch_assign_grade_item(row["id"])
-        if grade_items:
-            for grade_item in grade_items:
-                relationships.append(
-                    {
-                        "objectId": get_object_key(
-                            ObjectEnum.GRADE_ITEM, grade_item["id"]
-                        ),
-                        "qualifier": "assign is grade item",
-                        "from": format_date(grade_item["timecreated"]),
-                        "to": "9999-12-31T23:59:59.999Z",
-                    }
-                )
-        # endregion GRADE ITEM
-
-        return relationships
-
-    def fetch_assign_grade_item(self, assign_id):
-        grade_items = self.db_service.query_object(
-            self.GradeItems,
-            filters=[
-                self.GradeItems.iteminstance == assign_id,
-                self.GradeItems.itemmodule == "assign",
-            ],
-        )
-        return grade_items if grade_items else None

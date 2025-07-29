@@ -253,13 +253,7 @@ class EntityProcess:
                                 ObjectEnum.QUESTION_HINT.value.name,
                             ]
                         )
-                    elif module == ObjectEnum.ASSIGN.value.name:
-                        objects.update(
-                            [
-                                ObjectEnum.GRADE_ITEM.value.name,
-                            ]
-                        )
-
+                    
                     for event in event_list:
                         if event in module_map:
                             objects.update(module_map[event])

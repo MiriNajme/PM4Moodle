@@ -31,7 +31,6 @@ class ObjectEnum(Enum):
     QUESTION = ObjectValue("question", "qst", "mdl_question")
     QUESTION_HINT = ObjectValue("hint", "qhi", "mdl_question_hints")
     QUESTION_ANSWER = ObjectValue("answer", "qan", "mdl_question_answers")
-    GRADE_ITEM = ObjectValue("grade_item", "gri", "mdl_grade_items", "grade_item")
     
     @classmethod
     def all_values(cls):

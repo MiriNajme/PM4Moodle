@@ -96,7 +96,7 @@ class Choice(Base):
 
     def get_module_import_event_object(self, row):
         result = super().get_module_import_event_object(row)
-        choice_options = self.fetch_choice_options_by_choice_id(row["id"])
+        choice_options = self.fetch_choice_options_by_choice_id(row["instance"])
 
         for option in choice_options:
             result["relationships"].append(

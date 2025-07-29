@@ -244,10 +244,7 @@ class EntityProcess:
             for module, event_list in selected.items():
                 if module in modules_map:
                     module_map = modules_map[module]
-                    if (
-                        module == ObjectEnum.QUESTION.value.name
-                        or module == ObjectEnum.QUIZ.value.name
-                    ):
+                    if module == ObjectEnum.QUIZ.value.name:
                         objects.update(
                             [
                                 ObjectEnum.QUESTION.value.name,

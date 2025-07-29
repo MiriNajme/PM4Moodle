@@ -85,10 +85,10 @@ class EventType(Enum):
     # region QUIZ
     CREATE_QUESTION = EventValue("create_question", "crt_ques", "create_question", "Creates")
     DELETE_QUESTION = EventValue("delete_question", "del_ques", "delete_question", "Deletes")
-    ADD_QUESTION_SLOT = EventValue(
+    ADD_QUESTION_TO_QUIZ = EventValue(
         "add_question_to_quiz", "add_ques_slt", "add_question_to_quiz", "Adds"
     )
-    DELETE_QUESTION_SLOT = EventValue(
+    DELETE_QUESTION_FROM_QUIZ = EventValue(
         "delete_question_from_quiz", "del_ques_slt", "delete_question_from_quiz", "Deletes"
     )
     QUIZ_ATTEMPT = EventValue("attempt_quiz", "quz_atmp", "attempt_quiz", "Attempts")

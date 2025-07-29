@@ -32,8 +32,8 @@ class Quiz(Base):
         super().extract()
         self.get_question_events(EventType.CREATE_QUESTION)
         self.get_question_events(EventType.DELETE_QUESTION)
-        self.get_question_slot_events(EventType.ADD_QUESTION_SLOT)
-        self.get_question_slot_events(EventType.DELETE_QUESTION_SLOT)
+        self.get_question_slot_events(EventType.ADD_QUESTION_TO_QUIZ)
+        self.get_question_slot_events(EventType.DELETE_QUESTION_FROM_QUIZ)
         self.get_attempt_quiz_events()
         self.get_set_grade_quiz_events()
 
@@ -65,10 +65,10 @@ class Quiz(Base):
             self.get_question_events(EventType.DELETE_QUESTION)
 
         if "add_question_to_quiz" in events:
-            self.get_question_slot_events(EventType.ADD_QUESTION_SLOT)
+            self.get_question_slot_events(EventType.ADD_QUESTION_TO_QUIZ)
 
         if "delete_question_from_quiz" in events:
-            self.get_question_slot_events(EventType.DELETE_QUESTION_SLOT)
+            self.get_question_slot_events(EventType.DELETE_QUESTION_FROM_QUIZ)
 
         if "attempt_quiz" in events or "reattempt_quiz" in events:
             self.get_attempt_quiz_events()
@@ -97,7 +97,7 @@ class Quiz(Base):
                     self.ocel_event_log["events"].append(formated_event_object)
 
     def get_question_slot_events(self, event_type: EventType):
-        if event_type == EventType.ADD_QUESTION_SLOT:
+        if event_type == EventType.ADD_QUESTION_TO_QUIZ:
             action = "created"
         else:
             action = "deleted"
@@ -152,11 +152,14 @@ class Quiz(Base):
         if event_type_enum is EventType.CREATE_QUESTION:
             user_qualifier = "Added by user"
             question_qualifier = "Creates question"
+            question_qualifier = "Adds question bank entry"
         elif event_type_enum is EventType.DELETE_QUESTION:
             user_qualifier = "Deleted by user"
             question_qualifier = "Deletes question"
+            question_qualifier = "Deletes question bank entry"
         else:
             user_qualifier = ""
+            question_qualifier = ""
             question_qualifier = ""
 
         relationships = [
@@ -216,17 +219,14 @@ class Quiz(Base):
             "attributes": attributes,
         }
 
-        if event_type_enum is EventType.ADD_QUESTION_SLOT:
+        if event_type_enum is EventType.ADD_QUESTION_TO_QUIZ:
             user_qualifier = "Added by user"
-            question_qualifier = "Adds question bank entry"
             quiz_qualifier = "Added to the quiz"
-        elif event_type_enum is EventType.DELETE_QUESTION_SLOT:
+        elif event_type_enum is EventType.DELETE_QUESTION_FROM_QUIZ:
             user_qualifier = "Deleted by user"
-            question_qualifier = "Deletes question bank entry"
             quiz_qualifier = "Deleted from the quiz"
         else:
             user_qualifier = ""
-            question_qualifier = ""
             quiz_qualifier = ""
 
         relationships = [
@@ -239,16 +239,6 @@ class Quiz(Base):
             },
         ]
 
-        question_refrence = self.fetch_question_refrence(event["objectid"], "itemid")
-        if question_refrence is not None:
-            relationships.append(
-                get_formatted_relationship(
-                    ObjectEnum.QUESTION_BANK_ENTRY,
-                    question_refrence["questionbankentryid"],
-                    question_qualifier,
-                )
-            )
-
         instance = json.loads(event["other"])
         if instance:
             relationships.append(
@@ -257,7 +247,7 @@ class Quiz(Base):
                 )
             ),
 
-        if event_type_enum == EventType.ADD_QUESTION_SLOT:
+        if event_type_enum == EventType.ADD_QUESTION_TO_QUIZ:
             question_refrence = self.fetch_question_refrence(
                 event["objectid"], "itemid"
             )
@@ -266,7 +256,7 @@ class Quiz(Base):
                     get_formatted_relationship(
                         ObjectEnum.QUESTION_BANK_ENTRY,
                         question_refrence["questionbankentryid"],
-                        "Added question bank entry to slot",
+                        "Adds question bank entry to quiz",
                     )
                 ),
 
@@ -372,22 +362,22 @@ class Quiz(Base):
             bank_entry_qualifier = ""
             quiz_qualifier = ""
 
+        question_version = self.fetch_question_version(event["objectid"])
+
+        if question_version is None:
+            return
+
+        relationships.append(
+            get_formatted_relationship(
+                ObjectEnum.QUESTION_BANK_ENTRY,
+                question_version["questionbankentryid"],
+                bank_entry_qualifier,
+            )
+        )
+
         course_modules = self.fetch_course_modules(event["contextinstanceid"])
 
         if course_modules is None:
-            question_version = self.fetch_question_version(event["objectid"])
-
-            if question_version is None:
-                return
-
-            relationships.append(
-                get_formatted_relationship(
-                    ObjectEnum.QUESTION_BANK_ENTRY,
-                    question_version["questionbankentryid"],
-                    bank_entry_qualifier,
-                )
-            )
-
             question_refrence = self.fetch_question_refrence(
                 question_version["questionbankentryid"], "questionbankentryid"
             )

@@ -224,11 +224,6 @@ class Choice(Base):
                     f"{EventType.MAKE_A_CHOICE.value.qualifier} {self.object_type.value.name}",
                 ),
                 get_formatted_relationship(
-                    ObjectEnum.USER,
-                    event["userid"],
-                    "Made a choice by user",
-                ),
-                get_formatted_relationship(
                     ObjectEnum.OPTION,
                     instance["optionid"],
                     "Selected option",
@@ -249,15 +244,8 @@ class Choice(Base):
             get_formatted_relationship(
                 ObjectEnum.USER,
                 event["userid"],
-                "Selected by",
-            ),
-        )
-        relationships.append(
-            get_formatted_relationship(
-                ObjectEnum.USER,
-                event["relateduserid"],
-                "Selected for",
-            ),
+                "Made a choice by user",
+            )
         )
 
         if relationships:
@@ -310,13 +298,6 @@ class Choice(Base):
                 ObjectEnum.USER,
                 event["userid"],
                 "Deleted by",
-            ),
-        )
-        relationships.append(
-            get_formatted_relationship(
-                ObjectEnum.USER,
-                event["relateduserid"],
-                "Deleted for",
             ),
         )
 

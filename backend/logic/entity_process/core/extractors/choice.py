@@ -142,6 +142,16 @@ class Choice(Base):
             if course_relation:
                 relationships.append(course_relation)
 
+            choice_options = self.fetch_choice_options_by_choice_id(choice["id"])
+            for option in choice_options:
+                relationships.append(
+                    get_formatted_relationship(
+                        ObjectEnum.OPTION,
+                        option["id"],
+                        "Choice option",
+                    )
+                )
+
         result["relationships"] = relationships
         # endregion RELATIONSHIPS
 

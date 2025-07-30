@@ -47,7 +47,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     () =>
       jsonContent
         ? buildPivotTable(jsonContent)
-        : { objectTypes: [], eventTypes: [], matrix: {} },
+        : { objectTypes: [], eventTypes: [], matrix: {}, cardinality: {} },
     [jsonContent]
   );
 

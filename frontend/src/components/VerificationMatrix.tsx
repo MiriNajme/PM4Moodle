@@ -4,6 +4,7 @@ import { useAppContext } from "../context/useAppContext";
 import Spinner from "./ui/Spinner";
 import OcelVerificationCardinality from "./Cardinality";
 import OcelVerificationFrequency from "./Frequency";
+import TableFilterDialog from "./TableFilterDialog";
 
 const OcelVerificationMatrix = React.memo(() => {
   const { pivot, isLoadingContent } = useAppContext();
@@ -27,13 +28,15 @@ const OcelVerificationMatrix = React.memo(() => {
   return (
     <div className='w-full'>
       <Tabs.Root defaultValue='frequency'>
-        <Tabs.List className='mb-4'>
+        <Tabs.List className='relative mb-4'>
           <Tabs.Trigger value='frequency'>
             <span>Frequency</span>
           </Tabs.Trigger>
           <Tabs.Trigger value='cardinality'>
             <span>Cardinality</span>
           </Tabs.Trigger>
+
+          <TableFilterDialog />
         </Tabs.List>
 
         <div className='flex flex-col gap-6'>

@@ -6,6 +6,7 @@ import OcelVerificationMatrix from "../components/VerificationMatrix.tsx";
 import { VerificationStateChart } from "../components/VerificationStateChart.tsx";
 import { useAppContext } from "../context/useAppContext.ts";
 import Spinner from "../components/ui/Spinner.tsx";
+import OcelVerificationCardinality from "../components/VerificationCardinality.tsx";
 
 const Home = React.memo(() => {
   const [activeTab, setActiveTab] = useState<string>("extraction");
@@ -47,6 +48,14 @@ const Home = React.memo(() => {
                 Verification matrix
               </Tabs.Trigger>
               <Tabs.Trigger
+                value='cardinality'
+                className='px-4 py-2 font-semibold transition-colors rounded-none relative
+                  data-[state=active]:border-b-2 data-[state=active]:border-orange-300 data-[state=active]:text-blue-950
+                  data-[state=active]:shadow-md'
+              >
+                Verification Cardinality
+              </Tabs.Trigger>
+              <Tabs.Trigger
                 value='statechart'
                 className='px-4 py-2 font-semibold transition-colors rounded-none relative
                   data-[state=active]:border-b-2 data-[state=active]:border-orange-300 data-[state=active]:text-blue-950
@@ -68,6 +77,9 @@ const Home = React.memo(() => {
             </Tabs.Content>
             <Tabs.Content value='verification'>
               <OcelVerificationMatrix />
+            </Tabs.Content>
+            <Tabs.Content value='cardinality'>
+              <OcelVerificationCardinality />
             </Tabs.Content>
             <Tabs.Content value='statechart'>
               <VerificationStateChart />

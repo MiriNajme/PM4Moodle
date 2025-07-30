@@ -1,31 +1,12 @@
-import React, { useState } from "react";
-import { Text } from "@radix-ui/themes";
-import clsx from "clsx";
+import React from "react";
+import { Tabs, Text } from "@radix-ui/themes";
 import { useAppContext } from "../context/useAppContext";
 import Spinner from "./ui/Spinner";
-
-type RowColType = {
-  row: number | null;
-  col: number | null;
-};
-
-const groupEventTypesByPostfix = (eventTypes: string[]) => {
-  const groups: Record<string, string[]> = {};
-  eventTypes.forEach((eventType) => {
-    const parts = eventType.split("_");
-    const postfix = parts.length > 1 ? parts[parts.length - 1] : eventType;
-    if (!groups[postfix]) groups[postfix] = [];
-    groups[postfix].push(eventType);
-  });
-  return Object.values(groups).flat();
-};
+import OcelVerificationCardinality from "./Cardinality";
+import OcelVerificationFrequency from "./Frequency";
 
 const OcelVerificationMatrix = React.memo(() => {
   const { pivot, isLoadingContent } = useAppContext();
-  const [hovered, setHovered] = useState<RowColType>({
-    row: null,
-    col: null,
-  });
 
   if (isLoadingContent) {
     return (
@@ -43,86 +24,27 @@ const OcelVerificationMatrix = React.memo(() => {
     );
   }
 
-  const filteredObjectTypes = pivot.objectTypes.filter((objType) =>
-    pivot.eventTypes.some((eventType) => pivot.matrix[eventType][objType])
-  );
-
-  let filteredEventTypes = pivot.eventTypes.filter((eventType) =>
-    filteredObjectTypes.some((objType) => pivot.matrix[eventType][objType])
-  );
-
-  filteredEventTypes = groupEventTypesByPostfix(filteredEventTypes);
-
   return (
-    <div className='overflow-x-auto'>
-      <Text className='mb-4'>
-        Verification Matrix (Object counts per event)
-      </Text>
-      <div className='my-4 max-h-[55dvh] overflow-auto border border-gray-200 rounded-lg'>
-        <table className='w-full'>
-          <thead>
-            <tr>
-              <th className='bg-white border-b border-r p-2 text-left sticky top-0 left-0 min-w-[140px]'>
-                Event \ Object
-              </th>
-              {filteredObjectTypes.map((objType, colIdx) => (
-                <th
-                  key={objType}
-                  className={clsx(
-                    "bg-gray-100 border-b p-2 sticky top-0 z-20 text-center min-w-[100px]",
-                    hovered.col === colIdx ? "!bg-blue-100" : ""
-                  )}
-                >
-                  {objType}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {filteredEventTypes.map((eventType, rowIdx) => (
-              <tr
-                key={eventType}
-                className={clsx(
-                  rowIdx % 2 === 1 ? "bg-gray-50" : "",
-                  hovered.col !== null && hovered.row === rowIdx
-                    ? "!bg-blue-50"
-                    : ""
-                )}
-              >
-                <td
-                  className={clsx(
-                    "bg-gray-100 border-b border-r p-2 font-semibold sticky left-0 z-20 border-gray-100 border-r-gray-500",
-                    rowIdx % 2 === 1 ? "bg-gray-200" : "",
-                    hovered.row === rowIdx ? "!bg-blue-100" : ""
-                  )}
-                >
-                  {eventType}
-                </td>
-                {filteredObjectTypes.map((objType, colIdx) => (
-                  <td
-                    key={objType}
-                    className={clsx(
-                      "border-b border-gray-100 p-2 text-center cursor-pointer",
-                      hovered.row === rowIdx || hovered.col === colIdx
-                        ? "!bg-blue-100"
-                        : "",
-                      hovered.row === rowIdx && hovered.col === colIdx
-                        ? "!bg-blue-300"
-                        : ""
-                    )}
-                    onMouseEnter={() =>
-                      setHovered({ row: rowIdx, col: colIdx })
-                    }
-                    onMouseLeave={() => setHovered({ row: null, col: null })}
-                  >
-                    {pivot.matrix[eventType][objType] || "-"}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className='w-full'>
+      <Tabs.Root defaultValue='frequency'>
+        <Tabs.List className='mb-4'>
+          <Tabs.Trigger value='frequency'>
+            <span>Frequency</span>
+          </Tabs.Trigger>
+          <Tabs.Trigger value='cardinality'>
+            <span>Cardinality</span>
+          </Tabs.Trigger>
+        </Tabs.List>
+
+        <div className='flex flex-col gap-6'>
+          <Tabs.Content value='frequency'>
+            <OcelVerificationFrequency />
+          </Tabs.Content>
+          <Tabs.Content value='cardinality'>
+            <OcelVerificationCardinality />
+          </Tabs.Content>
+        </div>
+      </Tabs.Root>
     </div>
   );
 });

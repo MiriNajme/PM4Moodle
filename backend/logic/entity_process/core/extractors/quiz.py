@@ -152,14 +152,11 @@ class Quiz(Base):
         if event_type_enum is EventType.CREATE_QUESTION:
             user_qualifier = "Added by user"
             question_qualifier = "Creates question"
-            question_qualifier = "Adds question bank entry"
         elif event_type_enum is EventType.DELETE_QUESTION:
             user_qualifier = "Deleted by user"
             question_qualifier = "Deletes question"
-            question_qualifier = "Deletes question bank entry"
         else:
             user_qualifier = ""
-            question_qualifier = ""
             question_qualifier = ""
 
         relationships = [
@@ -362,10 +359,20 @@ class Quiz(Base):
             bank_entry_qualifier = ""
             quiz_qualifier = ""
 
+        course_modules = self.fetch_course_modules(event["contextinstanceid"])
+        if course_modules is not None:
+            relationships.append(
+                get_formatted_relationship(
+                    ObjectEnum.QUIZ,
+                    course_modules["instance"],
+                    quiz_qualifier,
+                )
+            )
+
         question_version = self.fetch_question_version(event["objectid"])
 
         if question_version is None:
-            return
+            return relationships
 
         relationships.append(
             get_formatted_relationship(
@@ -374,8 +381,6 @@ class Quiz(Base):
                 bank_entry_qualifier,
             )
         )
-
-        course_modules = self.fetch_course_modules(event["contextinstanceid"])
 
         if course_modules is None:
             question_refrence = self.fetch_question_refrence(
@@ -386,22 +391,17 @@ class Quiz(Base):
                 context = self.fetch_context(question_refrence["usingcontextid"])
 
                 if context is None:
-                    return
+                    return relationships
 
                 course_modules = self.fetch_course_modules(context["instanceid"])
-            else:
-                return
 
-        if course_modules is None:
-            return
-
-        relationships.append(
-            get_formatted_relationship(
-                ObjectEnum.QUIZ,
-                course_modules["instance"],
-                quiz_qualifier,
-            )
-        )
+                relationships.append(
+                    get_formatted_relationship(
+                        ObjectEnum.QUIZ,
+                        course_modules["instance"],
+                        quiz_qualifier,
+                    )
+                )
 
         return relationships
 

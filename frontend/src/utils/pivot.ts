@@ -25,14 +25,17 @@ export function buildPivotTable(ocelData: OcelJsonContent): OcelPivotTable {
 
   const matrix: Matrix<number> = {};
   const cardinality: Matrix<Cardinality> = {};
+  const defaultObjTypeCount: Matrix<number> = {};
 
   for (const eType of eventTypes) {
     matrix[eType] = {};
     cardinality[eType] = {};
+    defaultObjTypeCount[eType] = {};
 
     for (const oType of objectTypes) {
       matrix[eType][oType] = 0;
       cardinality[eType][oType] = { min: Infinity, max: -Infinity };
+      defaultObjTypeCount[eType][oType] = 0;
     }
   }
 
@@ -40,7 +43,9 @@ export function buildPivotTable(ocelData: OcelJsonContent): OcelPivotTable {
     const eType = event.type;
     if (!eType || !matrix[eType]) continue;
 
-    const objTypeCount: Record<string, number> = {};
+    const objTypeCount: Record<string, number> = {
+      ...defaultObjTypeCount[eType],
+    };
 
     for (const relationship of event.relationships || []) {
       const objType = objectIdToType[relationship.objectId];
@@ -55,14 +60,10 @@ export function buildPivotTable(ocelData: OcelJsonContent): OcelPivotTable {
 
     for (const objType of Object.keys(objTypeCount)) {
       const count = objTypeCount[objType] || 0;
-      cardinality[eType][objType].min = Math.min(
-        cardinality[eType][objType].min,
-        count
-      );
-      cardinality[eType][objType].max = Math.max(
-        cardinality[eType][objType].max,
-        count
-      );
+      const { min, max } = cardinality[eType][objType];
+
+      cardinality[eType][objType].min = Math.min(min, count);
+      cardinality[eType][objType].max = Math.max(max, count);
     }
   }
 

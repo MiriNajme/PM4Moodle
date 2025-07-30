@@ -29,7 +29,7 @@ const Home = React.memo(() => {
             value={activeTab}
             onValueChange={setActiveTab}
           >
-            <Tabs.List className='flex gap-4 mb-4' color='orange'>
+            <Tabs.List className='flex gap-4 mb-2' color='orange'>
               <Tabs.Trigger
                 value='extraction'
                 className='px-4 py-2 font-semibold transition-colors rounded-none relative
@@ -56,7 +56,7 @@ const Home = React.memo(() => {
               </Tabs.Trigger>
             </Tabs.List>
             <div
-              className='w-full h-2 mb-8 rounded-full'
+              className='w-full h-1 mb-2 rounded-full'
               style={{
                 background:
                   "linear-gradient(90deg, #012846 0%, #6366f1 40%, #f59e42 100%)",

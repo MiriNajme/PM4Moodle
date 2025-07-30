@@ -70,7 +70,7 @@ const OcelVerificationCardinality = React.memo(() => {
   return (
     <div className='overflow-x-auto'>
       <Text>Verification Cardinality</Text>
-      <div className='mt-4 max-h-[55dvh] overflow-auto border border-gray-200 rounded-lg'>
+      <div className='mt-4 max-h-[57dvh] overflow-auto border border-gray-200 rounded-lg'>
         <table className='w-full'>
           <thead>
             <tr>

@@ -1,31 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Text } from "@radix-ui/themes";
 import clsx from "clsx";
 import { useAppContext } from "../context/useAppContext";
 import Spinner from "./ui/Spinner";
-
-type RowColType = {
-  row: number | null;
-  col: number | null;
-};
-
-const groupEventTypesByPostfix = (eventTypes: string[]) => {
-  const groups: Record<string, string[]> = {};
-  eventTypes.forEach((eventType) => {
-    const parts = eventType.split("_");
-    const postfix = parts.length > 1 ? parts[parts.length - 1] : eventType;
-    if (!groups[postfix]) groups[postfix] = [];
-    groups[postfix].push(eventType);
-  });
-  return Object.values(groups).flat();
-};
+import { groupEventTypesByPostfix, type RowColType } from "../utils/utils";
 
 const OcelVerificationFrequency = React.memo(() => {
-  const { pivot, isLoadingContent } = useAppContext();
+  const { pivot, tableFilters, isLoadingContent } = useAppContext();
   const [hovered, setHovered] = useState<RowColType>({
     row: null,
     col: null,
   });
+
+  const filteredObjectTypes = useMemo(() => {
+    if (!pivot || !pivot.objectTypes?.length) return [];
+
+    if (tableFilters?.objectTypes.length > 0) {
+      return pivot.objectTypes.filter((objType) =>
+        tableFilters.objectTypes.includes(objType)
+      );
+    }
+
+    return pivot.objectTypes.filter((objType) =>
+      pivot.eventTypes.some((eventType) => pivot.matrix[eventType][objType])
+    );
+  }, [pivot, tableFilters]);
+
+  const filteredEventTypes = useMemo(() => {
+    if (!pivot || !pivot.eventTypes?.length) return [];
+    
+    let filtered=[];
+    if (tableFilters?.eventTypes.length > 0) {
+      filtered= pivot.eventTypes.filter((eventType) =>
+        tableFilters.eventTypes.includes(eventType)
+      );
+    }else {
+      filtered= pivot.eventTypes.filter((eventType) =>
+          filteredObjectTypes.some(
+            (objType) => pivot.matrix[eventType][objType]
+          )
+        );
+    }
+
+    return groupEventTypesByPostfix(filtered);
+  }, [filteredObjectTypes, pivot, tableFilters]);
 
   if (isLoadingContent) {
     return (
@@ -42,16 +60,6 @@ const OcelVerificationFrequency = React.memo(() => {
       </Text>
     );
   }
-
-  const filteredObjectTypes = pivot.objectTypes.filter((objType) =>
-    pivot.eventTypes.some((eventType) => pivot.matrix[eventType][objType])
-  );
-
-  let filteredEventTypes = pivot.eventTypes.filter((eventType) =>
-    filteredObjectTypes.some((objType) => pivot.matrix[eventType][objType])
-  );
-
-  filteredEventTypes = groupEventTypesByPostfix(filteredEventTypes);
 
   return (
     <div className='overflow-x-auto'>

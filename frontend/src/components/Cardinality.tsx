@@ -8,7 +8,7 @@ import { groupEventTypesByPostfix, type RowColType } from "../utils/utils";
 
 const formatCardinality = (cardinality: Cardinality) => {
   if (!cardinality || (!cardinality.min && !cardinality.max)) return "-";
-  return `${cardinality.min}:${cardinality.max}`;
+  return `${cardinality.min}..${cardinality.max}`;
 };
 
 const OcelVerificationCardinality = React.memo(() => {

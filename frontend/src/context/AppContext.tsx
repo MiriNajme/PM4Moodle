@@ -26,6 +26,8 @@ type AppContextType = {
   setSelectedModules: React.Dispatch<React.SetStateAction<string[]>>;
   selectedEvents: string[];
   setSelectedEvents: React.Dispatch<React.SetStateAction<string[]>>;
+  tableFilters: {eventTypes: string[], objectTypes: string[]};
+  setTableFilters: React.Dispatch<React.SetStateAction<{eventTypes: string[], objectTypes: string[]}>>;
   handleExtraction: () => Promise<void>;
 };
 
@@ -37,7 +39,10 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [modules, setModules] = useState<ModuleType>({});
   const [selectedModules, setSelectedModules] = useState<string[]>([]);
   const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
-
+  const [tableFilters, setTableFilters] = useState<{eventTypes: string[], objectTypes: string[]}>({
+    eventTypes: [],
+    objectTypes: [],
+  });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingContent, setIsLoadingContent] = useState<boolean>(false);
   const [isWorking, setIsWorking] = useState(false);
@@ -56,6 +61,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     setJsonUrl(null);
     setImageUrl(null);
     setJsonContent(null);
+    setTableFilters({ eventTypes: [], objectTypes: [] });
 
     try {
       const request: Record<string, string[]> = {};
@@ -88,6 +94,8 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
     setIsLoadingContent(true);
     setJsonContent(null);
+    setTableFilters({ eventTypes: [], objectTypes: [] });
+    
     fetch(jsonUrl)
       .then((response) => response.json())
       .then((data) => setJsonContent(data))
@@ -120,6 +128,8 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
         setSelectedModules,
         selectedEvents,
         setSelectedEvents,
+        tableFilters,
+        setTableFilters,
         handleExtraction,
       }}
     >

@@ -35,10 +35,9 @@ root/
 ---
 ## Table of Contents
 
-- [PM4Moodle Set Up Giud](SETUP.md)
-- [PM4Moodle User Guid](USER_GUIDE.md)
+- [PM4Moodle Setup Giud](SETUP.md)
+- [PM4Moodle Usage Guid](USAGE_GUIDE.md)
 - [OCPM<sup>2</sup> Methodology and Case Study](METHODOLOGY_AND_CASE_STUDY.md)
-- [License](#license)
 
 ---
 ## License

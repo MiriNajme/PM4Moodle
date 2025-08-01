@@ -37,7 +37,7 @@ root/
 
 - [Setup and Installation](SETUP.md)
 - [How to Use PM4Moodle](USER_GUIDE.md)
-- [Methodology and Case Study](DEVELOPER_GUIDE.md)
+- [Methodology and Case Study](METHODOLOGY_AND_CASE_STUDY.md)
 - [License](#license)
 
 ---

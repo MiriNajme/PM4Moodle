@@ -1,4 +1,4 @@
-# PM4Moodle User Guide
+# PM4Moodle Usage Guide
 
 Welcome to the **PM4Moodle User Guide**!  
 This document provides a comprehensive overview of the tool’s main features and a step-by-step guide for end-users.

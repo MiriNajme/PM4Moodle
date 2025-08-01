@@ -136,30 +136,137 @@ Where event logs had already been extracted for specific activities in earlier p
 ### 3.1 Implementation
 
 We developed and released **PM4Moodle**, an open-source tool for repeatable OCEL 2.0 log extraction from Moodle.  
-The tool is publicly available at: [https://github.com/MiriNajme/PM4Moodle](https://github.com/MiriNajme/PM4Moodle)
 
 **Architecture:**
 - **Frontend:** Built in TypeScript and React, providing an interactive, user-friendly interface for configuring and initiating log extraction.
 - **Backend:** Developed in Python using Flask, integrating the PM4Py process mining library for robust log processing and analysis.
-
-<img src="figures/pm4moodle_extraction_interface.png" alt="PM4Moodle Extraction Interface" width="600"/>
 
 **Usage highlights:**
 - Users connect to any Moodle database by entering credentials via the interface.
 - Extraction can be targeted: users may select specific courses, module types (e.g., assignment, file, folder, URL), and event types of interest.
 - For convenience, PM4Moodle also supports “one-click” extraction—automatically generating OCEL 2.0 logs for all courses and supported modules.
 
+For step-by-step usage instructions, see the [User Guide](USER_GUIDE.md).
+
+### 3.2 Extraction
+
+We used **PM4Moodle** to extract OCEL 2.0 logs from both test and production Moodle environments.
+
+- **Test Environment:**  
+  Data extraction began with a test setup using two simulated courses, with systematically entered data to cover all relevant event and object types. The inclusion of a second course enabled us to capture import events between courses and verify that the tool could extract comprehensive OCEL 2.0 logs for all modules relevant to general-purpose extraction (Q5), even those not always present in real-world settings.
+
+- **Production Environment:**  
+  After successful testing, we extracted data from a real course spanning one academic year. This production dataset enabled us to address the first four analytical questions and to validate the method in a real-world context, capturing detailed records of student and teacher interactions—including assignments, submissions, grading, and resource usage—across the course lifecycle.
+
+<img src="figures/figure_extraction_test.png" alt="Extracted OCEL log by PM4Moodle" width="600"/>
+
+**Outputs:**
+- The tool generates OCEL 2.0 event logs in JSON format, adhering to the latest object-centric event log standards.
+- For each extraction, PM4Moodle automatically produces Object-Centric Directly-Follows Graphs (OC-DFGs).
+- Both the OCEL log and OC-DFG visualizations are directly downloadable through the interface.
+
+### 3.3 Verification
+
+**PM4Moodle** enables systematic verification of the extracted OCEL logs from both test and production environments using two approaches: **Verification Matrices** (frequency and cardinality) and **State Chart Diagrams**, each accessible as dedicated tabs in the interface.
+
+#### Verification Matrices
+
+- **Frequency Matrix:** Shows the number of each object type associated with every event type, helping to confirm the expected relationships in the log.
+- **Cardinality Matrix:** Presents the minimum and maximum numbers of each object type per event type, supporting detailed cardinality checks.
+- Both matrices can be filtered by object and event type for focused analysis.
+- Users can compare the generated verification matrices against the extraction matrix to check completeness and correctness.
+
+<img src="figures/Figure_ActivityMatrix_Frequency.png" alt="Verification Matrix - Frequency" width="700"/>
+<img src="figures/Figure_ActivityMatrix_Cardinality.png" alt="Verification Matrix - Cardinality" width="700"/>
+
+**Insights:**  
+- Most expected relationships and cardinalities were correctly extracted.  
+- Some discrepancies were found and explained by Moodle’s internal logic (e.g., deletion of related objects prevents logging associations, and group grading is logged as individual student grades).
+
+#### State Chart Diagrams
+
+- PM4Moodle automatically generates state chart diagrams for each module based on the extracted event log (see example below for the File module).
+- These diagrams let analysts compare the expected lifecycle of a module (from the hand-crafted model) with the actual transitions observed in the OCEL.
+- While the automatically generated diagrams do not display hierarchy, they accurately capture all key transitions, including repeated updates/views and proper handling of the deleted state.
+
+<img src="figures/Figure_StateChart_File.png" alt="State Chart Diagram - File Module" width="500"/>
+
 ---
 
 ## 4. Analysis Iteration
 
-<!-- To be completed as needed. -->
+We analyzed the extracted OCEL logs from the real-world case study to answer each prioritized business-related question. Results were reviewed by the course responsible to ensure accuracy. Each analysis iteration began with a **log adjustment** to tailor the data to the research question.
+
+### 4.1 Answering Question 1: Learning Paths
+
+- **Goal:** Explore how students visit and interact with course pages.
+- **Approach:**  
+  - Compared the discovered Object-Centric Directly-Follows Graph (OC-DFG) before and after log adjustment (see figures below).
+  - Log adjustment involved drilling down page objects, unfolding view events by page name, and separating user roles.
+- **Findings:**  
+  - Without log adjustment, the process model did not provide insights into specific page visits.
+  - After adjustment, the OC-DFG visualized students’ sequential access of pages, revealing revisit loops and suggesting areas for curriculum improvement.
+
+<img src="figures/Figure_Q1_ocdfg.png" alt="OC-DFG before log adjustment" width="400"/>
+<img src="figures/Figure_Q11.png" alt="OC-DFG after log adjustment" width="400"/>
+<img src="figures/Figure_Q12.png" alt="Detailed OC-DFG after log adjustment" width="400"/>
+
+### 4.2 Answering Question 2: Assignment Submission Behaviors
+
+- **Goal:** Understand patterns in individual and group assignment submissions.
+- **Approach:**  
+  - Applied log adjustment to filter for submission activities, drill down user and assignment objects, and unfold relevant events.
+- **Findings:**  
+  - OC-DFG revealed sequential flows in assignment submissions.
+  - The analysis showed both group and individual interactions and highlighted issues such as discrepancies between submission and grading relationships due to Moodle’s logging structure.
+
+<img src="figures/Figure_Q21.png" alt="OC-DFG for assignment submission" width="400"/>
+<img src="figures/Figure_Q22.png" alt="Zoomed OC-DFG for assignment submission" width="400"/>
+
+### 4.3 Answering Question 3: Leadership in Group Assignments
+
+- **Goal:** Determine if lead submitters in group work achieve higher grades.
+- **Approach:**  
+  - Identified “lead” students by submission frequency.
+  - Mapped final grades from A–F to 5–0.
+  - Compared grade distributions between lead and non-lead submitters using histograms and boxplots.
+- **Findings:**  
+  - Lead submitters had significantly higher grades (p = 0.0334, Mann–Whitney U test).
+  - Boxplot confirmed a higher median and narrower grade range for lead students.
+  - Indicates a link between leadership in submissions and academic performance.
+
+<img src="figures/Figure_Q3_Histogram.png" alt="Grade distribution: lead vs non-lead" width="380"/>
+<img src="figures/Figure_Q3_Boxplot.png" alt="Boxplot: lead vs non-lead" width="380"/>
+
+### 4.4 Answering Question 4: Resource Access and Exam Performance
+
+- **Goal:** Assess the relationship between resource access and exam grades.
+- **Approach:**  
+  - Performed log adjustment, calculated frequencies of folder, page, and file views.
+  - Used Pearson correlation and multiple regression.
+- **Findings:**  
+  - No statistically significant relationship was found (all r ≈ 0.12, p > 0.20).
+  - Regression explained just 2.2% of grade variance.
+  - Indicates that the simple frequency of content access does not predict exam performance.
+
+
+For each question, iterative log adjustment and tailored analysis ensured that the extracted event logs provided actionable insights aligned with stakeholder needs and the OCPM<sup>2</sup> methodology.
 
 ---
 
-## 5. Process Improvement and Support
+## 5. Process Improvement & Support
 
-<!-- To be completed as needed. -->
+Based on our analysis of the real-world data:
+
+- **Curriculum Refinement:**  
+  Students frequently revisited course pages related to control-flow perspectives, process complexity, and process trees, suggesting potential challenges in topic comprehension or course sequencing.  
+  **Recommendation:** Adjust the course structure by moving process tree discussions after control-flow perspectives and introducing process complexity at the end. This may help reduce unnecessary navigation and create a more structured learning experience. Further investigation is encouraged to fully understand and address the reasons behind these patterns.
+
+- **Collaborative Learning Enhancement:**  
+  Students who consistently led group assignment submissions achieved higher final grades, highlighting the benefits of active leadership in collaborative tasks.  
+  **Recommendation:** Encourage instructors to rotate leadership roles within groups so that each student leads at least one assignment. This approach may improve accountability, engagement, and help prevent passive participation in group work.
+
+These insights, supported by the OCPM<sup>2</sup> methodology, demonstrate the tool’s ability not only to analyze but also to inform actionable educational improvements.
 
 ---
 

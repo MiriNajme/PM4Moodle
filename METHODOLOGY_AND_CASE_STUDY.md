@@ -75,36 +75,36 @@ This section follows the structure of OCPM<sup>2</sup>, detailing how each stage
 
   1. **Object Type Identification**
 
-  We identified key object types by systematically mapping educational concepts from the prioritized business-related questions. This process combined stakeholder interviews, a review of Moodle documentation, and domain analysis.
+      We identified key object types by systematically mapping educational concepts from the prioritized business-related questions.        This process combined stakeholder interviews, a review of Moodle documentation, and domain analysis.
 
-  - For Questions 1–4, we extracted primary nouns representing core educational entities (e.g., Student, File, Page, Folder, Assignment, URL, Group, Course, Exam) directly from the analytical questions.
-  - For Question 5 (general-purpose event log extraction), we broadened the list using instructor input and module relevance ratings, adding object types such as Label, Quiz, Forum, and Choice.
+      - For Questions 1–4, we extracted primary nouns representing core educational entities (e.g., Student, File, Page, Folder,             Assignment, URL, Group, Course, Exam) directly from the analytical questions.
+      - For Question 5 (general-purpose event log extraction), we broadened the list using instructor input and module relevance             ratings, adding object types such as Label, Quiz, Forum, and Choice.
 
-  The relationship between each analytical question and the identified object types is summarized in the Question-to-Object Type (Q2OT) matrix below. Notably, Q5 is associated with all object types except Exam, since exam grading is managed in a separate platform and not captured by Moodle.
+      The relationship between each analytical question and the identified object types is summarized in the Question-to-Object Type        (Q2OT) matrix below. Notably, Q5 is associated with all object types except Exam, since exam grading is managed in a separate         platform and not captured by Moodle.
 
-  This matrix ensures that all relevant Moodle modules identified by stakeholders are explicitly included and systematically supported by event data extraction.
+      This matrix ensures that all relevant Moodle modules identified by stakeholders are explicitly included and systematically            supported by event data extraction.
 
-  <!-- Example: Insert Q2OT matrix figure -->
-  <img src="figures/table_q2ot_matrix.png" alt="Question-to-Object Type (Q2OT) Matrix" width="650"/>
-  src="figures/table3_object_types.png" alt="Table 3: Extracted object types from Moodle modules" width="650"/>
+ 
+      <img src="figures/table_q2ot_matrix.png" alt="Question-to-Object Type (Q2OT) Matrix" width="650"/>
+      src="figures/table3_object_types.png" alt="Table 3: Extracted object types from Moodle modules" width="650"/>
 
   2. **Conceptual Modeling**
 
-  We developed a conceptual model using UML notation to formalize the relationships among object types identified in the previous stage. The model distinguishes:
+      We developed a conceptual model using UML notation to formalize the relationships among object types identified in the previous       stage. The model distinguishes:
 
-  - **Red-colored classes:** Elements specific to the Exam object type, originating from an external exam administration system.
-  - **Black-colored classes:** Object types native to Moodle.
-  - **Blue-colored classes:** Specifications of a superclass, differentiated in implementation by a type attribute (e.g., different question formats as subtypes of Question).
+      - **Red-colored classes:** Elements specific to the Exam object type, originating from an external exam administration system.
+      - **Black-colored classes:** Object types native to Moodle.
+      - **Blue-colored classes:** Specifications of a superclass, differentiated in implementation by a type attribute (e.g.,                different question formats as subtypes of Question).
 
-  This hierarchical structure enables advanced analysis operations such as drill-down, roll-up, fold, and unfold. While UML is used here for clarity, our methodology is notation-agnostic and supports equivalent modeling approaches.
+      This hierarchical structure enables advanced analysis operations such as drill-down, roll-up, fold, and unfold. While UML is          used here for clarity, our methodology is notation-agnostic and supports equivalent modeling approaches.
 
-  The model was iteratively refined by:
-  - Including object types missed by initial Q2OT mapping, such as Teacher (identified via deeper documentation review) and User (as a generalization of Teacher and Student).
-  - Utilizing a source discovery tool ([Moodle_Database_Comparison](https://github.com/MiriNajme/Moodle_Database_Comparison)) to detect additional object types (e.g., Forum, Discussion, Post) by comparing database changes before and after operations.
+      The model was iteratively refined by:
+      - Including object types missed by initial Q2OT mapping, such as Teacher (identified via deeper documentation review) and User         (as a generalization of Teacher and Student).
+      - Utilizing a source discovery tool ([Moodle_Database_Comparison](https://github.com/MiriNajme/Moodle_Database_Comparison)) to         detect additional object types (e.g., Forum, Discussion, Post) by comparing database changes before and after operations.
 
-  Design decisions (e.g., treating Grades as an attribute of Submission, modeling Exam Sheet as part of Exam) reflect the desire to balance simplicity and analytical power. Exam-related classes are included for completeness in cross-system analysis, even though they are not native to Moodle.
+      Design decisions (e.g., treating Grades as an attribute of Submission, modeling Exam Sheet as part of Exam) reflect the desire        to balance simplicity and analytical power. Exam-related classes are included for completeness in cross-system analysis, even         though they are not native to Moodle.
 
-  <img src="figures/conceptual-model.png" alt="UML Conceptual Model for Moodle Data Extraction" width="650"/>
+      <img src="figures/conceptual-model.png" alt="UML Conceptual Model for Moodle Data Extraction" width="650"/>
 
 
  3. **Activity (Event Type) Identification**

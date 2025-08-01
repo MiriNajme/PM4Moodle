@@ -17,7 +17,7 @@ This document explains, step by step, how the PM4Moodle tool and its underlying 
     - [3.1 Implementation](#31-implementation)
     - [3.2 ...](#32-...)
 - [4. Analysis Iteration](#4-analysis-iteration)
-- [5. Process Improvement and Support](#5-process-improvement-and-support)
+- [5. Process Improvement & Support](#5-process-improvement-and-support)
 - [References](#references)
 
 ---
@@ -58,10 +58,9 @@ We identified key object types by systematically mapping educational concepts fr
 
 The relationship between each analytical question and the identified object types is summarized in the Question-to-Object Type (Q2OT) matrix below. Notably, Q5 is associated with all object types except Exam, since exam grading is managed in a separate platform and not captured by Moodle.
 
-This matrix ensures that all relevant Moodle modules identified by stakeholders are explicitly included and systematically supported by event data extraction.
+<img src="figures/table-q2ot-matrix.png" alt="Question-to-Object Type (Q2OT) Matrix" width="500"/>
 
-<img src="figures/table_q2ot_matrix.png" alt="Question-to-Object Type (Q2OT) Matrix" width="650"/>
-<img src="figures/table3_object_types.png" alt="Table 3: Extracted object types from Moodle modules" width="650"/>
+This matrix ensures that all relevant Moodle modules identified by stakeholders are explicitly included and systematically supported by event data extraction.
 
 ### 2.2 Conceptual Modeling
 
@@ -94,12 +93,12 @@ For example, for the File module, possible activities include creating, importin
 - **Comprehensive Statechart:**  
   The initial UML statechart models the full lifecycle of the File module, including all theoretically possible transitions (e.g., changing visibility or availability, hierarchical nesting by parent section).
 
-  <img src="figures/figure_statechart_full.png" alt="UML Statechart - Full File Module Lifecycle" width="500"/>
+  <img src="figures/figure-statechart-full.png" alt="UML Statechart - Full File Module Lifecycle" width="500"/>
 
 - **Log-Feasible Statechart:**  
   Due to Moodle’s logging limitations, many transitions (such as hide, show, make available, or unavailable) are logged only as generic updates and cannot be traced in detail. We created a filtered version of the statechart showing only transitions supported by actual event logs, such as create/import, update, view, and delete. This filtered model exposes the gap between possible and observable activities due to logging granularity.
 
-  <img src="figures/figure_statechart_logged.png" alt="UML Statechart - Logged Events Only" width="500"/>
+  <img src="figures/figure-statechart-refined.png" alt="UML Statechart - Logged Events Only" width="500"/>
 
 These diagrams were designed for all included modules, ensuring that both theoretical and log-feasible activities were systematically identified and documented.
 
@@ -158,7 +157,7 @@ We used **PM4Moodle** to extract OCEL 2.0 logs from both test and production Moo
 - **Production Environment:**  
   After successful testing, we extracted data from a real course spanning one academic year. This production dataset enabled us to address the first four analytical questions and to validate the method in a real-world context, capturing detailed records of student and teacher interactions—including assignments, submissions, grading, and resource usage—across the course lifecycle.
 
-<img src="figures/figure_extraction_test.png" alt="Extracted OCEL log by PM4Moodle" width="600"/>
+<img src="figures/main-page2.png" alt="Extracted OCEL log by PM4Moodle" width="500"/>
 
 **Outputs:**
 - The tool generates OCEL 2.0 event logs in JSON format, adhering to the latest object-centric event log standards.
@@ -176,20 +175,34 @@ We used **PM4Moodle** to extract OCEL 2.0 logs from both test and production Moo
 - Both matrices can be filtered by object and event type for focused analysis.
 - Users can compare the generated verification matrices against the extraction matrix to check completeness and correctness.
 
-<img src="figures/Figure_ActivityMatrix_Frequency.png" alt="Verification Matrix - Frequency" width="700"/>
-<img src="figures/Figure_ActivityMatrix_Cardinality.png" alt="Verification Matrix - Cardinality" width="700"/>
+<img src="figures/figure-activitymatrix-frequency.png" alt="Verification Matrix - Frequency" width="500"/>
+<img src="figures/figure-activitymatrix-cardinality.png" alt="Verification Matrix - Cardinality" width="500"/>
 
-**Insights:**  
-- Most expected relationships and cardinalities were correctly extracted.  
-- Some discrepancies were found and explained by Moodle’s internal logic (e.g., deletion of related objects prevents logging associations, and group grading is logged as individual student grades).
+**Insights and Case Study Findings:**  
+While most expected relationships and cardinalities were correctly extracted, we identified three notable issues in our case study:
+
+1. **Missing Associations Due to Deletion Logic:**  
+   - For `delete question` event, expected links to Question, Answer, Hint, and Question Bank Entry, and for `delete question from quiz` event expected link to Question Bank Entry were absent.   
+   - *Reason:* When an object is deleted, Moodle simultaneously removes all related objects, so these associations are not recorded in the log.
+
+2. **Discrepancies in Creation and Addition Events:**  
+   - For `create question` and `add question to quiz` events, observed cardinality was 0..1 (not 1..1) for Question Bank Entry and Question.  
+   - *Reason:* When these objects are deleted after their creation, some events of these types in the log are without any relationship to the now-deleted objects. This results in observed events that lack the expected associations.
+
+3. **Missing Group-Grading Relationships:**  
+   - The `set grade` event lacked the expected link to Group for group assignments (expected cardinality 0..1).  
+   - *Reason:* Moodle logs a `set grade` event for each student, not directly for groups, even when group grading occurs.
+
+These issues are highlighted in the verification matrices above. They stem from Moodle’s internal event logging and deletion behavior, not from limitations in the extraction process itself. Recognizing these patterns is essential for the correct interpretation and analysis of educational process data.
 
 #### State Chart Diagrams
 
 - PM4Moodle automatically generates state chart diagrams for each module based on the extracted event log (see example below for the File module).
-- These diagrams let analysts compare the expected lifecycle of a module (from the hand-crafted model) with the actual transitions observed in the OCEL.
-- While the automatically generated diagrams do not display hierarchy, they accurately capture all key transitions, including repeated updates/views and proper handling of the deleted state.
+- These diagrams allow analysts to directly compare the actual process behavior captured in the OCEL with the expected lifecycle defined in hand-crafted models.
+- For the File module, the generated state chart was found to be **identical to the hand-crafted diagram** in terms of all relevant state transitions: after creation or import, a file can be viewed or updated any number of times, and deletion is possible from all other states, terminating further activity.
+- While the automatically generated diagrams do not display state hierarchy, they provide a faithful representation of the key behavioral transitions, demonstrating the tool's reliability for lifecycle analysis.
 
-<img src="figures/Figure_StateChart_File.png" alt="State Chart Diagram - File Module" width="500"/>
+<img src="figures/figure-statechart-file.png" alt="State Chart Diagram - File Module" width="500"/>
 
 ---
 

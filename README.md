@@ -1,6 +1,6 @@
 # PM4Moodle
 
-<img src="screenshots/extractor-logo.png" alt="PM4Moodle Logo" width="180"/>
+<img src="figures/extractor-logo.png" alt="PM4Moodle Logo" width="180"/>
 
 **PM4Moodle** is a specialized, open-source tool for extracting [OCEL 2.0](https://www.ocel-standard.org/) event logs from Moodle, focused on the most common and important Moodle modules. It offers a modern, intuitive interface for users to connect directly to their Moodle database and extract OCEL 2.0 logs effortlessly, enabling advanced process mining and learning analytics.
 
@@ -35,9 +35,9 @@ root/
 ---
 ## Table of Contents
 
-- [Setup and Installation](SETUP.md)
-- [How to Use PM4Moodle](USER_GUIDE.md)
-- [Methodology and Case Study](METHODOLOGY_AND_CASE_STUDY.md)
+- [PM4Moodle Set Up Giud](SETUP.md)
+- [PM4Moodle User Guid](USER_GUIDE.md)
+- [OCPM<sup>2</sup> Methodology and Case Study](METHODOLOGY_AND_CASE_STUDY.md)
 - [License](#license)
 
 ---

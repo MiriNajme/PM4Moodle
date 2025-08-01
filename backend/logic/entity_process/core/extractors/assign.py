@@ -605,12 +605,6 @@ class Assign(Base):
         rows = self.db_service.query_object(group_members, filter_conditions)
         return rows if rows else None
 
-    def fetch_course_module_by_id(self, course_module_id):
-        course_modules = self.db_service.query_object(
-            self.CourseModule, [self.CourseModule.id == course_module_id]
-        )
-        return course_modules[0] if course_modules else None
-
     def fetch_course_module_by_instance(self, instance, module_id):
         filter_conditions = [
             self.CourseModule.instance == instance,

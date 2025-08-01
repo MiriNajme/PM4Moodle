@@ -361,7 +361,8 @@ class Quiz(Base):
             bank_entry_qualifier = ""
             quiz_qualifier = ""
 
-        course_modules = self.fetch_course_modules(event["contextinstanceid"])
+        course_modules = self.fetch_course_module_by_id(event["contextinstanceid"])
+
         if course_modules is not None:
             relationships.append(
                 get_formatted_relationship(
@@ -395,15 +396,16 @@ class Quiz(Base):
                 if context is None:
                     return relationships
 
-                course_modules = self.fetch_course_modules(context["instanceid"])
+                course_modules = self.fetch_course_module_by_id(context["instanceid"])
 
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.QUIZ,
-                        course_modules["instance"],
-                        quiz_qualifier,
+                if course_modules is not None:
+                    relationships.append(
+                        get_formatted_relationship(
+                            ObjectEnum.QUIZ,
+                            course_modules["instance"],
+                            quiz_qualifier,
+                        )
                     )
-                )
 
         return relationships
 
@@ -433,12 +435,6 @@ class Quiz(Base):
     def fetch_context(self, using_context_id):
         TABLE = self.db_service.Base.classes.mdl_question_references
         filter_conditions = [TABLE.id == using_context_id]
-        rows = self.db_service.query_object(TABLE, filter_conditions)
-        return rows[0] if rows else None
-
-    def fetch_course_modules(self, instance_id):
-        TABLE = self.db_service.Base.classes.mdl_course_modules
-        filter_conditions = [TABLE.id == instance_id]
         rows = self.db_service.query_object(TABLE, filter_conditions)
         return rows[0] if rows else None
 

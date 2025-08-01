@@ -1,4 +1,4 @@
-# Methodology and Case Study: Implementing PM4Moodle with our proposed methodology, OCPM<sup>2</sup>
+#  OCPM<sup>2</sup>: Methodology and Case Study
 
 This document explains, step by step, how the PM4Moodle tool and its underlying case study were implemented using the OCPM<sup>2</sup> methodology. It is intended for anyone interested in understanding the methodological framework, design decisions, and the full process behind our educational process mining case study.
 
@@ -15,8 +15,12 @@ This document explains, step by step, how the PM4Moodle tool and its underlying 
     - [2.5 Extraction Prioritization](#25-extraction-prioritization)
 - [3. Log Extraction](#3-log-extraction)
     - [3.1 Implementation](#31-implementation)
-    - [3.2 ...](#32-...)
+    - [3.2 Extraction](#32-extraction)
+    - [3.3 Verification](#33-verification)
 - [4. Analysis Iteration](#4-analysis-iteration)
+    - [4.1 Answering Question 1: Learning Paths](#33-verification)
+    - [3.3 Verification](#33-verification)
+    - [3.3 Verification](#33-verification)     
 - [5. Process Improvement & Support](#5-process-improvement-and-support)
 - [References](#references)
 

@@ -18,10 +18,11 @@ This document explains, step by step, how the PM4Moodle tool and its underlying 
     - [3.2 Extraction](#32-extraction)
     - [3.3 Verification](#33-verification)
 - [4. Analysis Iteration](#4-analysis-iteration)
-    - [4.1 Answering Question 1: Learning Paths](#33-verification)
-    - [3.3 Verification](#33-verification)
-    - [3.3 Verification](#33-verification)     
-- [5. Process Improvement & Support](#5-process-improvement-and-support)
+   - [4.1 Answering Question 1: Learning Paths](#41-answering-question-1-learning-paths)
+   - [4.2 Answering Question 2: Assignment Submission Behaviors](#42-answering-question-2-assignment-submission-behaviors)
+   - [4.3 Answering Question 3: Leadership in Group Assignments](#43-answering-question-3-leadership-in-group-assignments)
+   - [4.4 Answering Question 4: Resource Access and Exam Performance](#44-answering-question-4-resource-access-and-exam-performance)
+- [5. Process Improvement and Support](#5-process-improvement-and-support)
 - [References](#references)
 
 ---
@@ -279,6 +280,7 @@ We analyzed the extracted OCEL logs from the real-world case study to answer eac
 <img src="figures/figure_Q3_histogram.png" alt="Grade distribution: lead vs non-lead" width="300"/>
 <img src="figures/figure_Q3_boxplot.png" alt="Boxplot: lead vs non-lead" width="300"/>
 </p>
+
 ### 4.4 Answering Question 4: Resource Access and Exam Performance
 
 - **Goal:** Assess the relationship between resource access and exam grades.
@@ -295,7 +297,7 @@ For each question, iterative log adjustment and tailored analysis ensured that t
 
 ---
 
-## 5. Process Improvement & Support
+## 5. Process Improvement and Support
 
 Based on our analysis of the real-world data:
 

@@ -8,7 +8,7 @@ This document provides a comprehensive overview of the tool’s main features an
 ## Table of Contents
 
 - [Interface Overview](#interface-overview)
-- [Set Up Database Connection](#database-connection)
+- [Set Up Database Connection](#set-up-database-connection)
 - [Extraction Tab](#extraction-tab)
 - [Verification Matrix Tab](#verification-matrix-tab)
 - [Statechart Diagram Tab](#statechart-diagram-tab)
@@ -19,7 +19,7 @@ This document provides a comprehensive overview of the tool’s main features an
 PM4Moodle features an intuitive and modern web interface, consisting of three main tabs: **Extraction**, **Verification Matrix**, and **Statechart Diagram**. The navigation bar allows users to seamlessly switch between the core functionalities of the tool.  
 The **Extraction** tab is the starting point for log generation, while the **Verification Matrix** and **Statechart Diagram** tabs support in-depth analysis and quality assurance of the extracted event data.
 
-<img src="screenshots/main-page1.png" alt="PM4Moodle Main Interface" width="500"/>
+<img src="figures/main-page1.png" alt="PM4Moodle Main Interface" width="500"/>
 
 ---
 ## Set Up Database Connection
@@ -28,7 +28,7 @@ The **Extraction** tab is the starting point for log generation, while the **Ver
 - Enter your Moodle database credentials (host, port, user, password, database name).
 - Save your settings.
 
-<img src="screenshots/database-connection.png" alt="Screenshot: Database Settings Dialog" width="500"/>
+<img src="figures/database-connection.png" alt="Screenshot: Database Settings Dialog" width="500"/>
 
 ---
 
@@ -47,7 +47,7 @@ The **Extraction** tab is the starting point for log generation, while the **Ver
 - The tool connects to your database and processes the data to extract the OCEL 2.0 log based on your selection.
 - When finished, download the OCEL 2.0 log in JSON format and the Directly-Follows Graph (DFG) as an image, if desired. You can also view these files in full size without downloading them.
 
-<img src="screenshots/main-page2.png" alt="Screenshot: Extraction and Download" width="500"/>
+<img src="figures/main-page2.png" alt="Screenshot: Extraction and Download" width="500"/>
 ---
 
 ## Verification Matrix Tab
@@ -56,15 +56,15 @@ The Verification Matrix tab provides log quality checks by automatically generat
 
 - **Filtering:** Both matrix types are interactive and can be filtered by object type (row) or event type (column), enabling focused analysis.
 
-<img src="screenshots/filter-matrices.png" alt="Object Frequency Verification Matrix" width="500"/>
+<img src="figures/filter-matrices.png" alt="Object Frequency Verification Matrix" width="500"/>
 
 - **Object Frequency Matrix:** Displays the frequency of each object type per event type, supporting quick inspection of the relationships in the log.
-<!-- Screenshot: Frequency Verification Matrix -->
-<img src="screenshots/frequency-matrix.png" alt="Object Frequency Verification Matrix" width="500"/>
+
+<img src="figures/frequency-matrix.png" alt="Object Frequency Verification Matrix" width="500"/>
 
 - **Cardinality Matrix:** Shows the minimum and maximum cardinality of objects per event as observed in the extracted log, facilitating detection of anomalies and validation against expected extraction matrices.
-<!-- Screenshot: Cardinality Verification Matrix -->
-<img src="screenshots/cardinality-matrix.png" alt="Cardinality Verification Matrix" width="500"/>
+
+<img src="figures/cardinality-matrix.png" alt="Cardinality Verification Matrix" width="500"/>
 
 ---
 
@@ -75,8 +75,7 @@ After extracting the OCEL 2.0 log, users can access the Statechart Diagram tab, 
 - **Lifecycle Visualization:** The diagrams illustrate the actual state transitions (such as create, update, view, and delete) observed in the data for each module instance.
 - **Interpretation:** Users can compare the system’s observed behavior with expected module lifecycles and gain insights into module usage patterns.
 
-<!-- Screenshot: Statechart Diagram for File module -->
-<img src="screenshots/state-chart-assign.png" alt="Statechart Diagram for File Module" width="500"/>
+<img src="figures/state-chart-assign.png" alt="Statechart Diagram for File Module" width="500"/>
 
 
 

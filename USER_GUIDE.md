@@ -32,7 +32,7 @@ The **Extraction** tab is the starting point for log generation, while the **Ver
 - Enter your Moodle database credentials (host, port, user, password, database name).
 - Save your settings.
 
-<img src="screenshots/database_connection.png" alt="Screenshot: Database Settings Dialog" width="500"/>
+<img src="screenshots/database-connection.png" alt="Screenshot: Database Settings Dialog" width="500"/>
 
 ---
 

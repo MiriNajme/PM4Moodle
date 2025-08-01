@@ -36,11 +36,11 @@ This document explains, step by step, how the PM4Moodle tool and its underlying 
 
 - **Prioritized Business-Related Questions and Their Purpose:**
 
-    1. **What learning paths do students typically follow when accessing educational materials, such as files, pages, and folders, throughout a course?**  
-    2. **How do students submit (or resubmit) individual and group assignments during the course?**  
-    3. **Do students who usually take the lead in submitting group assignments on behalf of the group tend to achieve higher final grades?**  
-    4. **How is students' exam success related to their frequency of accessing course materials, such as files, pages, and folders?**  
-    5. **How can OCEL 2.0 event logs be systematically extracted for Moodle’s most important standard modules?**  
+1. **What learning paths do students typically follow when accessing educational materials, such as files, pages, and folders, throughout a course?**  
+2. **How do students submit (or resubmit) individual and group assignments during the course?**  
+3. **Do students who usually take the lead in submitting group assignments on behalf of the group tend to achieve higher final grades?**  
+4. **How is students' exam success related to their frequency of accessing course materials, such as files, pages, and folders?**  
+5. **How can OCEL 2.0 event logs be systematically extracted for Moodle’s most important standard modules?**  
 
 ---
 
@@ -58,7 +58,7 @@ We identified key object types by systematically mapping educational concepts fr
 
 The relationship between each analytical question and the identified object types is summarized in the Question-to-Object Type (Q2OT) matrix below. Notably, Q5 is associated with all object types except Exam, since exam grading is managed in a separate platform and not captured by Moodle.
 
-<img src="figures/table-q2ot-matrix.png" alt="Question-to-Object Type (Q2OT) Matrix" width="500"/>
+<img src="figures/table-q2ot-matrix.png" alt="Question-to-Object Type (Q2OT) Matrix" width="600"/>
 
 This matrix ensures that all relevant Moodle modules identified by stakeholders are explicitly included and systematically supported by event data extraction.
 
@@ -93,7 +93,7 @@ For example, for the File module, possible activities include creating, importin
 - **Comprehensive Statechart:**  
   The initial UML statechart models the full lifecycle of the File module, including all theoretically possible transitions (e.g., changing visibility or availability, hierarchical nesting by parent section).
 
-  <img src="figures/figure-statechart-full.png" alt="UML Statechart - Full File Module Lifecycle" width="500"/>
+  <img src="figures/figure-statechart-full.png" alt="UML Statechart - Full File Module Lifecycle" width="600"/>
 
 - **Log-Feasible Statechart:**  
   Due to Moodle’s logging limitations, many transitions (such as hide, show, make available, or unavailable) are logged only as generic updates and cannot be traced in detail. We created a filtered version of the statechart showing only transitions supported by actual event logs, such as create/import, update, view, and delete. This filtered model exposes the gap between possible and observable activities due to logging granularity.
@@ -111,7 +111,10 @@ The extraction matrices provide a structured overview of how each identified act
 - The object type **User** is added as a generalization of Teacher and Student, capturing shared interactions across both roles.
 - Matrix cells indicate the possible cardinality for each object–activity relationship, supporting a systematic and reproducible log extraction process.
 
-> *Due to their size and detail, the complete extraction matrices are provided in Tables 3 and 4 of the paper.*
+- [Extraction Matrix for Resource Modules (Table 3, PNG)](figures/table-resources-extraction-matrix.png)
+- [Extraction Matrix for Activity Modules (Table 4, PNG)](figures/table-activities-extraction-matrix.png)
+
+<sub>*Tip: Right-click and choose “Open link in new tab” to view matrices without leaving this page.*</sub>
 
 ### 2.5 Extraction Prioritization
 
@@ -175,8 +178,8 @@ We used **PM4Moodle** to extract OCEL 2.0 logs from both test and production Moo
 - Both matrices can be filtered by object and event type for focused analysis.
 - Users can compare the generated verification matrices against the extraction matrix to check completeness and correctness.
 
-<img src="figures/figure-activitymatrix-frequency.png" alt="Verification Matrix - Frequency" width="500"/>
-<img src="figures/figure-activitymatrix-cardinality.png" alt="Verification Matrix - Cardinality" width="500"/>
+<img src="figures/figure_activitymatrix_frequency.png" alt="Verification Matrix - Frequency" width="500"/>
+<img src="figures/figure-activitymatrix_cardinality.png" alt="Verification Matrix - Cardinality" width="500"/>
 
 **Insights and Case Study Findings:**  
 While most expected relationships and cardinalities were correctly extracted, we identified three notable issues in our case study:

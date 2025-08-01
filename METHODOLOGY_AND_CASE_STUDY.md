@@ -36,11 +36,11 @@ This document explains, step by step, how the PM4Moodle tool and its underlying 
 
 - **Prioritized Business-Related Questions and Their Purpose:**
 
-1. **What learning paths do students typically follow when accessing educational materials, such as files, pages, and folders, throughout a course?**  
-2. **How do students submit (or resubmit) individual and group assignments during the course?**  
-3. **Do students who usually take the lead in submitting group assignments on behalf of the group tend to achieve higher final grades?**  
-4. **How is students' exam success related to their frequency of accessing course materials, such as files, pages, and folders?**  
-5. **How can OCEL 2.0 event logs be systematically extracted for Moodle’s most important standard modules?**  
+1. What learning paths do students typically follow when accessing educational materials, such as files, pages, and folders, throughout a course? 
+2. How do students submit (or resubmit) individual and group assignments during the course?  
+3. Do students who usually take the lead in submitting group assignments on behalf of the group tend to achieve higher final grades? 
+4. How is students' exam success related to their frequency of accessing course materials, such as files, pages, and folders?
+5. How can OCEL 2.0 event logs be systematically extracted for Moodle’s most important standard modules?  
 
 ---
 

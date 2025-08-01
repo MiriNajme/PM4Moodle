@@ -11,7 +11,7 @@ This document provides a comprehensive overview of the tool’s main features an
 - [Set Up Database Connection](#set-up-database-connection)
 - [Extraction Tab](#extraction-tab)
 - [Verification Matrix Tab](#verification-matrix-tab)
-- [Statechart Diagram Tab](#statechart-diagram-tab)
+- [State Chart Diagram Tab](#state-chart-diagram-tab)
 
 ---
 ## Interface Overview
@@ -68,7 +68,7 @@ The Verification Matrix tab provides log quality checks by automatically generat
 
 ---
 
-## Statechart Diagram Tab
+## State Chart Diagram Tab
 
 After extracting the OCEL 2.0 log, users can access the Statechart Diagram tab, where PM4Moodle automatically generates statechart diagrams for each extracted module.
 

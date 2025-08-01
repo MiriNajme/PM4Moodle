@@ -205,7 +205,7 @@ These issues are highlighted in the verification matrices above. They stem from 
 - For the File module, the generated state chart was found to be **identical to the hand-crafted diagram** in terms of all relevant state transitions: after creation or import, a file can be viewed or updated any number of times, and deletion is possible from all other states, terminating further activity.
 - While the automatically generated diagrams do not display state hierarchy, they provide a faithful representation of the key behavioral transitions, demonstrating the tool's reliability for lifecycle analysis.
 
-<img src="figures/figure-statechart-file.png" alt="State Chart Diagram - File Module" width="500"/>
+<img src="figures/figure-statechart-file.png" alt="State Chart Diagram - File Module" width="400"/>
 
 ---
 
@@ -220,12 +220,12 @@ We analyzed the extracted OCEL logs from the real-world case study to answer eac
   - Compared the discovered Object-Centric Directly-Follows Graph (OC-DFG) before and after log adjustment (see figures below).
   - Log adjustment involved drilling down page objects, unfolding view events by page name, and separating user roles.
 - **Findings:**  
-  - Without log adjustment, the process model did not provide insights into specific page visits.
-  - After adjustment, the OC-DFG visualized students’ sequential access of pages, revealing revisit loops and suggesting areas for curriculum improvement.
-
-<img src="figures/Figure_Q1_ocdfg.png" alt="OC-DFG before log adjustment" width="400"/>
-<img src="figures/Figure_Q11.png" alt="OC-DFG after log adjustment" width="400"/>
-<img src="figures/Figure_Q12.png" alt="Detailed OC-DFG after log adjustment" width="400"/>
+  - Without log adjustment, the process model did not provide insights into specific page visits(see the figure below).
+  <img src="figures/figure_Q1_ocdfg.png" alt="OC-DFG before log adjustment" width="400"/>
+  
+  - After adjustment, the OC-DFG visualized students’ sequential access of pages, revealing revisit loops and suggesting areas for curriculum improvement(see the figures below).
+  <img src="figures/figure_Q11.png" alt="OC-DFG after log adjustment" width="400"/>
+  <img src="figures/figure_Q12.png" alt="Detailed OC-DFG after log adjustment" width="400"/>
 
 ### 4.2 Answering Question 2: Assignment Submission Behaviors
 
@@ -236,8 +236,8 @@ We analyzed the extracted OCEL logs from the real-world case study to answer eac
   - OC-DFG revealed sequential flows in assignment submissions.
   - The analysis showed both group and individual interactions and highlighted issues such as discrepancies between submission and grading relationships due to Moodle’s logging structure.
 
-<img src="figures/Figure_Q21.png" alt="OC-DFG for assignment submission" width="400"/>
-<img src="figures/Figure_Q22.png" alt="Zoomed OC-DFG for assignment submission" width="400"/>
+<img src="figures/figure_Q21.png" alt="OC-DFG for assignment submission" width="400"/>
+<img src="figures/figure_Q22.png" alt="Zoomed OC-DFG for assignment submission" width="400"/>
 
 ### 4.3 Answering Question 3: Leadership in Group Assignments
 
@@ -245,14 +245,14 @@ We analyzed the extracted OCEL logs from the real-world case study to answer eac
 - **Approach:**  
   - Identified “lead” students by submission frequency.
   - Mapped final grades from A–F to 5–0.
-  - Compared grade distributions between lead and non-lead submitters using histograms and boxplots.
+  - Compared grade distributions between lead and non-lead submitters using histograms and box plots.
 - **Findings:**  
   - Lead submitters had significantly higher grades (p = 0.0334, Mann–Whitney U test).
   - Boxplot confirmed a higher median and narrower grade range for lead students.
   - Indicates a link between leadership in submissions and academic performance.
 
-<img src="figures/Figure_Q3_Histogram.png" alt="Grade distribution: lead vs non-lead" width="380"/>
-<img src="figures/Figure_Q3_Boxplot.png" alt="Boxplot: lead vs non-lead" width="380"/>
+<img src="figures/figure_Q3_histogram.png" alt="Grade distribution: lead vs non-lead" width="380"/>
+<img src="figures/figure_Q3_boxplot.png" alt="Boxplot: lead vs non-lead" width="380"/>
 
 ### 4.4 Answering Question 4: Resource Access and Exam Performance
 
@@ -289,6 +289,6 @@ These insights, supported by the OCPM<sup>2</sup> methodology, demonstrate the t
 ## References
 
 For in-depth details, figures, and further explanations, see the full paper:  
-*Miri, N., Khayatbashi, S., Zdravkovic, J., Jalali, A.: "OCPM2: An Object-Centric Process Mining Methodology" (2025).*
+*Miri, N., Khayatbashi, S., Zdravkovic, J., Jalali, A.: "OCPM<subp>2</sup>: An Object-Centric Process Mining Methodology" (2025).*
 
 ---

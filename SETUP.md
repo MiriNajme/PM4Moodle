@@ -125,7 +125,7 @@ Download and install Node.js from the [official website](https://nodejs.org/en/d
 
 ### 2. Install Frontend Dependencies
 
-Navigate to the `frontend/` folder and run:
+Open another terminal or powershell and navigate to the `frontend/` folder and run:
 
 ```bash
 npm install --legacy-peer-deps

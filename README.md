@@ -33,7 +33,7 @@ root/
 ```
 
 ---
-## Table of Contents
+## Documentation Overview
 
 - [PM4Moodle Setup Giud](SETUP.md)
 - [PM4Moodle Usage Guid](USAGE_GUIDE.md)

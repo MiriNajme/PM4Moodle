@@ -87,9 +87,9 @@ class Quiz(Base):
             self.Log.target == "question",
             self.Log.objecttable == "question",
         ]
-        
+
         events = self.fetch_question_events(filter_conditions)
-        
+
         if events:
             for event in events:
                 formated_event_object = self.get_question_event_object(
@@ -444,12 +444,24 @@ class Quiz(Base):
 
     def fetch_attempt_quiz_events(self):
         TABLE = self.db_service.Base.classes.mdl_quiz_attempts
-        rows = self.db_service.query_object(TABLE)
+        quiz_ids = self.fetch_quiz_ids_by_course_ids()
+        filter_conditions = None
+
+        if quiz_ids:
+            filter_conditions = [TABLE.quiz.in_(quiz_ids)]
+
+        rows = self.db_service.query_object(TABLE, filter_conditions)
         return rows if rows else None
 
     def fetch_set_grade_quiz_events(self):
         TABLE = self.db_service.Base.classes.mdl_quiz_grades
-        rows = self.db_service.query_object(TABLE)
+        quiz_ids = self.fetch_quiz_ids_by_course_ids()
+        filter_conditions = None
+
+        if quiz_ids:
+            filter_conditions = [TABLE.quiz.in_(quiz_ids)]
+
+        rows = self.db_service.query_object(TABLE, filter_conditions)
         return rows if rows else None
 
     def fetch_question_answers(self, question_id):
@@ -469,3 +481,14 @@ class Quiz(Base):
         filter_conditions = [TABLE.id == quiz_id]
         rows = self.db_service.query_object(TABLE, filter_conditions)
         return rows[0] if rows else None
+
+    def fetch_quiz_ids_by_course_ids(self):
+        TABLE = self.db_service.Base.classes.mdl_quiz
+        filter_conditions = None
+
+        if self.selected_courses:
+            filter_conditions = [TABLE.course.in_(self.selected_courses)]
+
+        rows = self.db_service.query_object(TABLE, filter_conditions)
+
+        return [row["id"] for row in rows] if rows else []

@@ -57,8 +57,9 @@ We identified key object types by systematically mapping educational concepts fr
 - For Question 5 (general-purpose event log extraction), we broadened the list using instructor input and module relevance ratings, adding object types such as Label, Quiz, Forum, and Choice.
 
 The relationship between each analytical question and the identified object types is summarized in the Question-to-Object Type (Q2OT) matrix below. Notably, Q5 is associated with all object types except Exam, since exam grading is managed in a separate platform and not captured by Moodle.
-
+<p align="center">
 <img src="figures/table-q2ot-matrix.png" alt="Question-to-Object Type (Q2OT) Matrix" width="600"/>
+</p>
 
 This matrix ensures that all relevant Moodle modules identified by stakeholders are explicitly included and systematically supported by event data extraction.
 
@@ -77,8 +78,9 @@ The model was iteratively refined by:
 - Utilizing a source discovery tool ([Moodle_Database_Comparison](https://github.com/MiriNajme/Moodle_Database_Comparison)) to detect additional object types (e.g., Forum, Discussion, Post) by comparing database changes before and after operations.
 
 Design decisions (e.g., treating Grades as an attribute of Submission, modeling Exam Sheet as part of Exam) reflect the desire to balance simplicity and analytical power. Exam-related classes are included for completeness in cross-system analysis, even though they are not native to Moodle.
-
+<p align="center">
 <img src="figures/conceptual-model.png" alt="UML Conceptual Model for Moodle Data Extraction" width="650"/>
+</p>
 
 ### 2.3 Activity (Event Type) Identification
 
@@ -92,13 +94,15 @@ For example, for the File module, possible activities include creating, importin
 
 - **Comprehensive Statechart:**  
   The initial UML statechart models the full lifecycle of the File module, including all theoretically possible transitions (e.g., changing visibility or availability, hierarchical nesting by parent section).
-
+  <p align="center">
   <img src="figures/figure-statechart-full.png" alt="UML Statechart - Full File Module Lifecycle" width="600"/>
+  </p>
 
 - **Log-Feasible Statechart:**  
   Due to Moodle’s logging limitations, many transitions (such as hide, show, make available, or unavailable) are logged only as generic updates and cannot be traced in detail. We created a filtered version of the statechart showing only transitions supported by actual event logs, such as create/import, update, view, and delete. This filtered model exposes the gap between possible and observable activities due to logging granularity.
-
-  <img src="figures/figure-statechart-refined.png" alt="UML Statechart - Logged Events Only" width="500"/>
+<p align="center">
+ <img src="figures/figure-statechart-refined.png" alt="UML Statechart - Logged Events Only" width="500"/>
+ </p>
 
 These diagrams were designed for all included modules, ensuring that both theoretical and log-feasible activities were systematically identified and documented.
 
@@ -135,6 +139,11 @@ Where event logs had already been extracted for specific activities in earlier p
 
 ## 3. Log Extraction
 
+Regarding the log extraction phase, the enterprise log extraction setup (see figure below) illustrates how teams collaboratively design, implement, and operationalize the OCEL extraction process in practice. By organizing activities into distinct roles and well-defined steps—spanning domain modeling, test case creation, pipeline implementation, and automated deployment—this setup ensures repeatable, robust, and auditable extraction of event logs across development, test, and production environments. The process also incorporates source discovery and continuous refinement, enabling organizations to handle both known and newly uncovered activities and data sources.
+<p align="center">
+<img src="figures/figure_log-extraction-stage.png" alt="Enterprise log extraction setup" width="700"/>
+</p>
+
 ### 3.1 Implementation
 
 We developed and released **PM4Moodle**, an open-source tool for repeatable OCEL 2.0 log extraction from Moodle.  
@@ -159,8 +168,9 @@ We used **PM4Moodle** to extract OCEL 2.0 logs from both test and production Moo
 
 - **Production Environment:**  
   After successful testing, we extracted data from a real course spanning one academic year. This production dataset enabled us to address the first four analytical questions and to validate the method in a real-world context, capturing detailed records of student and teacher interactions—including assignments, submissions, grading, and resource usage—across the course lifecycle.
-
+<p align="center">
 <img src="figures/main-page2.png" alt="Extracted OCEL log by PM4Moodle" width="500"/>
+</p>
 
 **Outputs:**
 - The tool generates OCEL 2.0 event logs in JSON format, adhering to the latest object-centric event log standards.
@@ -177,9 +187,10 @@ We used **PM4Moodle** to extract OCEL 2.0 logs from both test and production Moo
 - **Cardinality Matrix:** Presents the minimum and maximum numbers of each object type per event type, supporting detailed cardinality checks.
 - Both matrices can be filtered by object and event type for focused analysis.
 - Users can compare the generated verification matrices against the extraction matrix to check completeness and correctness.
-
+<p align="center">
 <img src="figures/figure_activitymatrix_frequency.png" alt="Verification Matrix - Frequency" width="500"/>
 <img src="figures/figure-activitymatrix_cardinality.png" alt="Verification Matrix - Cardinality" width="500"/>
+</p>
 
 **Insights and Case Study Findings:**  
 While most expected relationships and cardinalities were correctly extracted, we identified three notable issues in our case study:
@@ -204,8 +215,9 @@ These issues are highlighted in the verification matrices above. They stem from 
 - These diagrams allow analysts to directly compare the actual process behavior captured in the OCEL with the expected lifecycle defined in hand-crafted models.
 - For the File module, the generated state chart was found to be **identical to the hand-crafted diagram** in terms of all relevant state transitions: after creation or import, a file can be viewed or updated any number of times, and deletion is possible from all other states, terminating further activity.
 - While the automatically generated diagrams do not display state hierarchy, they provide a faithful representation of the key behavioral transitions, demonstrating the tool's reliability for lifecycle analysis.
-
+<p align="center">
 <img src="figures/figure-statechart-file.png" alt="State Chart Diagram - File Module" width="400"/>
+</p>
 
 ---
 
@@ -221,11 +233,16 @@ We analyzed the extracted OCEL logs from the real-world case study to answer eac
   - Log adjustment involved drilling down page objects, unfolding view events by page name, and separating user roles.
 - **Findings:**  
   - Without log adjustment, the process model did not provide insights into specific page visits(see the figure below).
+  <p align="center">
   <img src="figures/figure_Q1_ocdfg.png" alt="OC-DFG before log adjustment" width="400"/>
-  
+  </p>
   - After adjustment, the OC-DFG visualized students’ sequential access of pages, revealing revisit loops and suggesting areas for curriculum improvement(see the figures below).
-  <img src="figures/figure_Q11.png" alt="OC-DFG after log adjustment" width="400"/>
-  <img src="figures/figure_Q12.png" alt="Detailed OC-DFG after log adjustment" width="400"/>
+  <p align="center">
+  <img src="figures/figure_Q11.png" alt="OC-DFG after log adjustment" width="600"/>
+  </p>
+  <p align="center">
+  <img src="figures/figure_Q12.png" alt="Detailed OC-DFG after log adjustment" width="600"/>
+  </p>
 
 ### 4.2 Answering Question 2: Assignment Submission Behaviors
 
@@ -236,8 +253,12 @@ We analyzed the extracted OCEL logs from the real-world case study to answer eac
   - OC-DFG revealed sequential flows in assignment submissions.
   - The analysis showed both group and individual interactions and highlighted issues such as discrepancies between submission and grading relationships due to Moodle’s logging structure.
 
-<img src="figures/figure_Q21.png" alt="OC-DFG for assignment submission" width="400"/>
-<img src="figures/figure_Q22.png" alt="Zoomed OC-DFG for assignment submission" width="400"/>
+<p align="center">
+    <img src="figures/figure_Q21.png" alt="OC-DFG for assignment submission" width="600"/>
+</p>
+<p align="center">
+<img src="figures/figure_Q22.png" alt="Zoomed OC-DFG for assignment submission" width="600"/>
+</p>
 
 ### 4.3 Answering Question 3: Leadership in Group Assignments
 
@@ -250,10 +271,10 @@ We analyzed the extracted OCEL logs from the real-world case study to answer eac
   - Lead submitters had significantly higher grades (p = 0.0334, Mann–Whitney U test).
   - Boxplot confirmed a higher median and narrower grade range for lead students.
   - Indicates a link between leadership in submissions and academic performance.
-
-<img src="figures/figure_Q3_histogram.png" alt="Grade distribution: lead vs non-lead" width="380"/>
-<img src="figures/figure_Q3_boxplot.png" alt="Boxplot: lead vs non-lead" width="380"/>
-
+<p align="center">
+<img src="figures/figure_Q3_histogram.png" alt="Grade distribution: lead vs non-lead" width="300"/>
+<img src="figures/figure_Q3_boxplot.png" alt="Boxplot: lead vs non-lead" width="300"/>
+</p>
 ### 4.4 Answering Question 4: Resource Access and Exam Performance
 
 - **Goal:** Assess the relationship between resource access and exam grades.
@@ -289,6 +310,6 @@ These insights, supported by the OCPM<sup>2</sup> methodology, demonstrate the t
 ## References
 
 For in-depth details, figures, and further explanations, see the full paper:  
-*Miri, N., Khayatbashi, S., Zdravkovic, J., Jalali, A.: "OCPM<subp>2</sup>: An Object-Centric Process Mining Methodology" (2025).*
+*Miri, N., Khayatbashi, S., Zdravkovic, J., Jalali, A.: "OCPM<sup>2</sup>: An Object-Centric Process Mining Methodology" (2025).*
 
 ---

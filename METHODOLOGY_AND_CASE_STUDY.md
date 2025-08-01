@@ -1,6 +1,6 @@
 #  OCPM<sup>2</sup>: Methodology and Case Study
 
-This document explains, step by step, how the PM4Moodle tool and its underlying case study were implemented using the OCPM<sup>2</sup> methodology. It is intended for anyone interested in understanding the methodological framework, design decisions, and the full process behind our educational process mining case study.
+This document explains, step by step, how the PM4Moodle tool and its underlying case study were implemented using the OCPM<sup>2</sup>, an extension of PM<sup>2</sup> methodology. It is intended for anyone interested in understanding the methodological framework, design decisions, and the full process behind our educational process mining case study.
 
 ---
 

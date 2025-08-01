@@ -122,12 +122,13 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     setIsLoading(true);
     const fetchModules = async () => {
-      const resp = await getModules();
-      setModules(resp);
-      const courseResp = await getCourses();
-      console.log("Courses fetched:", courseResp);
-      setCourses(courseResp);
-      setIsLoading(false);
+      try {
+        const [moduleResp, courseResp] = await Promise.all([getModules(), getCourses()]);
+        setModules(moduleResp);
+        setCourses(courseResp);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchModules();
   }, []);

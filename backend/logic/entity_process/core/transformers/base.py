@@ -1,7 +1,6 @@
 from abc import ABC
 from logic.model.object_enum import ObjectEnum
 from logic.utils.object_utils import get_object_key
-from logic.utils.date_utils import format_date
 
 
 class Base(ABC):
@@ -15,7 +14,7 @@ class Base(ABC):
         self.has_relationships = None
         self.module_id = 0
 
-    def transform(self):
+    def transform(self, courses: list = None):
         self.module_id = self.db_service.fetch_module_id(
             self.object_type.value.module_name
         )

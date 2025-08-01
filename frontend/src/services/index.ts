@@ -34,7 +34,11 @@ export const getModules = async (): Promise<ModuleType> => {
   }
 };
 
-export type ExtractionRequest = Record<string, string[]>;
+export type ExtractionRequest = {
+  courses: number[];
+  modules: Record<string, string[]>;
+};
+
 export type ExtractionResponse = {
   image_url: string;
   json_url: string;
@@ -115,4 +119,20 @@ export type OcelJsonContent = {
   eventTypes: OcelTypesModel[];
   objects: OcelObjectsModel[];
   events: OcelEventModel[];
+};
+
+export type CourseModel = {
+  id: string;
+  shortName: string;
+  fullName: string;
+};
+
+export const getCourses = async (): Promise<CourseModel[]> => {
+  try {
+    const response = await axios.get<CourseModel[]>(`${BASE_URL}/courses`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching courses:", error);
+    throw error;
+  }
 };

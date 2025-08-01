@@ -33,8 +33,8 @@ class Forum(Base):
         self.Files = self.db_service.Base.classes.mdl_files
 
     # region Extra event extraction process
-    def extract(self):
-        super().extract()
+    def extract(self, courses: list = None):
+        super().extract(courses)
 
         self.subscribe_to_forum_events()
         self.unsubscribe_from_forum_events()
@@ -49,10 +49,12 @@ class Forum(Base):
         self.edit_post_events()
         self.add_grade_rate_events()
 
-    def extractBy(self, events: list = None):
+    def extractBy(self, courses: list = None, events: list = None):
         if not events:
-            self.extract()
+            self.extract(courses)
             return
+
+        self.selected_courses = courses
 
         self.module_id = self.db_service.fetch_module_id(
             self.object_type.value.module_name
@@ -933,6 +935,9 @@ class Forum(Base):
         if filter_conditions is None:
             filter_conditions = []
 
+        if self.selected_courses:
+            filter_conditions.append(self.Log.courseid.in_(self.selected_courses))
+
         events = self.db_service.query_object(
             self.Log, filter_conditions, sort_by=[("timecreated", "asc")]
         )
@@ -949,6 +954,9 @@ class Forum(Base):
             self.Log.target == "post",
             self.Log.objecttable == "forum_posts",
         ]
+
+        if self.selected_courses:
+            filter_conditions.append(self.Log.courseid.in_(self.selected_courses))
 
         events = self.db_service.query_object(
             self.Log, filter_conditions, sort_by=[("timecreated", "asc")]
@@ -983,6 +991,10 @@ class Forum(Base):
             self.Log.objecttable == "grade_grades",
             self.Log.userid > 0,
         ]
+
+        if self.selected_courses:
+            filter_conditions.append(self.Log.courseid.in_(self.selected_courses))
+
         rows = self.db_service.query_object(
             self.Log,
             filter_conditions,

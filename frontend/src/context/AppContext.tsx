@@ -6,8 +6,11 @@ import React, {
   useMemo,
 } from "react";
 import {
+  getCourses,
   getModules,
   runExtraction,
+  type CourseModel,
+  type ExtractionRequest,
   type ModuleType,
   type OcelJsonContent,
 } from "../services";
@@ -22,12 +25,17 @@ type AppContextType = {
   isLoading: boolean;
   isLoadingContent: boolean;
   isWorking: boolean;
+  courses: CourseModel[];
+  selectedCourses: string[];
+  setSelectedCourses: React.Dispatch<React.SetStateAction<string[]>>;
   selectedModules: string[];
   setSelectedModules: React.Dispatch<React.SetStateAction<string[]>>;
   selectedEvents: string[];
   setSelectedEvents: React.Dispatch<React.SetStateAction<string[]>>;
-  tableFilters: {eventTypes: string[], objectTypes: string[]};
-  setTableFilters: React.Dispatch<React.SetStateAction<{eventTypes: string[], objectTypes: string[]}>>;
+  tableFilters: { eventTypes: string[]; objectTypes: string[] };
+  setTableFilters: React.Dispatch<
+    React.SetStateAction<{ eventTypes: string[]; objectTypes: string[] }>
+  >;
   handleExtraction: () => Promise<void>;
 };
 
@@ -36,10 +44,15 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [jsonUrl, setJsonUrl] = useState<string | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [courses, setCourses] = useState<CourseModel[]>([]);
   const [modules, setModules] = useState<ModuleType>({});
+  const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
   const [selectedModules, setSelectedModules] = useState<string[]>([]);
   const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
-  const [tableFilters, setTableFilters] = useState<{eventTypes: string[], objectTypes: string[]}>({
+  const [tableFilters, setTableFilters] = useState<{
+    eventTypes: string[];
+    objectTypes: string[];
+  }>({
     eventTypes: [],
     objectTypes: [],
   });
@@ -64,16 +77,19 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     setTableFilters({ eventTypes: [], objectTypes: [] });
 
     try {
-      const request: Record<string, string[]> = {};
+      const request: ExtractionRequest = {
+        courses: selectedCourses.map(id => +id),
+        modules: {},
+      };
 
       if (selectedModules && selectedModules.length > 0) {
         selectedModules.forEach((module) => {
           if (selectedEvents && selectedEvents.length > 0) {
-            request[module] = selectedEvents
+            request.modules[module] = selectedEvents
               .filter((event) => event.startsWith(module))
               .map((event) => event.split("__")[1]);
           } else {
-            request[module] = Object.keys(modules[module] ?? {}) ?? [];
+            request.modules[module] = Object.keys(modules[module] ?? {}) ?? [];
           }
         });
       }
@@ -87,7 +103,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     } finally {
       setIsWorking(false);
     }
-  }, [selectedModules, selectedEvents, modules]);
+  }, [selectedModules, selectedEvents, modules, selectedCourses]);
 
   useEffect(() => {
     if (!jsonUrl) return;
@@ -95,7 +111,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoadingContent(true);
     setJsonContent(null);
     setTableFilters({ eventTypes: [], objectTypes: [] });
-    
+
     fetch(jsonUrl)
       .then((response) => response.json())
       .then((data) => setJsonContent(data))
@@ -108,6 +124,9 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const fetchModules = async () => {
       const resp = await getModules();
       setModules(resp);
+      const courseResp = await getCourses();
+      console.log("Courses fetched:", courseResp);
+      setCourses(courseResp);
       setIsLoading(false);
     };
     fetchModules();
@@ -117,6 +136,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     <AppContext.Provider
       value={{
         modules,
+        courses,
         isLoading,
         isLoadingContent,
         isWorking,
@@ -124,6 +144,8 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
         imageUrl,
         jsonContent,
         pivot,
+        selectedCourses,
+        setSelectedCourses,
         selectedModules,
         setSelectedModules,
         selectedEvents,

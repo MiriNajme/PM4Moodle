@@ -156,4 +156,20 @@ class DatabaseService:
 
         return None
 
+    def fetch_courses_list(self):
+        courseTable = self.Base.classes.mdl_course
+        with self.get_session() as session:
+            query = (
+                session.query(
+                    courseTable.id, courseTable.fullname, courseTable.shortname
+                )
+                .filter(courseTable.shortname != "Moodle")
+                .order_by(asc(courseTable.shortname))
+            )
+            result = [
+                {"id": row.id, "fullName": row.fullname, "shortName": row.shortname}
+                for row in query.all()
+            ]
+        return result if result else []
+
     # endregion SHARED METHODS

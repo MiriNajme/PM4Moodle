@@ -3,7 +3,7 @@ from abc import ABC
 from sqlalchemy import func
 from logic.model.object_enum import ObjectEnum
 from logic.model.event_types import EventType
-from logic.utils.object_utils import get_object_key, relation_formatter
+from logic.utils.object_utils import get_object_key
 from logic.utils.date_utils import format_date
 from logic.utils.extractor_utils import (
     build_attributes,
@@ -26,6 +26,7 @@ class Base(ABC):
         self.object_class = None
         self.has_view_events = False
         self.has_course_relation = False
+        self.selected_courses = None
         self.deleted_items = {}
         self.module_id = 0
         self.CourseModule = self.db_service.Base.classes.mdl_course_modules
@@ -33,7 +34,9 @@ class Base(ABC):
         self.TaskAdhoc = self.db_service.Base.classes.mdl_task_adhoc
 
     # region Main extraction process
-    def extract(self):
+    def extract(self, courses: list = None):
+        self.selected_courses = courses
+        
         self.module_id = self.db_service.fetch_module_id(
             self.object_type.value.module_name
         )
@@ -45,7 +48,7 @@ class Base(ABC):
         if self.has_view_events:
             self.add_view_events()
 
-    def extractBy(self, events: list = None):
+    def extractBy(self, courses: list = None, events: list = None):
         pass
 
     def add_create_import_events(self):
@@ -253,6 +256,12 @@ class Base(ABC):
     # region Data fetching helpers
     def fetch_all_course_modules_by_module(self, module_id):
         filter_conditions = [self.CourseModule.module == module_id]
+
+        if self.selected_courses:
+            filter_conditions.append(
+                self.CourseModule.course.in_(self.selected_courses)
+            )
+
         course_modules = self.db_service.query_object(
             self.CourseModule, filter_conditions
         )
@@ -265,6 +274,10 @@ class Base(ABC):
             func.JSON_EXTRACT(self.Log.other, "$.modulename")
             == self.object_type.value.module_name,
         ]
+
+        if self.selected_courses:
+            filter_conditions.append(self.Log.courseid.in_(self.selected_courses))
+
         events = self.db_service.query_object(
             self.Log, filter_conditions, sort_by=[("timecreated", "asc")]
         )
@@ -276,6 +289,10 @@ class Base(ABC):
             self.Log.objecttable == self.object_type.value.module_name,
             self.Log.target == "course_module",
         ]
+
+        if self.selected_courses:
+            filter_conditions.append(self.Log.courseid.in_(self.selected_courses))
+
         events = self.db_service.query_object(
             self.Log, filter_conditions, sort_by=[("timecreated", "asc")]
         )
@@ -283,10 +300,21 @@ class Base(ABC):
 
     def fetch_deleted_events(self):
         module = f'%"module":"{self.module_id}"%'
+        
         filter_conditions = [
             self.TaskAdhoc.classname.like("%course_delete_modules%"),
             self.TaskAdhoc.customdata.like(module),
         ]
+
+        if self.selected_courses:
+            filter_conditions.append(
+                func.JSON_CONTAINS(
+                    self.TaskAdhoc.customdata,
+                    f'"{self.selected_courses}"',
+                    "$.cms[*].course",
+                )
+            )
+
         events = self.db_service.query_object(
             self.TaskAdhoc, filter_conditions, sort_by=[("timecreated", "asc")]
         )

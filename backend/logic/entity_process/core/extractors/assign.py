@@ -1,16 +1,14 @@
-import json
+from sqlalchemy import not_
 from logic.entity_process.core.extractors.base import Base
 from logic.model.event_types import EventType
 from logic.model.object_enum import ObjectEnum
+from logic.utils.date_utils import format_date
 from logic.utils.extractor_utils import (
     build_attributes,
     get_formatted_event_id,
     get_formatted_relationship,
     get_module_event_type_name,
 )
-from logic.utils.date_utils import format_date
-
-from sqlalchemy import not_, or_
 
 
 class Assign(Base):
@@ -33,16 +31,18 @@ class Assign(Base):
         self.Files = self.db_service.Base.classes.mdl_files
         self.Assign_submission = self.db_service.Base.classes.mdl_assign_submission
 
-    def extract(self):
-        super().extract()
+    def extract(self, courses: list = None):
+        super().extract(courses)
 
         self.add_submit_assignment_events()
         self.add_grade_assignment_events()
 
-    def extractBy(self, events: list = None):
+    def extractBy(self, courses: list = None, events: list = None):
         if not events:
-            self.extract()
+            self.extract(courses)
             return
+
+        self.selected_courses = courses
 
         self.module_id = self.db_service.fetch_module_id(
             self.object_type.value.module_name
@@ -76,6 +76,7 @@ class Assign(Base):
             event = self.fetch_assign_event_by_ids(
                 course_module["id"], EventType.CREATED.value.name
             )
+
             if event:
                 self.ocel_event_log["events"].append(
                     self.get_assign_create_event_object(event, assign)
@@ -532,6 +533,10 @@ class Assign(Base):
             self.Log.objectid == course_module_id,
             self.Log.objecttable == "course_modules",
         ]
+
+        if self.selected_courses:
+            filter_conditions.append(self.Log.courseid.in_(self.selected_courses))
+
         events = self.db_service.query_object(
             self.Log, filter_conditions, sort_by=[("timecreated", "asc")]
         )
@@ -554,6 +559,10 @@ class Assign(Base):
             self.Log.eventname == "\\assignsubmission_file\\event\\assessable_uploaded",
             self.Log.objecttable == "assign_submission",
         ]
+
+        if self.selected_courses:
+            filter_conditions.append(self.Log.courseid.in_(self.selected_courses))
+
         events = self.db_service.query_object(
             self.Log, filter_conditions, sort_by=[("timecreated", "asc")]
         )
@@ -607,6 +616,12 @@ class Assign(Base):
             self.CourseModule.instance == instance,
             self.CourseModule.module == module_id,
         ]
+
+        if self.selected_courses:
+            filter_conditions.append(
+                self.CourseModule.course.in_(self.selected_courses)
+            )
+
         course_modules = self.db_service.query_object(
             self.CourseModule, filter_conditions
         )
@@ -618,6 +633,10 @@ class Assign(Base):
             self.Log.target == "submission",
             self.Log.objecttable == "assign_grades",
         ]
+
+        if self.selected_courses:
+            filter_conditions.append(self.Log.courseid.in_(self.selected_courses))
+
         rows = self.db_service.query_object(
             self.Log,
             filter_conditions,
@@ -667,9 +686,15 @@ class Assign(Base):
         return rows[0] if rows else None
 
     def fetch_assigns(self):
+        filters = None
+        
+        if self.selected_courses:
+            filters = [self.object_class.course.in_(self.selected_courses)]
+
         assigns = self.db_service.query_object(
-            self.object_class, sort_by=[("timemodified", "asc")]
+            self.object_class, filters=filters, sort_by=[("timemodified", "asc")]
         )
+
         return assigns if assigns else None
 
     def fetch_module_by_id(self, module_id):

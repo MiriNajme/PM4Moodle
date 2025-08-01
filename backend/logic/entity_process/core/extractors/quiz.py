@@ -28,8 +28,8 @@ class Quiz(Base):
         self.has_view_events = True
         self.has_course_relation = True
 
-    def extract(self):
-        super().extract()
+    def extract(self, courses: list = None):
+        super().extract(courses)
         self.get_question_events(EventType.CREATE_QUESTION)
         self.get_question_events(EventType.DELETE_QUESTION)
         self.get_question_slot_events(EventType.ADD_QUESTION_TO_QUIZ)
@@ -37,15 +37,15 @@ class Quiz(Base):
         self.get_attempt_quiz_events()
         self.get_set_grade_quiz_events()
 
-    def extractBy(self, events: list = None):
+    def extractBy(self, courses: list = None, events: list = None):
+        if not events:
+            self.extract(courses)
+            return
+
+        self.selected_courses = courses
         self.module_id = self.db_service.fetch_module_id(
             self.object_type.value.module_name
         )
-
-        if not events:
-            self.extract()
-            return
-
         if "create_quiz" in events or "import_quiz" in events:
             self.add_create_import_events()
 
@@ -87,7 +87,9 @@ class Quiz(Base):
             self.Log.target == "question",
             self.Log.objecttable == "question",
         ]
+        
         events = self.fetch_question_events(filter_conditions)
+        
         if events:
             for event in events:
                 formated_event_object = self.get_question_event_object(
@@ -406,6 +408,9 @@ class Quiz(Base):
         return relationships
 
     def fetch_question_events(self, filter_conditions):
+        if self.selected_courses:
+            filter_conditions.append(self.Log.courseid.in_(self.selected_courses))
+
         rows = self.db_service.query_object(
             self.Log,
             filter_conditions,

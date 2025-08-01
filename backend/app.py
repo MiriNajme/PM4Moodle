@@ -6,7 +6,11 @@ import glob
 from logic.model.event_types import EventType
 from logic.model.object_enum import ObjectEnum
 from logic.utils.extractor_utils import get_module_events_map
-from logic.utils.ocel_tools import get_database_config, set_database_config
+from logic.utils.ocel_tools import (
+    get_database_config,
+    set_database_config,
+    get_courses_list,
+)
 from logic.pm4py_test import run_dfg_analysis
 
 app = Flask(__name__)
@@ -163,6 +167,25 @@ def set_db_config():
     return jsonify()
 
 
+@app.route("/api/courses")
+def get_courses():
+    """
+    Get list of courses
+    ---
+    responses:
+      200:
+        description: A list of courses with all eventtypes and object enums
+        examples:
+          application/json: [{
+            id: 1,
+            fullName: "Course 1",
+            shortName: "CSE101",
+          }]
+    """
+    courses = get_courses_list()
+    return jsonify(courses)
+
+
 @app.route("/api/run-extraction", methods=["POST"])
 @swag_from(
     {
@@ -172,9 +195,18 @@ def set_db_config():
                 "in": "body",
                 "schema": {
                     "type": "object",
-                    "additionalProperties": {
-                        "type": "array",
-                        "items": {"type": "string"},
+                    "properties": {
+                        "courses": {
+                            "type": "array",
+                            "items": {"type": "integer"},
+                        },
+                        "modules": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "array",
+                                "items": {"type": "string"},
+                            },
+                        },
                     },
                 },
             }
@@ -191,10 +223,17 @@ def run_extraction():
         in: body
         schema:
           type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
+          properties:
+            courses:
+              type: array
+              items:
+                type: integer
+            modules:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
     responses:
       200:
         description: OCEL and image URLs
@@ -204,11 +243,19 @@ def run_extraction():
         return jsonify({"error": "Invalid request body"}), 400
 
     if not data:
+        courses = None
         module_events = None
     else:
-        module_events = data
+        courses = data["courses"]
+        module_events = data["modules"]
 
-    result = run_dfg_analysis(module_events)
+        if not courses:
+            courses = None
+
+        if not module_events:
+            module_events = None
+
+    result = run_dfg_analysis(courses, module_events)
 
     if result["image_file"] is not None:
         img_url = url_for(

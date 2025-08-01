@@ -18,11 +18,13 @@ class Page(Base):
         self.has_view_events = True
         self.has_course_relation = True
 
-    def extractBy(self, events: list = None):
+    def extractBy(self, courses: list = None, events: list = None):
         if not events:
-            self.extract()
+            self.extract(courses)
             return
 
+        self.selected_courses = courses
+        
         self.module_id = self.db_service.fetch_module_id(
             self.object_type.value.module_name
         )

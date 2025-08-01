@@ -20,13 +20,13 @@ class EntityProcess:
             "events": [],
         }
 
-    def process_all(self):
+    def process_all(self, courses: list = None):
         self.create_objects_type()
 
         registry = ObjectTransformerRegistry(
             self.db_service, self.related_object_columns, self.ocel_event_log
         )
-        registry.transform_all()
+        registry.transform_all(courses)
 
         self.create_events_type()
 
@@ -36,13 +36,13 @@ class EntityProcess:
             self.related_event_columns,
             self.ocel_event_log,
         )
-        event_registry.extract_all()
+        event_registry.extract_all(courses)
 
         self.write_output()
 
-    def process_custom(self, module_events: dict = None):
+    def process_custom(self, courses: list = None, module_events: dict = None):
         if module_events is None:
-            process_all()
+            self.process_all(courses)
             return
 
         objects, events = self.get_selected_events_and_objects(module_events)
@@ -52,7 +52,7 @@ class EntityProcess:
         registry = ObjectTransformerRegistry(
             self.db_service, self.related_object_columns, self.ocel_event_log
         )
-        registry.transform_all(objects)
+        registry.transform_all(courses, objects)
 
         self.create_events_type(events)
         event_registry = EventExtractorRegistry(
@@ -61,7 +61,7 @@ class EntityProcess:
             self.related_event_columns,
             self.ocel_event_log,
         )
-        event_registry.extract_all(module_events)
+        event_registry.extract_all(courses, module_events)
 
         self.write_output()
 
@@ -253,7 +253,7 @@ class EntityProcess:
                                 ObjectEnum.QUESTION_HINT.value.name,
                             ]
                         )
-                    
+
                     for event in event_list:
                         if event in module_map:
                             objects.update(module_map[event])

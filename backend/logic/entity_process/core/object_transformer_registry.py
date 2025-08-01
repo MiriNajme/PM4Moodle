@@ -51,11 +51,11 @@ class ObjectTransformerRegistry:
             QuestionAnswer(db_service, related_object_columns, ocel_event_log),
         ]
 
-    def transform_all(self, objects: list = None):
+    def transform_all(self, courses: list = None, objects: list = None):
         if objects is None or len(objects) == 0:
             for processor in self.transformer:
-                processor.transform()
+                processor.transform(courses)
         else:
             for processor in self.transformer:
                 if processor.object_type.value.name in objects:
-                    processor.transform()
+                    processor.transform(courses)

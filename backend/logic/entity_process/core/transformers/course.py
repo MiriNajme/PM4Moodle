@@ -22,6 +22,21 @@ class Course(Base):
         self.Group = self.db_service.Base.classes.mdl_groups
         self.Role = self.db_service.Base.classes.mdl_role
 
+    def transform(self, courses: list = None):
+        self.module_id = self.db_service.fetch_module_id(
+            self.object_type.value.module_name
+        )
+        records = self.db_service.query_object(
+            self.object_class,
+            filters=[self.object_class.id.in_(courses)] if courses else None,
+            sort_by=self.sort_by,
+        )
+
+        if not records:
+            return
+
+        self.process_records(records)
+
     def get_attributes(self, row, columns):
         attributes = []
         history_rows = self.get_course_update_history(row)

@@ -10,14 +10,17 @@ import { useAppContext } from "../context/useAppContext";
 const Extractor = React.memo(() => {
   const {
     selectedModules,
+    selectedCourses,
     selectedEvents,
     modules,
+    courses,
     jsonUrl,
     imageUrl,
     isLoading,
     isWorking,
     setSelectedEvents,
     setSelectedModules,
+    setSelectedCourses,
     handleExtraction,
   } = useAppContext();
 
@@ -32,12 +35,28 @@ const Extractor = React.memo(() => {
   return (
     <div className='flex flex-col mt-4 gap-8'>
       <Text className='mb-4'>
-        Select modules and their events to generate your OCEL and OCDFG outputs.
+        Select modules and their events to generate your OCEL and OC-DFG
+        outputs.
       </Text>
 
       <div className='flex flex-col gap-6'>
         <div>
-          <Label className='block mb-2'>Select Modules:</Label>
+          <Label className='block mb-2'>Select courses:</Label>
+          <Combobox
+            id='course-select'
+            placeholder='Choose course(s)'
+            value={selectedCourses}
+            onValueChange={(newCourses) => {
+              setSelectedCourses(newCourses);
+            }}
+            options={courses.map((course) => ({
+              value: `${course.id}`,
+              label: `${course.shortName} - ${course.fullName}`,
+            }))}
+          />
+        </div>
+        <div>
+          <Label className='block mb-2'>Select modules:</Label>
           <Combobox
             id='module-select'
             placeholder='Choose module(s)'
@@ -59,7 +78,7 @@ const Extractor = React.memo(() => {
         </div>
 
         <div>
-          <Label className='block mb-2'>Select Events:</Label>
+          <Label className='block mb-2'>Select events:</Label>
           <Combobox
             id='event-select'
             placeholder='Choose event(s)'
@@ -127,7 +146,10 @@ const Extractor = React.memo(() => {
               imageUrl={imageUrl ?? ""}
               isJson={false}
               onClick={() =>
-                window.open(`./preview/image?url=${encodeURIComponent(imageUrl || "")}`, "_blank")
+                window.open(
+                  `./preview/image?url=${encodeURIComponent(imageUrl || "")}`,
+                  "_blank"
+                )
               }
             />
             <ImageButton
@@ -136,7 +158,10 @@ const Extractor = React.memo(() => {
               imageUrl={jsonUrl ?? ""}
               isJson={true}
               onClick={() =>
-                window.open(`./preview/json?url=${encodeURIComponent(jsonUrl || "")}`, "_blank")
+                window.open(
+                  `./preview/json?url=${encodeURIComponent(jsonUrl || "")}`,
+                  "_blank"
+                )
               }
             />
           </div>

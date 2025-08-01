@@ -74,11 +74,11 @@ class EventExtractorRegistry:
             ),
         ]
 
-    def extract_all(self, module_events: dict = None):
+    def extract_all(self, courses: list = None, module_events: dict = None):
         if module_events is None:
             for generator in self.generators:
-                generator.extract()
+                generator.extract(courses)
         else:
             for generator in self.generators:
                 if generator.object_type.value.name in module_events:
-                    generator.extractBy(module_events[generator.object_type.value.name])
+                    generator.extractBy(courses, module_events[generator.object_type.value.name])

@@ -23,7 +23,7 @@ This document provides a comprehensive overview of the tool’s main features an
 PM4Moodle features an intuitive and modern web interface, consisting of three main tabs: **Extraction**, **Verification Matrix**, and **Statechart Diagram**. The navigation bar allows users to seamlessly switch between the core functionalities of the tool.  
 The **Extraction** tab is the starting point for log generation, while the **Verification Matrix** and **Statechart Diagram** tabs support in-depth analysis and quality assurance of the extracted event data.
 
-<img src="screenshots/main-page.png" alt="PM4Moodle Main Interface" width="500"/>
+<img src="screenshots/main-page1.png" alt="PM4Moodle Main Interface" width="500"/>
 
 ---
 ## Set Up Database Connection
@@ -32,7 +32,7 @@ The **Extraction** tab is the starting point for log generation, while the **Ver
 - Enter your Moodle database credentials (host, port, user, password, database name).
 - Save your settings.
 
-<img src="screenshots/Database_Settings.png" alt="Screenshot: Database Settings Dialog" width="500"/>
+<img src="screenshots/database_connection.png" alt="Screenshot: Database Settings Dialog" width="500"/>
 
 ---
 
@@ -43,8 +43,6 @@ The **Extraction** tab is the starting point for log generation, while the **Ver
 - You can **extract logs for all supported modules and their events by simply clicking on "Run Extraction"** without selecting any modules or events.
 - Alternatively, **choose one or more Moodle module types** (e.g., Assignment, File, Folder, URL) to extract logs only for those modules. If you select modules but no events, all events for the selected modules will be extracted.
 - For more fine-grained control, you can **select specific events for any chosen module** to extract only those events.
-  
-- <img src="screenshots/Extraction_Tab.png" alt="Screenshot: Extraction and Download" width="500"/>
 
 ### **Step 2: Extract and Download the Log**
 
@@ -52,6 +50,6 @@ The **Extraction** tab is the starting point for log generation, while the **Ver
 - The tool connects to your database and processes the data to extract the OCEL 2.0 log based on your selection.
 - When finished, download the OCEL 2.0 log in JSON format and the Directly-Follows Graph (DFG) as an image, if desired. You can also view these files in full size without downloading them.
 
-<img src="screenshots/Extraction_Tab.png" alt="Screenshot: Extraction and Download" width="500"/>
+<img src="screenshots/main-page2.png" alt="Screenshot: Extraction and Download" width="500"/>
 
 

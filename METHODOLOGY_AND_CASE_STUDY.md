@@ -141,7 +141,7 @@ Where event logs had already been extracted for specific activities in earlier p
 
 Regarding the log extraction phase, the enterprise log extraction setup (see figure below) illustrates how teams collaboratively design, implement, and operationalize the OCEL extraction process in practice. By organizing activities into distinct roles and well-defined steps—spanning domain modeling, test case creation, pipeline implementation, and automated deployment—this setup ensures repeatable, robust, and auditable extraction of event logs across development, test, and production environments. The process also incorporates source discovery and continuous refinement, enabling organizations to handle both known and newly uncovered activities and data sources.
 <p align="center">
-<img src="figures/figure_log-extraction-stage.png" alt="Enterprise log extraction setup" width="700"/>
+<img src="figures/figure_log-extraction-stage.png" alt="Enterprise log extraction setup" width="500"/>
 </p>
 
 ### 3.1 Implementation

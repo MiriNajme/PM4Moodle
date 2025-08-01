@@ -36,7 +36,7 @@ class Base(ABC):
     # region Main extraction process
     def extract(self, courses: list = None):
         self.selected_courses = courses
-        
+
         self.module_id = self.db_service.fetch_module_id(
             self.object_type.value.module_name
         )
@@ -251,6 +251,55 @@ class Base(ABC):
 
         return result
 
+    def get_course_relation(self, event_type_enum: EventType, id):
+        course_rel = self.fetch_module_by_id(id)
+        if course_rel:
+            return {
+                "objectId": get_object_key(ObjectEnum.COURSE, course_rel["course"]),
+                "qualifier": get_course_relationship_qualifier(event_type_enum),
+            }
+
+        return None
+
+    def module_relationships(self, event, event_type_enum: EventType):
+        relationships = []
+        qualifier = f"{event_type_enum.value.qualifier} {self.object_type.value.name}"
+        instance = self.fetch_course_module_by_id(event["objectid"])
+
+        if instance:
+            instance_id = instance["instance"]
+
+            if event_type_enum == EventType.UPDATED:
+                delete_time = self.deleted_items.get(instance_id)
+                if delete_time is not None and event["timecreated"] > delete_time:
+                    return None
+
+            relationships.append(
+                get_formatted_relationship(self.object_type, instance_id, qualifier)
+            )
+
+            if self.has_course_relation:
+                course_relation = self.get_course_relation(
+                    event_type_enum, instance_id
+                )
+                if course_relation:
+                    relationships.append(course_relation)
+
+        qualifier = (
+            "Created by user"
+            if event_type_enum == EventType.CREATED
+            else "Updated by user"
+        )
+        relationships.append(
+            get_formatted_relationship(
+                ObjectEnum.USER,
+                event["userid"],
+                qualifier,
+            ),
+        )
+
+        return relationships
+
     # endregion Event object construction
 
     # region Data fetching helpers
@@ -300,7 +349,7 @@ class Base(ABC):
 
     def fetch_deleted_events(self):
         module = f'%"module":"{self.module_id}"%'
-        
+
         filter_conditions = [
             self.TaskAdhoc.classname.like("%course_delete_modules%"),
             self.TaskAdhoc.customdata.like(module),
@@ -347,50 +396,10 @@ class Base(ABC):
         )
         return result
 
+    def fetch_course_module_by_id(self, course_module_id):
+        course_modules = self.db_service.query_object(
+            self.CourseModule, [self.CourseModule.id == course_module_id]
+        )
+        return course_modules[0] if course_modules else None
+
     # endregion Data fetching helpers
-
-    def get_course_relation(self, event_type_enum: EventType, id):
-        course_rel = self.fetch_module_by_id(id)
-        if course_rel:
-            return {
-                "objectId": get_object_key(ObjectEnum.COURSE, course_rel["course"]),
-                "qualifier": get_course_relationship_qualifier(event_type_enum),
-            }
-
-        return None
-
-    def module_relationships(self, event, event_type_enum: EventType):
-        relationships = []
-        qualifier = f"{event_type_enum.value.qualifier} {self.object_type.value.name}"
-        instance = json.loads(event["other"])
-
-        if instance:
-            instance_id = instance["instanceid"]
-            if event_type_enum == EventType.UPDATED:
-                delete_time = self.deleted_items.get(instance_id)
-                if delete_time is not None and event["timecreated"] > delete_time:
-                    return None
-
-            relationships.append(
-                get_formatted_relationship(self.object_type, instance_id, qualifier)
-            )
-
-            if self.has_course_relation:
-                course_relation = self.get_course_relation(event_type_enum, instance_id)
-                if course_relation:
-                    relationships.append(course_relation)
-
-        qualifier = (
-            "Created by user"
-            if event_type_enum == EventType.CREATED
-            else "Updated by user"
-        )
-        relationships.append(
-            get_formatted_relationship(
-                ObjectEnum.USER,
-                event["userid"],
-                qualifier,
-            ),
-        )
-
-        return relationships

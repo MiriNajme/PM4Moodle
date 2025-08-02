@@ -163,7 +163,7 @@ class DatabaseService:
                 session.query(
                     courseTable.id, courseTable.fullname, courseTable.shortname
                 )
-                .filter(courseTable.shortname != "Moodle")
+                .filter(courseTable.id > 1)
                 .order_by(asc(courseTable.shortname))
             )
             result = [

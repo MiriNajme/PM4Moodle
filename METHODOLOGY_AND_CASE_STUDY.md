@@ -1,6 +1,25 @@
 #  OCPM<sup>2</sup>: Methodology and Case Study
 
-This document explains, step by step, how the PM4Moodle tool and its underlying case study were implemented using the OCPM<sup>2</sup> methodology. It is intended for anyone interested in understanding the methodological framework, design decisions, and the full process behind our educational process mining case study.
+This document explains, step by step, how the PM4Moodle tool and its underlying case study were implemented using the OCPM<sup>2</sup>, an extension of PM<sup>2</sup> methodology. It is intended for anyone interested in understanding the methodological framework, design decisions, and the full process behind our educational process mining case study.
+
+---
+
+## OCPM<sup>2</sup> Methodology Overview
+
+The OCPM<sup>2</sup> methodology is a structured, domain- and system-agnostic approach for object-centric process mining.  
+Its main steps are:
+
+1. **Planning**
+2. **Domain Modeling**
+3. **Log Extraction**
+4. **Analysis Iteration**
+5. **Process Improvement and Support**
+
+Each of these steps is detailed in a case study (Moodle) in the sections below.
+
+<p align="center">
+  <img src="figures/ocpm2-overview.png" alt="OCPM2 Methodology Overview" width="600"/>
+</p>
 
 ---
 

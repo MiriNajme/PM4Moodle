@@ -99,7 +99,7 @@ This hierarchical structure enables advanced analysis operations such as drill-d
 
 The model was iteratively refined by:
 - Including object types missed by initial Q2OT mapping, such as Teacher (identified via deeper documentation review) and User (as a generalization of Teacher and Student).
-- Utilizing a source discovery tool ([Moodle_Database_Comparison](https://github.com/MiriNajme/Moodle_Database_Comparison)) to detect additional object types (e.g., Forum, Discussion, Post) by comparing database changes before and after operations.
+- Utilizing a [source discovery tool](https://github.com/MiriNajme/Source-Discovery-Tool) to detect additional object types (e.g., Forum, Discussion, Post) by comparing database changes before and after operations.
 
 Design decisions (e.g., treating Grades as an attribute of Submission, modeling Exam Sheet as part of Exam) reflect the desire to balance simplicity and analytical power. Exam-related classes are included for completeness in cross-system analysis, even though they are not native to Moodle.
 <p align="center">

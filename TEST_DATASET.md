@@ -1,6 +1,6 @@
 # Using the Test Dataset
 
-This page explains how to download, set up, and use the provided test dataset for PM4Moodle.
+This page explains how to download, set up, and use the provided test dataset by PM4Moodle for OCEL 2.0 extraction.
 
 ---
 

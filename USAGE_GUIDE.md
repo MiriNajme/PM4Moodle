@@ -81,7 +81,7 @@ After extracting the OCEL 2.0 log, users can access the Statechart Diagram tab, 
 - **State Chart Visualization:** The diagrams illustrate the actual state transitions (such as create, update, view, and delete) observed in the data for each module instance.
 - **Interpretation:** Users can compare the system’s observed behavior with expected module lifecycles and gain insights into module usage patterns.
 
-<img src="figures/state-chart-assign.png" alt="Statechart Diagram for File Module" width="500"/>
+<img src="figures/q5-statechart.png" alt="Statechart Diagram for File Module" width="500"/>
 
 
 

@@ -9,7 +9,7 @@ This page explains how to download, set up, and use the provided test dataset by
 - [Downloading the Test Dataset](#downloading-the-test-dataset)
 - [Setting Up the Test Dataset](#setting-up-the-test-dataset)
 - [Testing Extraction with PM4Moodle - A Walkthrough](#testing-extraction-with-pm4moodle---a-walkthrough)
-- [How the Test Log Enables Analysis for Q1-Q5](#how-the-test-log-enables-analysis-for-q1–q5)
+- [How the Test Log Enables Analysis for Q1-Q5](#how-the-test-log-enables-analysis-for-q1-q5)
 
 ---
 

@@ -9,7 +9,7 @@ This page explains how to download, set up, and use the provided test dataset by
 - [Downloading the Test Dataset](#downloading-the-test-dataset)
 - [Setting Up the Test Dataset](#setting-up-the-test-dataset)
 - [Testing Extraction with PM4Moodle - A Walkthrough](#testing-extraction-with-pm4moodle---a-walkthrough)
-- [How the Test Log Enables Analysis for Q1-Q5](#how-the-test-log-enables-analysis-for-q1-q5)
+- [How the Test Log Enables Analysis for the Questions](#how-the-test-log-enables-analysis-for-the-questions)
 
 ---
 
@@ -119,7 +119,7 @@ Here’s what you should check and how to validate the extraction against the te
 
 ---
 
-## How the Test Log Enables Analysis for Q1–Q5
+## How the Test Log Enables Analysis for the Questions
 
 To see how the extracted log enables analysis for Q1–Q5 (also presented in our [case study](METHODOLOGY_AND_CASE_STUDY.md#4-analysis-iteration) in a production environment), you should extract and analyze logs **separately for each analytical question**.  
 This is because the complete OCEL 2.0 log and OC-DFG can be very large and difficult to interpret; extracting and visualizing the relevant subset for each question produces clearer, more actionable insights.

@@ -8,7 +8,7 @@ This page explains how to download, set up, and use the provided test dataset by
 - [About the Test Dataset](#about-the-test-dataset)
 - [Downloading the Test Dataset](#downloading-the-test-dataset)
 - [Setting Up the Test Dataset](#setting-up-the-test-dataset)
-- [Testing Extraction with PM4Moodle - A Walkthrough](#testing-extraction-with-pm4moodle---a-walkthrough)
+- [Testing Extraction with PM4Moodle](#testing-extraction-with-pm4moodle)
 - [How the Test Log Enables Analysis for the Questions](#how-the-test-log-enables-analysis-for-the-questions)
 
 ---
@@ -83,7 +83,7 @@ python moodle_backup_restore.py
 <img src="figures/backup-restore.png" alt="Restoring the backup file" width="500"/>
 </p>
 
-## Testing Extraction with PM4Moodle – A Walkthrough
+## Testing Extraction with PM4Moodle
 
 ### 1. Start the PM4Moodle tool  
   For setup details, see the [Setup Guide](SETUP.md).

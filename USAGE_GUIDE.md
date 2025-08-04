@@ -56,17 +56,20 @@ The Verification Matrix tab provides log quality checks by automatically generat
 
 - **Filtering:** Both matrix types are interactive and can be filtered by object type (row) or event type (column), enabling focused analysis.
   
-*Example of filtering the verification matrix by selected object and event types.*
+*Example of filtering the verification matrix by selected object and event types:*
+
 <img src="figures/filter-matrices.png" alt="Object Frequency Verification Matrix" width="500"/>
 
 - **Verification Matrix (Frequency):** Displays the frequency of each object type per event type, supporting quick inspection of the relationships in the log.
   
-*Example of a Frequency Matrix After Applying Filter*
-<img src="figures/figure-filtering-frequency" alt="Frequency Verification Matrix" width="500"/>
+*Example of a Frequency Matrix After Applying Filter:*
+
+<img src="figures/figure-filtering-frequency.png" alt="Frequency Verification Matrix" width="500"/>
 
 - **Verification Matrix (Cardinality):** Shows the minimum and maximum cardinality of objects per event as observed in the extracted log, facilitating detection of anomalies and validation against expected extraction matrices.
 
-*Example of a Cardinality Matrix After Applying Filter*
+*Example of a Cardinality Matrix After Applying Filter:*
+
 <img src="figures/figure-filtering-cardinality.png" alt="Cardinality Verification Matrix" width="500"/>
 
 ---

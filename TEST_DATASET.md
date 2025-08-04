@@ -3,6 +3,15 @@
 This page explains how to download, set up, and use the provided test dataset by PM4Moodle for OCEL 2.0 extraction.
 
 ---
+## Table of Contents
+
+- [About the Dataset](#about-the-dataset)
+- [Downloading the Test Dataset](#downloading-the-test-dataset)
+- [Setting Up the Test Dataset](#setting-up-the-test-dataset)
+- [Testing Extraction with PM4Moodle – A Walkthrough](#testing-extraction-with-pm4moodle–a-walkthrough)
+- [How the Test Log Enables Analysis for Q1–Q5](#how-the-test-log-enables-analysis-for-q1–q5)
+
+---
 
 ## About the Test Dataset
 
@@ -21,8 +30,6 @@ Or [download it directly here](test_dataset/backup.sql) (right-click and “Save
 ---
 
 ## Setting Up the Test Dataset
-
-## How to Restore the Provided Test Dataset
 
 You can use the `moodle_backup_restore.py` script to restore the provided test Moodle database backup into a new database.  
 Below are step-by-step instructions for using the tool interactively.
@@ -117,8 +124,13 @@ Here’s what you should check and how to validate the extraction against the te
 To see how the extracted log enables analysis for Q1–Q5 (also presented in our [case study](METHODOLOGY_AND_CASE_STUDY.md#4-analysis-iteration) in a production environment), you should extract and analyze logs **separately for each analytical question**.  
 This is because the complete OCEL 2.0 log and OC-DFG can be very large and difficult to interpret; extracting and visualizing the relevant subset for each question produces clearer, more actionable insights.
 
-***For example, suppose you want to answer the analytical questions for the course `DTO-HT24 - Digital Transformation in Organization` in the test dataset. In the extraction interface, select this course from the “Select Courses” dropdown, then select the relevant modules and event types for the specific question you are investigating (see below for details).***
+***For example, suppose you want to answer the following analytical(Q1-Q4) and general(Q5) questions for the course `DTO-HT24 - Digital Transformation in Organization` in the test dataset. In the extraction interface, select this course from the “Select Courses” dropdown, then select the relevant modules and event types for the specific question you are investigating (see below for details).***
 
+- Q1: What learning paths do students typically follow when accessing educational materials, such as files, pages, and folders, throughout a course?
+- Q2: How do students submit (or resubmit) individual and group assignments during the course?
+- Q3: Do students who usually take the lead in submitting group assignments on behalf of the group tend to achieve higher final grades?
+- Q4: How is students' exam success related to their frequency of accessing course materials, such as files, pages, and folders?
+- Q5: How can OCEL 2.0 event logs be systematically extracted for Moodle’s most important standard modules?
 ---
 
 ### Q1 & Q4: Learning Paths and Resource Access vs. Exam Success

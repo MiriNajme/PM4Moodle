@@ -55,16 +55,22 @@ The **Extraction** tab is the starting point for log generation, while the **Ver
 The Verification Matrix tab provides log quality checks by automatically generating two types of matrices from the extracted OCEL 2.0 log. This tab enables users (especially teachers and analysts) to verify whether all expected object-event relationships are captured, and to identify any gaps or unexpected patterns:
 
 - **Filtering:** Both matrix types are interactive and can be filtered by object type (row) or event type (column), enabling focused analysis.
+  
+*Example of filtering the verification matrix by selected object and event types:*
 
 <img src="figures/filter-matrices.png" alt="Object Frequency Verification Matrix" width="500"/>
 
-- **Object Frequency Matrix:** Displays the frequency of each object type per event type, supporting quick inspection of the relationships in the log.
+- **Verification Matrix (Frequency):** Displays the frequency of each object type per event type, supporting quick inspection of the relationships in the log.
+  
+*Example of a Frequency Matrix After Applying Filter:*
 
-<img src="figures/frequency-matrix.png" alt="Object Frequency Verification Matrix" width="500"/>
+<img src="figures/figure-filtering-frequency.png" alt="Frequency Verification Matrix" width="500"/>
 
-- **Cardinality Matrix:** Shows the minimum and maximum cardinality of objects per event as observed in the extracted log, facilitating detection of anomalies and validation against expected extraction matrices.
+- **Verification Matrix (Cardinality):** Shows the minimum and maximum cardinality of objects per event as observed in the extracted log, facilitating detection of anomalies and validation against expected extraction matrices.
 
-<img src="figures/cardinality-matrix.png" alt="Cardinality Verification Matrix" width="500"/>
+*Example of a Cardinality Matrix After Applying Filter:*
+
+<img src="figures/figure-filtering-cardinality.png" alt="Cardinality Verification Matrix" width="500"/>
 
 ---
 
@@ -72,7 +78,7 @@ The Verification Matrix tab provides log quality checks by automatically generat
 
 After extracting the OCEL 2.0 log, users can access the Statechart Diagram tab, where PM4Moodle automatically generates statechart diagrams for each extracted module.
 
-- **Lifecycle Visualization:** The diagrams illustrate the actual state transitions (such as create, update, view, and delete) observed in the data for each module instance.
+- **State Chart Visualization:** The diagrams illustrate the actual state transitions (such as create, update, view, and delete) observed in the data for each module instance.
 - **Interpretation:** Users can compare the system’s observed behavior with expected module lifecycles and gain insights into module usage patterns.
 
 <img src="figures/state-chart-assign.png" alt="Statechart Diagram for File Module" width="500"/>

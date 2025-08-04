@@ -188,7 +188,7 @@ For step-by-step usage instructions, see the [User Guide](USER_GUIDE.md).
 We used **PM4Moodle** to extract OCEL 2.0 logs from both test and production Moodle environments.
 
 - **Test Environment:**  
-  Data extraction began with a test setup using two simulated courses, with systematically entered data to cover all relevant event and object types. The inclusion of a second course enabled us to capture import events between courses and verify that the tool could extract comprehensive OCEL 2.0 logs for all modules relevant to general-purpose extraction (Q5), even those not always present in real-world settings.
+  Data extraction began with a test setup using two simulated courses, with systematically entered data to cover all relevant event and object types. The inclusion of a second course enabled us to capture "import" events between courses and verify that the tool could extract comprehensive OCEL 2.0 logs for all modules relevant to general-purpose extraction (Q5), even those not always present in real-world settings. (See [Testing with Example Dataset](TEST_DATASET.md) for step-by-step instructions on testing the tool in the provided test environment.) 
 
 - **Production Environment:**  
   After successful testing, we extracted data from a real course spanning one academic year. This production dataset enabled us to address the first four analytical questions and to validate the method in a real-world context, capturing detailed records of student and teacher interactions—including assignments, submissions, grading, and resource usage—across the course lifecycle.

@@ -57,7 +57,7 @@ We recommend using [Visual Studio Code (VS Code)](https://code.visualstudio.com/
 
 ### 3. Create and Activate a Virtual Environment
 
-In your terminal go to your `backend/` folder by the command:
+In your terminal or powershell go to your `backend/` folder with the command:
 
 ```bash
 cd backend
@@ -70,7 +70,7 @@ python -m venv venv
 
 Activate the virtual environment:
 
-- **Windows:**
+- **Windows PowerShell:**
   ```
   .\venv\Scripts\Activate
   ```
@@ -131,7 +131,7 @@ Download and install Node.js from the [official website](https://nodejs.org/en/d
 
 ### 2. Install Frontend Dependencies
 
-Open another PowerShell and navigate to the `frontend/` folder and run:
+Open another terminal or PowerShell and navigate to the `frontend/` folder and run:
 
 ```bash
 npm install --legacy-peer-deps

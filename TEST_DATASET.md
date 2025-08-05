@@ -23,9 +23,7 @@ It includes data for 9 of the most common and pedagogically important Moodle mod
 ## Accessing the Test Dataset
 
 > **Note:**  
-> If you have not cloned the project yet, please do so as described in the [Setup Guide](SETUP.md).
-
-Before using the test dataset, make sure you have set up **PM4Moodle**.  
+> If you have not cloned and set up the project yet, please do the steps described in the [Setup Guide](SETUP.md).  
 
 The test dataset is already included in your cloned project.  
 You can find it in the `test_dataset` directory, with the filename: [backup.sql](test_dataset/backup.sql).
@@ -140,13 +138,17 @@ This is because the complete OCEL 2.0 log and OC-DFG can be very large and diffi
 ### Q1 & Q4: Learning Paths and Resource Access vs. Exam Success
 
 - **Extraction:**  
-  Select only "view" events (for files, pages, and folders) and the relevant course.  
+  Select only "view" events (for files, pages, and folders) and the relevant course. Here we only test the object type Page as an example.  
   Extract the log and generate the OC-DFG.
- 
-  After exporting the OCEL2.0 Log, use your preferred process mining or data analysis tool to drill down objects into individual objects (pages, files, folders, users) if needed, depending on the question, and unfold "view" event types as needed. For Q4, include exam grade data to analyze correlations.
 
-  *Example OC-DFG for Q1/Q4 (filtered by "view" events):*  
-  <img src="figures/q1-dfg.png" alt="OC-DFG for Q1/Q4" width="500"/>
+ *Example OC-DFG for Q1/Q4 (filtered by "view" events):*  
+  <img src="figures/page.png" alt="OC-DFG for Q1/Q4" width="500"/>
+ 
+  For more detailed analysis, one can write scripts to drill down objects into individual objects (pages, files, folders, users) if needed, depending on the question, and unfold "view" event types as needed.
+
+*Example OC-DFG for Q1/Q4 (after log adjustments by drilling down the object page and unfolding view events):* 
+
+  <img src="figures/page-drilled.png" alt="OC-DFG for Q1/Q4" width="700"/>   
 
 ---
 

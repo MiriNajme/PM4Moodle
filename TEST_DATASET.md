@@ -103,7 +103,7 @@ Here’s what you should check and how to validate the extraction against the te
 
 ### 2. Connect to the test database you just restored (see the figure below)
 <p align='center'>
-<img src="figures/database-connection.png" alt="Test DB connection" width="500"/>
+<img src="figures/connection-setting-test.png" alt="Test DB connection" width="500"/>
 </p>
 
 > **Note:**  

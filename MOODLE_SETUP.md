@@ -105,14 +105,31 @@ You can now log in with your administrator account and start using Moodle!
 
 ---
 
+## 4. Download and Install HeidiSQL
+
+1. **Download the Installer**
+   - Go to [the official HeidiSQL download page](https://www.heidisql.com/download.php?download=installer&place=LinkLabelRelease).
+   - Download the `.exe` installer file.
+
+2. **Run the Installer**
+   - Double-click the downloaded file to launch the installer.
+   - Click through the standard Windows installation prompts (accept the license agreement, choose installation directory, etc.).
+
+*HeidiSQL does not require administrator rights for normal use, but you may need them for installation on some systems.*
+
 ## 5. Connect Moodle to Your Database
+
+ Open HeidiSQL from your start menu or desktop
 
 - **Database type:** MySQL or MariaDB
 - **Database host:** `localhost`
 - **Database name:** (e.g., `moodle`)
 - **Database user:** (e.g., `root`)
-- **Database password:** (your chosen password)
+- **Database password:** (your chosen password, if you chose any while setting up Moodle)
+<p align="center">
+     <img src="figures/heidisql-3.png" alt="Moodle server checks page" width="500"/>
+</p>
 
-You can create a new database for Moodle using a GUI tool or this SQL command:
-```sql
-CREATE DATABASE moodle DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+---
+
+You’re all set! Moodle is installed and running, and you can inspect or manage your database with HeidiSQL as needed.

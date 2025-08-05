@@ -26,7 +26,7 @@ Download the recommended Moodle version (5.1) for your operating system:
 - If your firewall asks for permission to allow Apache or MySQL/MariaDB (mysqld), choose **Allow**.
 
 <p align="center">
-  <img src="screenshots/start-moodle-cmd.png" alt="Start Moodle Command Prompt" width="500"/>
+  <img src="figures/run-moodle.png" alt="Start Moodle Command Prompt" width="500"/>
 </p>
 
 ---
@@ -52,22 +52,22 @@ Follow these steps to complete the initial Moodle setup:
 
 3. **Database Settings**
    - Enter your database connection details:
-     - **Host:** by default `localhost`
-     - **Database name by default `moodle`**
-     - **Database User by default `root`**
+     - **Database host:** by default `localhost`
+     - **Database name** by default `moodle`
+     - **Database User** by default `root`
      - **Table prefix:** *You must leave this as the default value (`mdl_`)*.
      - **Choose a password if you wish**
    - Click **Next**.
 
    <p align="center">
-     <img src="screenshots/moodle-setup-p3.png" alt="Moodle server checks page" width="500"/>
+     <img src="figures/moodle-setup-p3.png" alt="Moodle server checks page" width="500"/>
    </p>
 
 4. **Redirect**
    - You may see a page (see figure below); wait until it automatically redirects to the “Installation” page.
 
    <p align="center">
-     <img src="screenshots/moodle-setup-p4.png" alt="Moodle server checks page" width="500"/>
+     <img src="figures/moodle-setup-p4.png" alt="Moodle server checks page" width="500"/>
    </p>
 
 5. **Installation Page**
@@ -88,8 +88,9 @@ Follow these steps to complete the initial Moodle setup:
      - **Password, First name, Last name, Email address** are *required* fields.
    - Click **Update profile**.
   <p align="center">
-     <img src="screenshots/moodle-setup-p7.png" alt="Moodle server checks page" width="500"/>
+     <img src="figures/moodle-setup-p7.png" alt="Moodle server checks page" width="500"/>
   </p>
+  
 9. **Site Home Settings**
     - On this page, just the following fields are required:
      - **Full site name** (e.g., “My Moodle Test Site”)

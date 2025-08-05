@@ -124,7 +124,7 @@ Here’s what you should check and how to validate the extraction against the te
 
 ---
 
-## How the Test Log Enables Analysis for the Questions
+### 5. Analysis Iteration
 
 To see how the extracted log enables analysis for Q1–Q5 (also presented in our [case study](METHODOLOGY_AND_CASE_STUDY.md#4-analysis-iteration) in a production environment), you should extract and analyze logs **separately for each analytical question**.  
 This is because the complete OCEL 2.0 log and OC-DFG can be very large and difficult to interpret; extracting and visualizing the relevant subset for each question produces clearer, more actionable insights.

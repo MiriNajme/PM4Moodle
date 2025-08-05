@@ -16,6 +16,12 @@ Welcome to the **PM4Moodle Setup Guide**. This document will walk you through th
 
 ## Cloning the Repository
 
+> ⚠️ **Shell Compatibility Note**  
+> Please make sure to use the correct terminal **for all the steps below**:  
+> - On **Windows**, use **PowerShell** (instead of Command Prompt or Git Bash), as some commands may not work properly in other shells.  
+> - On **macOS** and **Linux**, the default **Terminal** is fully supported.
+
+
 To get started, you need to clone this repository to your local machine.
 
 1. Open your terminal or command prompt.
@@ -51,7 +57,7 @@ We recommend using [Visual Studio Code (VS Code)](https://code.visualstudio.com/
 
 ### 3. Create and Activate a Virtual Environment
 
-In your terminal go to your `backend/` folder by the command:
+In your terminal or powershell go to your `backend/` folder with the command:
 
 ```bash
 cd backend
@@ -64,7 +70,7 @@ python -m venv venv
 
 Activate the virtual environment:
 
-- **Windows:**
+- **Windows PowerShell:**
   ```
   .\venv\Scripts\Activate
   ```
@@ -83,17 +89,17 @@ Inside your virtual environment, run:
 pip install -r requirements.txt
 ```
 
-### 5. Set Environment Variables
+### 5. Set Environment Variables (This is optional for debug mode)
 
 - **Windows PowerShell:**
   ```powershell
   $env:FLASK_APP = "app.py"
-  $env:FLASK_DEBUG = "1"   # Optional for debug mode
+  $env:FLASK_DEBUG = "1"   
   ```
 - **macOS/Linux:**
   ```bash
   export FLASK_APP=app.py
-  export FLASK_DEBUG=1     # Optional for debug mode
+  export FLASK_DEBUG=1     
   ```
 
 ### 6. Run the Flask Application
@@ -117,15 +123,15 @@ python -m flask run
 
 ## Frontend Setup
 
-The frontend requires **Node.js**.
+The frontend requires **Node.js version 22.x**.
 
-### 1. Install Node.js
+### 1. Install Node.js version 22.x
 
 Download and install Node.js from the [official website](https://nodejs.org/en/download).
 
 ### 2. Install Frontend Dependencies
 
-Open another terminal or powershell and navigate to the `frontend/` folder and run:
+Open another terminal or PowerShell and navigate to the `frontend/` folder and run:
 
 ```bash
 npm install --legacy-peer-deps

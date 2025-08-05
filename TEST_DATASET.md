@@ -20,15 +20,16 @@ It includes data for 9 of the most common and pedagogically important Moodle mod
 
 ---
 
-## Accessing the Test Dataset
+## prerequisites
 
-> **Note:**  
+> **prerequisite 1:**  
 > If you have not cloned and set up the project yet, please do the steps described in the [Setup Guide](SETUP.md).  
 
 The test dataset is already included in your cloned project.  
 You can find it in the `test_dataset` directory, with the filename: [backup.sql](test_dataset/backup.sql).
 
-
+> **prerequisite 2:**  
+> If you have not set up Moodle, please do so by following the steps described in the [Moodle Setup Guide](MOODLE_SETUP.md).  
 ---
 
 ## Setting Up the Test Dataset
@@ -40,7 +41,11 @@ Below are step-by-step instructions for using the tool interactively.
 
 ### 1. Run the Backup/Restore Script
 
-Open your terminal and navigate to the folder containing the script (PM4Moodle/test_dataset), then run:
+Open your **PowerShell** on Windows or your default terminal on Mac and navigate to the folder containing the script (PM4Moodle/test_dataset), then run:
+
+> **Note:**  
+> Note that if your operating system is Windows, the following commands run only in PowerShell.
+
 
 ```bash
 python moodle_backup_restore.py
@@ -101,13 +106,11 @@ Here’s what you should check and how to validate the extraction against the te
 <img src="figures/database-connection.png" alt="Test DB connection" width="500"/>
 </p>
 
-### 3. Select courses, modules, and event types as needed 
-  The first combo box ("Select Courses:") lists the available courses (e.g., the two simulated test courses).  
-  The second ("Select Modules:") shows the 9 common Moodle modules in your test set.  
-  The third ("Select Events:") displays event types for the selected module(s).  
-  _Leaving any field unselected will extract logs for all of that type._
+> **Note:**  
+> The provided backup file (`backup.sql`) is a database-level backup designed specifically for use with PM4Moodle. It does not represent a Moodle course backup that can be directly imported or viewed as a course within the Moodle interface. Instead, it contains test data that you can extract and analyze using PM4Moodle.
+> If you’d like to explore Moodle’s features or try extracting your own data, you are welcome to create new test courses in your local Moodle installation as well.
 
-### 4. Run the extraction
+### 3. Run the extraction
   Click “Run Extraction” to generate the OCEL 2.0 event log and DFG visualization.  
   Download links will be provided for the log and its OC-DFG. You see:
 
@@ -115,7 +118,7 @@ Here’s what you should check and how to validate the extraction against the te
 <img src="figures/main-page2.png" alt="Test DB connection" width="500"/>
 </p>
 
-### 5. Validate the extraction results 
+### 4. Validate the extraction results 
   Use the Verification Matrix and State Chart Diagram tabs to check if all required relationships and lifecycles are present in the extracted log.  
   (See screenshots and details in the [Usage Guide - Verification Matrix Tab](USAGE_GUIDE.md#verification-matrix-tab).)
 

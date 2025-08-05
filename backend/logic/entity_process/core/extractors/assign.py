@@ -465,14 +465,16 @@ class Assign(Base):
 
     def get_grade_assignment_event_object(self, event, event_type: EventType):
         event_qualifier = "evt_set"
+        event_type_name = "set"
         if event_type == EventType.UPDATED:
             event_qualifier = "evt_upd"
+            event_type_name = "update"
 
         attributes = build_attributes(event, self.related_event_columns["log"])
 
         result = {
             "id": f'{event_qualifier}_grade_{event["id"]}',
-            "type": f"{event_type.value.name}_grade",
+            "type": f"{event_type_name}_grade",
             "time": format_date(event["timecreated"]),
             "attributes": attributes,
         }
@@ -681,7 +683,7 @@ class Assign(Base):
 
     def fetch_assigns(self):
         filters = None
-        
+
         if self.selected_courses:
             filters = [self.object_class.course.in_(self.selected_courses)]
 

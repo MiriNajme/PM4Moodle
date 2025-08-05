@@ -44,7 +44,7 @@ Below are step-by-step instructions for using the tool interactively.
 Open your **PowerShell** on Windows or your default terminal on Mac and navigate to the folder containing the script (PM4Moodle/test_dataset), then run:
 
 > **Note:**  
-> Note that if your operating system is Windows, the following commands run only in PowerShell.
+> Note that if your operating system is Windows, you should run the following commands only in PowerShell.
 
 
 ```bash

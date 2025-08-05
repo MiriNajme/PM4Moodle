@@ -108,8 +108,7 @@ Here’s what you should check and how to validate the extraction against the te
 
 > **Note:**  
 > The provided backup file (`backup.sql`) is a database-level backup designed specifically for use with PM4Moodle. It does not represent a Moodle course backup that can be directly imported or viewed as a course within the Moodle interface. Instead, it contains test data that you can extract and analyze using PM4Moodle.
-
-If you’d like to explore Moodle’s features or try extracting your own data, you are welcome to create new test courses in your local Moodle installation as well.
+> If you’d like to explore Moodle’s features or try extracting your own data, you are welcome to create new test courses in your local Moodle installation as well.
 
 ### 3. Run the extraction
   Click “Run Extraction” to generate the OCEL 2.0 event log and DFG visualization.  

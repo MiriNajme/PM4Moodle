@@ -140,13 +140,17 @@ This is because the complete OCEL 2.0 log and OC-DFG can be very large and diffi
 ### Q1 & Q4: Learning Paths and Resource Access vs. Exam Success
 
 - **Extraction:**  
-  Select only "view" events (for files, pages, and folders) and the relevant course.  
+  Select only "view" events (for files, pages, and folders) and the relevant course. Here we only test the object type Page as an example.  
   Extract the log and generate the OC-DFG.
- 
-  After exporting the OCEL2.0 Log, use your preferred process mining or data analysis tool to drill down objects into individual objects (pages, files, folders, users) if needed, depending on the question, and unfold "view" event types as needed. For Q4, include exam grade data to analyze correlations.
 
-  *Example OC-DFG for Q1/Q4 (filtered by "view" events):*  
-  <img src="figures/q1-dfg.png" alt="OC-DFG for Q1/Q4" width="500"/>
+ *Example OC-DFG for Q1/Q4 (filtered by "view" events):*  
+  <img src="figures/page.png" alt="OC-DFG for Q1/Q4" width="500"/>
+ 
+  For more detailed analysis, one can write scripts to drill down objects into individual objects (pages, files, folders, users) if needed, depending on the question, and unfold "view" event types as needed.
+
+*Example OC-DFG for Q1/Q4 (after log adjustments by drilling down the object page and unfolding view events):* 
+
+  <img src="figures/page-drilled.png" alt="OC-DFG for Q1/Q4" width="700"/>   
 
 ---
 

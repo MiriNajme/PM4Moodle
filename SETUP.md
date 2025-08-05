@@ -83,17 +83,17 @@ Inside your virtual environment, run:
 pip install -r requirements.txt
 ```
 
-### 5. Set Environment Variables
+### 5. Set Environment Variables (This is optional for debug mode)
 
 - **Windows PowerShell:**
   ```powershell
   $env:FLASK_APP = "app.py"
-  $env:FLASK_DEBUG = "1"   # Optional for debug mode
+  $env:FLASK_DEBUG = "1"   
   ```
 - **macOS/Linux:**
   ```bash
   export FLASK_APP=app.py
-  export FLASK_DEBUG=1     # Optional for debug mode
+  export FLASK_DEBUG=1     
   ```
 
 ### 6. Run the Flask Application

@@ -20,12 +20,16 @@ It includes data for 9 of the most common and pedagogically important Moodle mod
 
 ---
 
-## Downloading the Test Dataset
+## Accessing the Test Dataset
 
-You can find the test dataset in the repository under:
-test_dataset/backup.sql
+> **Note:**  
+> If you have not cloned the project yet, please do so as described in the [Setup Guide](SETUP.md).
 
-Or [download it directly here](test_dataset/backup.sql) (right-click and “Save link as...” if needed).
+Before using the test dataset, make sure you have set up **PM4Moodle**.  
+
+The test dataset is already included in your cloned project.  
+You can find it in the `test_dataset` directory, with the filename: [backup.sql](test_dataset/backup.sql).
+
 
 ---
 

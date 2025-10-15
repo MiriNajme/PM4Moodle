@@ -218,8 +218,14 @@ class Forum(Base):
 
     def upload_post_events(self):
         events = self.fetch_upload_post_events()
+        isVisited = []
+        
         if events:
             for event in events:
+                if event["objectid"] in isVisited:
+                    continue
+
+                isVisited.append(event["objectid"])
                 self.ocel_event_log["events"].append(
                     self.get_upload_post_event_object(event)
                 )
@@ -727,7 +733,7 @@ class Forum(Base):
                 ),
             )
 
-            discussion = self.fetch_discussion_by_id(event["objectid"])
+            discussion = self.fetch_discussion_by_id(post["discussion"])
             if discussion:
                 relationships.append(
                     get_formatted_relationship(
@@ -771,25 +777,22 @@ class Forum(Base):
             },
         ]
 
-        post = self.fetch_post_by_id(event["objectid"])
-        if post:
+        other = json.loads(event["other"])
+        if other:
             relationships.append(
                 get_formatted_relationship(
                     ObjectEnum.FORUM_DISCUSSION,
-                    post["discussion"],
+                    other["discussionid"],
                     f"Deleted from discussion",
                 ),
             )
-
-            discussion = self.fetch_discussion_by_id(event["objectid"])
-            if discussion:
-                relationships.append(
-                    get_formatted_relationship(
-                        ObjectEnum.FORUM,
-                        discussion["forum"],
-                        f"Deleted from forum",
-                    ),
-                )
+            relationships.append(
+                get_formatted_relationship(
+                    ObjectEnum.FORUM,
+                    other["forumid"],
+                    f"Deleted from forum",
+                ),
+            )
 
         result["relationships"] = relationships
         # endregion
@@ -835,7 +838,7 @@ class Forum(Base):
                 ),
             )
 
-            discussion = self.fetch_discussion_by_id(event["objectid"])
+            discussion = self.fetch_discussion_by_id(post["discussion"])
             if discussion:
                 relationships.append(
                     get_formatted_relationship(
@@ -950,8 +953,7 @@ class Forum(Base):
 
     def fetch_upload_post_events(self):
         filter_conditions = [
-            self.Log.action == "created",
-            self.Log.target == "post",
+            self.Log.action == "uploaded",
             self.Log.objecttable == "forum_posts",
         ]
 

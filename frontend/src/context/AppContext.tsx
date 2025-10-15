@@ -78,10 +78,10 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
     try {
       const request: ExtractionRequest = {
-        courses: selectedCourses.map(id => +id),
+        courses: selectedCourses.map((id) => +id),
         modules: {},
       };
-
+       
       if (selectedModules && selectedModules.length > 0) {
         selectedModules.forEach((module) => {
           if (selectedEvents && selectedEvents.length > 0) {
@@ -91,6 +91,10 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
           } else {
             request.modules[module] = Object.keys(modules[module] ?? {}) ?? [];
           }
+        });
+      } else {
+        Object.keys(modules).forEach((module) => {
+          request.modules[module] = Object.keys(modules[module] ?? {}) ?? [];
         });
       }
 
@@ -123,7 +127,10 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoading(true);
     const fetchModules = async () => {
       try {
-        const [moduleResp, courseResp] = await Promise.all([getModules(), getCourses()]);
+        const [moduleResp, courseResp] = await Promise.all([
+          getModules(),
+          getCourses(),
+        ]);
         setModules(moduleResp);
         setCourses(courseResp);
       } finally {

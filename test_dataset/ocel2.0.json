@@ -7030,17 +7030,17 @@
                 {
                     "name": "lastaccess",
                     "time": "1970-01-01T00:00:00Z",
-                    "value": 1760536628
+                    "value": 1760620265
                 },
                 {
                     "name": "lastlogin",
                     "time": "1970-01-01T00:00:00Z",
-                    "value": 1754166072
+                    "value": 1760533635
                 },
                 {
                     "name": "currentlogin",
                     "time": "1970-01-01T00:00:00Z",
-                    "value": 1760533635
+                    "value": 1760619862
                 },
                 {
                     "name": "lastip",
@@ -18386,7 +18386,7 @@
                 {
                     "objectId": "fdi_3",
                     "qualifier": "Has discussion",
-                    "from": "2025-10-15T13:57:08.000+00:00",
+                    "from": "2025-10-16T13:11:04.000+00:00",
                     "to": "9999-12-31T23:59:59.999Z"
                 }
             ]
@@ -21115,7 +21115,7 @@
                 {
                     "name": "groupid",
                     "time": "1970-01-01T00:00:00Z",
-                    "value": 1
+                    "value": -1
                 },
                 {
                     "name": "assessed",
@@ -21125,7 +21125,7 @@
                 {
                     "name": "timemodified",
                     "time": "1970-01-01T00:00:00Z",
-                    "value": 1760536628
+                    "value": 1760620264
                 },
                 {
                     "name": "usermodified",
@@ -21158,12 +21158,6 @@
                     "objectId": "fpo_4",
                     "qualifier": "Has post",
                     "from": "2025-10-15T13:30:52.000+00:00",
-                    "to": "9999-12-31T23:59:59.999Z"
-                },
-                {
-                    "objectId": "fpo_5",
-                    "qualifier": "Has post",
-                    "from": "2025-10-15T13:57:08.000+00:00",
                     "to": "9999-12-31T23:59:59.999Z"
                 }
             ]
@@ -21296,7 +21290,7 @@
                 {
                     "name": "modified",
                     "time": "1970-01-01T00:00:00Z",
-                    "value": 1760535352
+                    "value": 1760620264
                 },
                 {
                     "name": "mailed",
@@ -21311,7 +21305,7 @@
                 {
                     "name": "message",
                     "time": "1970-01-01T00:00:00Z",
-                    "value": "<p>Let's discuss chapter 2.</p>"
+                    "value": "<p>Let's discuss chapter 2. (editted)</p>"
                 },
                 {
                     "name": "messageformat",
@@ -21350,109 +21344,13 @@
                 },
                 {
                     "name": "wordcount",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": 4
-                },
-                {
-                    "name": "charcount",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": 21
-                }
-            ]
-        },
-        {
-            "id": "fpo_5",
-            "type": "post",
-            "attributes": [
-                {
-                    "name": "id",
                     "time": "1970-01-01T00:00:00Z",
                     "value": 5
                 },
                 {
-                    "name": "discussion",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": 3
-                },
-                {
-                    "name": "parent",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": 4
-                },
-                {
-                    "name": "userid",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": 2
-                },
-                {
-                    "name": "created",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": 1760536628
-                },
-                {
-                    "name": "modified",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": 1760536628
-                },
-                {
-                    "name": "mailed",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": 0
-                },
-                {
-                    "name": "subject",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": "Discussion2"
-                },
-                {
-                    "name": "message",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": "<div class=\"text_to_html\">Chapter 2 is quite big. What topic in it would you like to discuss?</div>"
-                },
-                {
-                    "name": "messageformat",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": 1
-                },
-                {
-                    "name": "messagetrust",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": 0
-                },
-                {
-                    "name": "attachment",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": ""
-                },
-                {
-                    "name": "totalscore",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": 0
-                },
-                {
-                    "name": "mailnow",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": 0
-                },
-                {
-                    "name": "deleted",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": 0
-                },
-                {
-                    "name": "privatereplyto",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": 0
-                },
-                {
-                    "name": "wordcount",
-                    "time": "1970-01-01T00:00:00Z",
-                    "value": 14
-                },
-                {
                     "name": "charcount",
                     "time": "1970-01-01T00:00:00Z",
-                    "value": 54
+                    "value": 30
                 }
             ]
         },
@@ -64258,6 +64156,111 @@
             ]
         },
         {
+            "id": "evt_forum_vew_2462",
+            "type": "view_forum",
+            "time": "2025-10-16T13:10:04.000+00:00",
+            "attributes": [
+                {
+                    "name": "id",
+                    "value": 2462
+                },
+                {
+                    "name": "eventname",
+                    "value": "\\mod_forum\\event\\course_module_viewed"
+                },
+                {
+                    "name": "component",
+                    "value": "mod_forum"
+                },
+                {
+                    "name": "action",
+                    "value": "viewed"
+                },
+                {
+                    "name": "target",
+                    "value": "course_module"
+                },
+                {
+                    "name": "objecttable",
+                    "value": "forum"
+                },
+                {
+                    "name": "objectid",
+                    "value": 2
+                },
+                {
+                    "name": "crud",
+                    "value": "r"
+                },
+                {
+                    "name": "edulevel",
+                    "value": 2
+                },
+                {
+                    "name": "contextid",
+                    "value": 44
+                },
+                {
+                    "name": "contextlevel",
+                    "value": 70
+                },
+                {
+                    "name": "contextinstanceid",
+                    "value": 26
+                },
+                {
+                    "name": "userid",
+                    "value": 2
+                },
+                {
+                    "name": "courseid",
+                    "value": 2
+                },
+                {
+                    "name": "relateduserid",
+                    "value": null
+                },
+                {
+                    "name": "anonymous",
+                    "value": 0
+                },
+                {
+                    "name": "other",
+                    "value": "null"
+                },
+                {
+                    "name": "timecreated",
+                    "value": 1760620204
+                },
+                {
+                    "name": "origin",
+                    "value": "web"
+                },
+                {
+                    "name": "ip",
+                    "value": "0:0:0:0:0:0:0:1"
+                },
+                {
+                    "name": "realuserid",
+                    "value": null
+                }
+            ],
+            "relationships": [
+                {
+                    "objectId": "frm_2",
+                    "qualifier": "Viewed forum"
+                },
+                {
+                    "objectId": "usr_2",
+                    "qualifier": "Viewed by user"
+                },
+                {
+                    "objectId": "crs_2",
+                    "qualifier": "Viewed in course"
+                }
+            ]
+        },
+        {
             "id": "evt_forum_sub_frm_1384",
             "type": "subscribe_to_forum",
             "time": "2025-08-02T18:12:59.000+00:00",
@@ -65526,10 +65529,6 @@
                 {
                     "objectId": "frm_2",
                     "qualifier": "Added in forum"
-                },
-                {
-                    "objectId": "grp_1",
-                    "qualifier": "Added for group"
                 }
             ]
         },
@@ -66562,6 +66561,442 @@
                 {
                     "name": "timecreated",
                     "value": 1760536628
+                },
+                {
+                    "name": "origin",
+                    "value": "web"
+                },
+                {
+                    "name": "ip",
+                    "value": "0:0:0:0:0:0:0:1"
+                },
+                {
+                    "name": "realuserid",
+                    "value": null
+                }
+            ],
+            "relationships": [
+                {
+                    "objectId": "fdi_3",
+                    "qualifier": "Views discussion forum"
+                },
+                {
+                    "objectId": "usr_2",
+                    "qualifier": "Views discussion by user"
+                },
+                {
+                    "objectId": "crs_2",
+                    "qualifier": "Related to course"
+                },
+                {
+                    "objectId": "frm_2",
+                    "qualifier": "Viewed in forum"
+                }
+            ]
+        },
+        {
+            "id": "evt_discussion_vew_disc_2463",
+            "type": "view_discussion",
+            "time": "2025-10-16T13:10:11.000+00:00",
+            "attributes": [
+                {
+                    "name": "id",
+                    "value": 2463
+                },
+                {
+                    "name": "eventname",
+                    "value": "\\mod_forum\\event\\discussion_viewed"
+                },
+                {
+                    "name": "component",
+                    "value": "mod_forum"
+                },
+                {
+                    "name": "action",
+                    "value": "viewed"
+                },
+                {
+                    "name": "target",
+                    "value": "discussion"
+                },
+                {
+                    "name": "objecttable",
+                    "value": "forum_discussions"
+                },
+                {
+                    "name": "objectid",
+                    "value": 3
+                },
+                {
+                    "name": "crud",
+                    "value": "r"
+                },
+                {
+                    "name": "edulevel",
+                    "value": 2
+                },
+                {
+                    "name": "contextid",
+                    "value": 44
+                },
+                {
+                    "name": "contextlevel",
+                    "value": 70
+                },
+                {
+                    "name": "contextinstanceid",
+                    "value": 26
+                },
+                {
+                    "name": "userid",
+                    "value": 2
+                },
+                {
+                    "name": "courseid",
+                    "value": 2
+                },
+                {
+                    "name": "relateduserid",
+                    "value": null
+                },
+                {
+                    "name": "anonymous",
+                    "value": 0
+                },
+                {
+                    "name": "other",
+                    "value": "null"
+                },
+                {
+                    "name": "timecreated",
+                    "value": 1760620211
+                },
+                {
+                    "name": "origin",
+                    "value": "web"
+                },
+                {
+                    "name": "ip",
+                    "value": "0:0:0:0:0:0:0:1"
+                },
+                {
+                    "name": "realuserid",
+                    "value": null
+                }
+            ],
+            "relationships": [
+                {
+                    "objectId": "fdi_3",
+                    "qualifier": "Views discussion forum"
+                },
+                {
+                    "objectId": "usr_2",
+                    "qualifier": "Views discussion by user"
+                },
+                {
+                    "objectId": "crs_2",
+                    "qualifier": "Related to course"
+                },
+                {
+                    "objectId": "frm_2",
+                    "qualifier": "Viewed in forum"
+                }
+            ]
+        },
+        {
+            "id": "evt_discussion_vew_disc_2464",
+            "type": "view_discussion",
+            "time": "2025-10-16T13:10:45.000+00:00",
+            "attributes": [
+                {
+                    "name": "id",
+                    "value": 2464
+                },
+                {
+                    "name": "eventname",
+                    "value": "\\mod_forum\\event\\discussion_viewed"
+                },
+                {
+                    "name": "component",
+                    "value": "mod_forum"
+                },
+                {
+                    "name": "action",
+                    "value": "viewed"
+                },
+                {
+                    "name": "target",
+                    "value": "discussion"
+                },
+                {
+                    "name": "objecttable",
+                    "value": "forum_discussions"
+                },
+                {
+                    "name": "objectid",
+                    "value": 3
+                },
+                {
+                    "name": "crud",
+                    "value": "r"
+                },
+                {
+                    "name": "edulevel",
+                    "value": 2
+                },
+                {
+                    "name": "contextid",
+                    "value": 44
+                },
+                {
+                    "name": "contextlevel",
+                    "value": 70
+                },
+                {
+                    "name": "contextinstanceid",
+                    "value": 26
+                },
+                {
+                    "name": "userid",
+                    "value": 2
+                },
+                {
+                    "name": "courseid",
+                    "value": 2
+                },
+                {
+                    "name": "relateduserid",
+                    "value": null
+                },
+                {
+                    "name": "anonymous",
+                    "value": 0
+                },
+                {
+                    "name": "other",
+                    "value": "null"
+                },
+                {
+                    "name": "timecreated",
+                    "value": 1760620245
+                },
+                {
+                    "name": "origin",
+                    "value": "web"
+                },
+                {
+                    "name": "ip",
+                    "value": "0:0:0:0:0:0:0:1"
+                },
+                {
+                    "name": "realuserid",
+                    "value": null
+                }
+            ],
+            "relationships": [
+                {
+                    "objectId": "fdi_3",
+                    "qualifier": "Views discussion forum"
+                },
+                {
+                    "objectId": "usr_2",
+                    "qualifier": "Views discussion by user"
+                },
+                {
+                    "objectId": "crs_2",
+                    "qualifier": "Related to course"
+                },
+                {
+                    "objectId": "frm_2",
+                    "qualifier": "Viewed in forum"
+                }
+            ]
+        },
+        {
+            "id": "evt_discussion_vew_disc_2467",
+            "type": "view_discussion",
+            "time": "2025-10-16T13:11:05.000+00:00",
+            "attributes": [
+                {
+                    "name": "id",
+                    "value": 2467
+                },
+                {
+                    "name": "eventname",
+                    "value": "\\mod_forum\\event\\discussion_viewed"
+                },
+                {
+                    "name": "component",
+                    "value": "mod_forum"
+                },
+                {
+                    "name": "action",
+                    "value": "viewed"
+                },
+                {
+                    "name": "target",
+                    "value": "discussion"
+                },
+                {
+                    "name": "objecttable",
+                    "value": "forum_discussions"
+                },
+                {
+                    "name": "objectid",
+                    "value": 3
+                },
+                {
+                    "name": "crud",
+                    "value": "r"
+                },
+                {
+                    "name": "edulevel",
+                    "value": 2
+                },
+                {
+                    "name": "contextid",
+                    "value": 44
+                },
+                {
+                    "name": "contextlevel",
+                    "value": 70
+                },
+                {
+                    "name": "contextinstanceid",
+                    "value": 26
+                },
+                {
+                    "name": "userid",
+                    "value": 2
+                },
+                {
+                    "name": "courseid",
+                    "value": 2
+                },
+                {
+                    "name": "relateduserid",
+                    "value": null
+                },
+                {
+                    "name": "anonymous",
+                    "value": 0
+                },
+                {
+                    "name": "other",
+                    "value": "null"
+                },
+                {
+                    "name": "timecreated",
+                    "value": 1760620265
+                },
+                {
+                    "name": "origin",
+                    "value": "web"
+                },
+                {
+                    "name": "ip",
+                    "value": "0:0:0:0:0:0:0:1"
+                },
+                {
+                    "name": "realuserid",
+                    "value": null
+                }
+            ],
+            "relationships": [
+                {
+                    "objectId": "fdi_3",
+                    "qualifier": "Views discussion forum"
+                },
+                {
+                    "objectId": "usr_2",
+                    "qualifier": "Views discussion by user"
+                },
+                {
+                    "objectId": "crs_2",
+                    "qualifier": "Related to course"
+                },
+                {
+                    "objectId": "frm_2",
+                    "qualifier": "Viewed in forum"
+                }
+            ]
+        },
+        {
+            "id": "evt_discussion_vew_disc_2469",
+            "type": "view_discussion",
+            "time": "2025-10-16T13:11:24.000+00:00",
+            "attributes": [
+                {
+                    "name": "id",
+                    "value": 2469
+                },
+                {
+                    "name": "eventname",
+                    "value": "\\mod_forum\\event\\discussion_viewed"
+                },
+                {
+                    "name": "component",
+                    "value": "mod_forum"
+                },
+                {
+                    "name": "action",
+                    "value": "viewed"
+                },
+                {
+                    "name": "target",
+                    "value": "discussion"
+                },
+                {
+                    "name": "objecttable",
+                    "value": "forum_discussions"
+                },
+                {
+                    "name": "objectid",
+                    "value": 3
+                },
+                {
+                    "name": "crud",
+                    "value": "r"
+                },
+                {
+                    "name": "edulevel",
+                    "value": 2
+                },
+                {
+                    "name": "contextid",
+                    "value": 44
+                },
+                {
+                    "name": "contextlevel",
+                    "value": 70
+                },
+                {
+                    "name": "contextinstanceid",
+                    "value": 26
+                },
+                {
+                    "name": "userid",
+                    "value": 2
+                },
+                {
+                    "name": "courseid",
+                    "value": 2
+                },
+                {
+                    "name": "relateduserid",
+                    "value": null
+                },
+                {
+                    "name": "anonymous",
+                    "value": 0
+                },
+                {
+                    "name": "other",
+                    "value": "null"
+                },
+                {
+                    "name": "timecreated",
+                    "value": 1760620284
                 },
                 {
                     "name": "origin",
@@ -68223,14 +68658,6 @@
                 {
                     "objectId": "crs_2",
                     "qualifier": "Related to course"
-                },
-                {
-                    "objectId": "fdi_3",
-                    "qualifier": "Uploaded in discussion"
-                },
-                {
-                    "objectId": "frm_2",
-                    "qualifier": "Uploaded in forum"
                 }
             ]
         },
@@ -68461,6 +68888,119 @@
             ]
         },
         {
+            "id": "evt_post_del_post_2468",
+            "type": "delete_post",
+            "time": "2025-10-16T13:11:10.000+00:00",
+            "attributes": [
+                {
+                    "name": "id",
+                    "value": 2468
+                },
+                {
+                    "name": "eventname",
+                    "value": "\\mod_forum\\event\\post_deleted"
+                },
+                {
+                    "name": "component",
+                    "value": "mod_forum"
+                },
+                {
+                    "name": "action",
+                    "value": "deleted"
+                },
+                {
+                    "name": "target",
+                    "value": "post"
+                },
+                {
+                    "name": "objecttable",
+                    "value": "forum_posts"
+                },
+                {
+                    "name": "objectid",
+                    "value": 5
+                },
+                {
+                    "name": "crud",
+                    "value": "d"
+                },
+                {
+                    "name": "edulevel",
+                    "value": 0
+                },
+                {
+                    "name": "contextid",
+                    "value": 44
+                },
+                {
+                    "name": "contextlevel",
+                    "value": 70
+                },
+                {
+                    "name": "contextinstanceid",
+                    "value": 26
+                },
+                {
+                    "name": "userid",
+                    "value": 2
+                },
+                {
+                    "name": "courseid",
+                    "value": 2
+                },
+                {
+                    "name": "relateduserid",
+                    "value": 2
+                },
+                {
+                    "name": "anonymous",
+                    "value": 0
+                },
+                {
+                    "name": "other",
+                    "value": "{\"discussionid\":3,\"forumid\":2,\"forumtype\":\"eachuser\"}"
+                },
+                {
+                    "name": "timecreated",
+                    "value": 1760620270
+                },
+                {
+                    "name": "origin",
+                    "value": "web"
+                },
+                {
+                    "name": "ip",
+                    "value": "0:0:0:0:0:0:0:1"
+                },
+                {
+                    "name": "realuserid",
+                    "value": null
+                }
+            ],
+            "relationships": [
+                {
+                    "objectId": "fpo_5",
+                    "qualifier": "Deletes post forum"
+                },
+                {
+                    "objectId": "usr_2",
+                    "qualifier": "Deletes post by user"
+                },
+                {
+                    "objectId": "crs_2",
+                    "qualifier": "Related to course"
+                },
+                {
+                    "objectId": "fdi_3",
+                    "qualifier": "Deleted from discussion"
+                },
+                {
+                    "objectId": "frm_2",
+                    "qualifier": "Deleted from forum"
+                }
+            ]
+        },
+        {
             "id": "evt_post_edt_post_2419",
             "type": "edit_post",
             "time": "2025-10-15T13:10:09.000+00:00",
@@ -68641,6 +69181,119 @@
                 {
                     "name": "timecreated",
                     "value": 1760535352
+                },
+                {
+                    "name": "origin",
+                    "value": "web"
+                },
+                {
+                    "name": "ip",
+                    "value": "0:0:0:0:0:0:0:1"
+                },
+                {
+                    "name": "realuserid",
+                    "value": null
+                }
+            ],
+            "relationships": [
+                {
+                    "objectId": "fpo_4",
+                    "qualifier": "Edits post forum"
+                },
+                {
+                    "objectId": "usr_2",
+                    "qualifier": "Edits post by user"
+                },
+                {
+                    "objectId": "crs_2",
+                    "qualifier": "Related to course"
+                },
+                {
+                    "objectId": "fdi_3",
+                    "qualifier": "Edited in discussion"
+                },
+                {
+                    "objectId": "frm_2",
+                    "qualifier": "Edited in forum"
+                }
+            ]
+        },
+        {
+            "id": "evt_post_edt_post_2466",
+            "type": "edit_post",
+            "time": "2025-10-16T13:11:05.000+00:00",
+            "attributes": [
+                {
+                    "name": "id",
+                    "value": 2466
+                },
+                {
+                    "name": "eventname",
+                    "value": "\\mod_forum\\event\\post_updated"
+                },
+                {
+                    "name": "component",
+                    "value": "mod_forum"
+                },
+                {
+                    "name": "action",
+                    "value": "updated"
+                },
+                {
+                    "name": "target",
+                    "value": "post"
+                },
+                {
+                    "name": "objecttable",
+                    "value": "forum_posts"
+                },
+                {
+                    "name": "objectid",
+                    "value": 4
+                },
+                {
+                    "name": "crud",
+                    "value": "u"
+                },
+                {
+                    "name": "edulevel",
+                    "value": 2
+                },
+                {
+                    "name": "contextid",
+                    "value": 44
+                },
+                {
+                    "name": "contextlevel",
+                    "value": 70
+                },
+                {
+                    "name": "contextinstanceid",
+                    "value": 26
+                },
+                {
+                    "name": "userid",
+                    "value": 2
+                },
+                {
+                    "name": "courseid",
+                    "value": 2
+                },
+                {
+                    "name": "relateduserid",
+                    "value": 2
+                },
+                {
+                    "name": "anonymous",
+                    "value": 0
+                },
+                {
+                    "name": "other",
+                    "value": "{\"discussionid\":3,\"forumid\":2,\"forumtype\":\"eachuser\"}"
+                },
+                {
+                    "name": "timecreated",
+                    "value": 1760620265
                 },
                 {
                     "name": "origin",

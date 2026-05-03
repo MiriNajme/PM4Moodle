@@ -203,7 +203,13 @@ We used **PM4Moodle** to extract OCEL 2.0 logs from both test and production Moo
 
 ### 3.3 Verification
 
-**PM4Moodle** enables systematic verification of the extracted OCEL logs from both test and production environments using two approaches: **Verification Matrices** (frequency and cardinality) and **State Chart Diagrams**, each accessible as dedicated tabs in the interface.
+**PM4Moodle** enables systematic verification of the extracted OCEL logs from both test and production environments using two approaches: **Verification Matrices** (frequency and cardinality) and **State Chart Diagrams**, each accessible as dedicated tabs in the interface elaborated below, focusing on selected object types and event types. The full list of object types, event types, and their relations extracted from the test courses are shown below:
+
+<p align="center">
+<img src="figures/Figure_testdata_heatmap.png" alt="The number of objects (grouped by object type) associated with each event type in the OCEL log extracted from test courses using PM4Moodle" width="500"/>
+</p>
+
+
 
 #### Verification Matrices
 

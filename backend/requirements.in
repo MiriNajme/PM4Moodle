@@ -1,0 +1,19 @@
+# PM4Moodle backend -- top-level (direct) dependencies.
+#
+# This is the human-maintained list: edit THIS file when you add or remove a
+# dependency, then regenerate the locked requirements.txt (see that file's
+# header for the exact commands).
+#
+# Requires Python 3.11-3.14 (3.12 recommended).
+
+# Web framework / REST API
+Flask==3.1.2
+flask-cors==6.0.1
+flasgger==0.9.7.1
+
+# Process mining + OCEL generation
+pm4py==2.7.18
+
+# Database access (Moodle MySQL)
+SQLAlchemy==2.0.44
+mysql-connector-python==9.4.0

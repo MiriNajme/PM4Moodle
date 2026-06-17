@@ -1,6 +1,74 @@
-flask
-flask-cors
-flasgger
-pm4py
-sqlalchemy
-mysql-connector-python
+# PM4Moodle backend -- LOCKED dependencies (generated; do not edit by hand).
+#
+# Every package below -- direct AND transitive -- is pinned to an exact, tested
+# version, so that every install (now or years from now, on any machine)
+# produces the same known-good environment. This is the list verified to run
+# the backend and serve data to the frontend.
+#
+# Requires Python 3.11-3.14 (3.12 recommended).
+#
+# ---------------------------------------------------------------------------
+# To regenerate after editing requirements.in:
+#   1. (fresh venv on a supported Python)  pip install -r requirements.in
+#   2. pip freeze > requirements.txt
+#   3. re-add the "--only-binary" line below to the top of the new file
+# ---------------------------------------------------------------------------
+#
+# The --only-binary line forces the compiled packages to install from prebuilt
+# wheels only. On an unsupported Python this makes the install FAIL LOUDLY with
+# a clear message instead of silently building a broken C extension -- the
+# broken build is what produces errors like:
+#   ModuleNotFoundError: No module named 'rpds.rpds'
+#   ModuleNotFoundError: No module named 'numpy._core._multiarray_umath'
+# If the install fails on this line, your Python version is unsupported: use a
+# supported version (above) rather than deleting this line.
+--only-binary=numpy,scipy,cvxopt,lxml,pandas,matplotlib,pillow,contourpy,kiwisolver,rpds-py,greenlet
+
+attrs==26.1.0
+blinker==1.9.0
+click==8.3.0
+colorama==0.4.6
+contourpy==1.3.3
+cvxopt==1.3.3
+cycler==0.12.1
+deprecation==2.1.0
+flasgger==0.9.7.1
+Flask==3.1.2
+flask-cors==6.0.1
+fonttools==4.63.0
+graphviz==0.21
+greenlet==3.2.4
+intervaltree==3.1.0
+itsdangerous==2.2.0
+Jinja2==3.1.6
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+kiwisolver==1.5.0
+lxml==6.1.1
+MarkupSafe==3.0.3
+matplotlib==3.11.0
+mistune==3.1.4
+mysql-connector-python==9.4.0
+networkx==3.5
+numpy==2.4.6
+packaging==26.2
+pandas==3.0.3
+pillow==12.2.0
+pm4py==2.7.18
+pydotplus==2.0.2
+pyparsing==3.3.2
+python-dateutil==2.9.0.post0
+pytz==2025.2
+PyYAML==6.0.3
+referencing==0.37.0
+rpds-py==2026.5.1
+scipy==1.17.1
+setuptools==80.9.0
+six==1.17.0
+sortedcontainers==2.4.0
+SQLAlchemy==2.0.44
+tqdm==4.67.1
+typing_extensions==4.15.0
+tzdata==2026.2
+Werkzeug==3.1.3
+wheel==0.45.1

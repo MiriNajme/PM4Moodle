@@ -44,8 +44,20 @@ The backend is built with **Python** and **Flask**.
 
 ### 1. Install Python
 
-Make sure you have Python 3.8+ installed.  
+Use **Python 3.11–3.14** (**3.12 recommended**).  
 [Download Python here](https://www.python.org/downloads/)
+
+> ⚠️ **Pick a supported version.** The scientific packages this tool depends on
+> (`numpy`, `scipy`, `pm4py`, `lxml`, `cvxopt`, …) ship prebuilt binaries only
+> for specific Python versions. If you install on a Python version that is too
+> new (or too old), `pip` may try to build these from source and produce a
+> broken environment. If unsure, install **Python 3.12**.
+
+You can check your version with:
+
+```bash
+python --version
+```
 
 ### 2. Open the Project in Your Code Editor
 
@@ -152,5 +164,36 @@ The frontend should now be running, typically on [[http://localhost:5173](http:/
 - Make sure Python and Node.js are correctly installed and added to your system PATH.
 - Ensure your virtual environment is activated before installing Python packages or running the Flask app.
 - If you encounter errors when running `flask run`, make sure you have activated your virtual environment first by running `.\venv\Scripts\Activate` (on Windows) or `source venv/bin/activate` (on macOS/Linux), and then try `flask run` again.
+
+### "No module named ..." / "broken install" errors on `flask run`
+
+If `flask run` fails with a `ModuleNotFoundError` or "broken install" coming from
+a compiled package, for example:
+
+```
+ModuleNotFoundError: No module named 'rpds.rpds'
+ModuleNotFoundError: No module named 'numpy._core._multiarray_umath'
+ImportError: The `scipy` install you are using seems to be broken
+ImportError: cannot import name 'etree' from 'lxml'
+```
+
+your Python version installed some packages from source as broken C extensions.
+This almost always means **your Python version is unsupported** (typically too
+new). Fix it by recreating the environment on a supported Python (**3.11–3.14,
+3.12 recommended**):
+
+```bash
+# from the backend/ folder, with the old venv deactivated
+rm -rf venv            # Windows PowerShell: Remove-Item -Recurse -Force venv
+py -3.12 -m venv venv  # or: python3.12 -m venv venv
+.\venv\Scripts\Activate            # Windows
+# source venv/bin/activate         # macOS/Linux
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+`requirements.txt` is configured to install these packages from prebuilt
+wheels only, so if your Python version is unsupported the install will **fail
+immediately with a clear message** instead of producing a broken environment.
 
 

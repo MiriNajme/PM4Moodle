@@ -48,8 +48,10 @@ export const VerificationStateChart: React.FC = () => {
             <Tabs.Content key={module} value={module}>
               <div className='p-4 flex flex-col gap-2'>
                 <div className='w-full h-[500px] flex items-center justify-center'>
-                  {chartData?.states?.length > 2 ? (
-                    // By default it has 2 points, Start and End
+                  {chartData?.states?.length > 0 ? (
+                    // Render whenever there is at least one event state.
+                    // (Start/End padding nodes were removed from
+                    // ocelToFullRelationStateChart, so the threshold is now 0.)
                     <StateChart chartData={chartData} />
                   ) : (
                     <span className='text-gray-400'>

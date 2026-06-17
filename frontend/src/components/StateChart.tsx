@@ -20,6 +20,12 @@ export const StateChart: React.FC<StateChartProps> = ({ chartData }) => {
 
     const cy = cytoscape({
       container: ref.current,
+      layout: {
+        name: "breadthfirst",
+        directed: true,
+        spacingFactor: 1.2,
+        padding: 20,
+      },
       elements: [
         // Nodes
         ...chartData.states.map((state) => ({

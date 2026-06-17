@@ -78,7 +78,7 @@ const Extractor = React.memo(() => {
         </div>
 
         <div>
-          <Label className='block mb-2'>Select events:</Label>
+          <Label className='block mb-2'>Select event types:</Label>
           <Combobox
             id='event-select'
             placeholder='Choose event(s)'

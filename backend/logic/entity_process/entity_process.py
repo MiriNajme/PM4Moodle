@@ -63,6 +63,20 @@ class EntityProcess:
         )
         event_registry.extract_all(courses, module_events)
 
+        # Some extractors emit paired event types from a single source (e.g.
+        # attempt_quiz/reattempt_quiz, submit_assign/resubmit_assign,
+        # set_grade/update_grade). Keep only events whose type was actually
+        # selected, so the emitted log stays consistent with the declared
+        # eventTypes (a valid OCEL must not reference undeclared event types).
+        declared_event_types = {
+            event_type["name"] for event_type in self.ocel_event_log["eventTypes"]
+        }
+        self.ocel_event_log["events"] = [
+            event
+            for event in self.ocel_event_log["events"]
+            if event.get("type") in declared_event_types
+        ]
+
         self.write_output()
 
     def get_related_object_columns(self):

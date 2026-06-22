@@ -7,11 +7,21 @@ This document provides a comprehensive overview of the tool’s main features an
 
 ## Table of Contents
 
+- [PM4Moodle Demo](#pm4moodle-demo)
 - [Interface Overview](#interface-overview)
 - [Set Up Database Connection](#set-up-database-connection)
 - [Extraction Tab](#extraction-tab)
 - [Verification Matrix Tab](#verification-matrix-tab)
 - [State Chart Diagram Tab](#state-chart-diagram-tab)
+
+---
+## PM4Moodle Demo
+
+A short (~4 minute) screencast walking through the main features of the tool:
+
+<video src="https://github.com/MiriNajme/PM4Moodle/raw/main/figures/PM4Moodle_Demo.mp4" controls width="500"></video>
+
+> If the player above doesn't load, [click here to watch the **PM4Moodle Demo**](figures/PM4Moodle_Demo.mp4).
 
 ---
 ## Interface Overview

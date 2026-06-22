@@ -17,11 +17,13 @@ This document provides a comprehensive overview of the tool’s main features an
 ---
 ## PM4Moodle Demo
 
-A short (~4 minute) screencast walking through the main features of the tool:
+A short (~4 minute) screencast walking through the main features of the tool. Click the thumbnail to watch it on YouTube:
 
-<video src="https://github.com/MiriNajme/PM4Moodle/raw/main/figures/PM4Moodle_Demo.mp4" controls width="500"></video>
+<a href="https://youtu.be/AHblrPF_owU">
+  <img src="https://img.youtube.com/vi/AHblrPF_owU/hqdefault.jpg" alt="PM4Moodle Demo video" width="500"/>
+</a>
 
-> If the player above doesn't load, [click here to watch the **PM4Moodle Demo**](figures/PM4Moodle_Demo.mp4).
+▶ [Watch the PM4Moodle Demo on YouTube](https://youtu.be/AHblrPF_owU)
 
 ---
 ## Interface Overview

@@ -9,6 +9,7 @@ from logic.utils.extractor_utils import get_module_events_map
 from logic.utils.ocel_tools import (
     get_database_config,
     set_database_config,
+    test_database_connection,
     get_courses_list,
 )
 from logic.pm4py_test import run_dfg_analysis
@@ -162,6 +163,18 @@ def set_db_config():
     required_keys = {"host", "port", "user", "password", "db_name"}
     if not isinstance(data, dict) or not required_keys.issubset(data.keys()):
         return jsonify({"error": "Invalid request body"}), 400
+
+    is_connected, error = test_database_connection(data)
+    if not is_connected:
+        print(f"[set-db-config] database connection test failed: {error}")
+        return (
+            jsonify(
+                {
+                    "error": "Couldn't connect to the database. Please check your connection details and try again."
+                }
+            ),
+            400,
+        )
 
     set_database_config(data)
     return jsonify()

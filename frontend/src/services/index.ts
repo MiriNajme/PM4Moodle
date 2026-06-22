@@ -83,6 +83,12 @@ export const saveDbConfig = async (data: DbConfigModel) => {
     await axios.post(`${BASE_URL}/set-db-config`, data);
   } catch (error) {
     console.error("Error to set db config:", error);
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.error ??
+          "Could not reach the server. Is the backend running?"
+      );
+    }
     throw error;
   }
 };

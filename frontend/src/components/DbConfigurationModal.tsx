@@ -1,5 +1,5 @@
-import { GearIcon } from "@radix-ui/react-icons";
-import { Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
+import { CheckCircledIcon, GearIcon } from "@radix-ui/react-icons";
+import { Button, Callout, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import React, { useCallback, useEffect, useState } from "react";
 import { getDbConfig, saveDbConfig, type DbConfigModel } from "../services";
 import Spinner from "./ui/Spinner";
@@ -15,6 +15,9 @@ const DbConfigurationModal = React.memo(() => {
 
   const [isLoading, setLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -24,21 +27,24 @@ const DbConfigurationModal = React.memo(() => {
     }));
   }, []);
 
-  const handleSubmit = useCallback(
-    async (e: React.MouseEvent) => {
-      e.preventDefault();
-      setIsSaving(true);
+  const handleSubmit = useCallback(async () => {
+    setIsSaving(true);
+    setError(null);
 
-      try {
-        await saveDbConfig(dbConfig);
-      } catch (err) {
-        console.error("Error setting database configuration:", err);
-      } finally {
-        setIsSaving(false);
-      }
-    },
-    [dbConfig]
-  );
+    try {
+      await saveDbConfig(dbConfig);
+      setOpen(false);
+      setShowSuccess(true);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Failed to save the database configuration."
+      );
+    } finally {
+      setIsSaving(false);
+    }
+  }, [dbConfig]);
 
   useEffect(() => {
     const fetchDbConfig = async () => {
@@ -57,7 +63,35 @@ const DbConfigurationModal = React.memo(() => {
   }, []);
 
   return (
-    <Dialog.Root>
+    <>
+      {showSuccess && (
+        <div
+          onAnimationEnd={() => setShowSuccess(false)}
+          style={{
+            position: "fixed",
+            top: 16,
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 1000,
+            animation: "db-toast-fade 3s ease-in-out forwards",
+          }}
+        >
+          <Callout.Root color='green' variant='surface' highContrast>
+            <Callout.Icon>
+              <CheckCircledIcon />
+            </Callout.Icon>
+            <Callout.Text>Database connection saved successfully.</Callout.Text>
+          </Callout.Root>
+        </div>
+      )}
+
+      <Dialog.Root
+        open={open}
+        onOpenChange={(isOpen) => {
+          setOpen(isOpen);
+          if (isOpen) setError(null);
+        }}
+      >
       <Dialog.Trigger>
         <Button
           variant='ghost'
@@ -139,22 +173,27 @@ const DbConfigurationModal = React.memo(() => {
               </label>
             </Flex>
 
+            {error && (
+              <Text as='div' size='2' color='red' mt='3'>
+                {error}
+              </Text>
+            )}
+
             <Flex gap='3' mt='4' justify='end'>
               <Dialog.Close>
                 <Button variant='soft' color='gray'>
                   Cancel
                 </Button>
               </Dialog.Close>
-              <Dialog.Close>
-                <Button loading={isSaving} onClick={handleSubmit}>
-                  Save
-                </Button>
-              </Dialog.Close>
+              <Button loading={isSaving} onClick={handleSubmit}>
+                Save
+              </Button>
             </Flex>
           </>
         )}
       </Dialog.Content>
-    </Dialog.Root>
+      </Dialog.Root>
+    </>
   );
 });
 

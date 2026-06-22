@@ -11,7 +11,7 @@ export function ImageButton({
 }: {
   imageUrl: string;
   title: string;
-  description: string;
+  description?: string;
   isJson: boolean;
   onClick?: () => void;
 }) {
@@ -45,12 +45,14 @@ export function ImageButton({
           />
         </div>
         <div>
-          <Heading size='2' mb='1'>
+          <Heading size='2' mb='4'>
             {title}
           </Heading>
-          <Text as='p' size='2' mb='4' color='gray'>
-            {description}
-          </Text>
+          {description && (
+            <Text as='p' size='2' mb='4' color='gray'>
+              {description}
+            </Text>
+          )}
 
           <Flex direction='column' align='stretch' gap='2'>
             <Button size='1' variant='soft' onClick={onClick}>

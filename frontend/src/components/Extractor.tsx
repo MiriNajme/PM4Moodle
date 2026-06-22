@@ -141,8 +141,7 @@ const Extractor = React.memo(() => {
         {imageUrl && (
           <div className='w-full flex justify-between gap-4 p-4 rounded-lg mt-6'>
             <ImageButton
-              title='View DFG Diagram'
-              description='Click to view the generated DFG diagram.'
+              title='OC-DFG Diagram'
               imageUrl={imageUrl ?? ""}
               isJson={false}
               onClick={() =>
@@ -153,8 +152,7 @@ const Extractor = React.memo(() => {
               }
             />
             <ImageButton
-              title='View JSON Output'
-              description='Click to view the generated JSON output.'
+              title='OCEL 2.0 (Json Format)'
               imageUrl={jsonUrl ?? ""}
               isJson={true}
               onClick={() =>

@@ -28,17 +28,25 @@ Docker Desktop is free and is the **only** thing you need to install. It runs
 everything else (database, backend, frontend, and optionally Moodle).
 
 1. Download it: <https://www.docker.com/products/docker-desktop/>
-   - On **Windows**, pick the **AMD64** build unless you have an ARM device
-     (Intel and AMD processors are both "AMD64").
+   - **Windows:** choose **AMD64** unless you have an ARM device — Intel *and*
+     AMD processors both count as "AMD64".
+   - **macOS:** choose **Apple Silicon** for M1/M2/M3/M4 Macs, or **Intel** for
+     older ones. (Not sure? Apple menu →  *About This Mac*.)
+   - **Linux:** install Docker Engine or Docker Desktop from the same page.
 2. Install with the default options.
 3. Launch Docker Desktop and wait until it reports **"Engine running"**
-   (bottom-left, or hover the whale icon in the system tray). The first launch
-   takes a minute or two.
+   (bottom-left, or hover the whale icon in the menu bar / system tray). The
+   first launch takes a minute or two.
 
 You do **not** need to create a Docker account — if a sign-in screen appears,
 skip it.
 
-> **Windows: if Docker warns that WSL2 is missing**
+The demo runs natively on both Intel/AMD and ARM machines (including Apple
+Silicon), so there is nothing else to configure.
+
+> **Windows only — if Docker warns that WSL2 is missing**
+>
+> *(macOS and Linux users can skip this box.)*
 >
 > Docker needs WSL2 (a lightweight Linux layer built into Windows). If you see
 > that warning, open **PowerShell as Administrator** and run:
@@ -124,13 +132,7 @@ This adds a real Moodle you can log into and edit. Because Moodle and PM4Moodle
 share the same database, you can **change a course in Moodle, re-run the
 extraction in PM4Moodle, and immediately see the change** in the OCEL log.
 
-### Step A — Get the Moodle code
-
-The test dataset was built with **Moodle 5.1dev (Build: 20250711)** and Moodle
-must run that exact version, otherwise it would try to upgrade (and thereby
-alter) the dataset on first boot. Choose **one** of the options below.
-
-#### Option A — download the prepared archive (recommended)
+### Step A — Download the Moodle archive
 
 **You do not need to install Moodle.** Download the prepared `moodle-src.tar.gz`
 into `docker/moodle-dist/`, keeping the file name.
@@ -159,38 +161,12 @@ Check it arrived in the right place — the file must be exactly here:
 PM4Moodle/docker/moodle-dist/moodle-src.tar.gz
 ```
 
-That is the complete, unmodified Moodle 5.1dev source (~70 MB), so the version
-matches the dataset exactly. Moodle is licensed under the GPLv3, which permits
-this redistribution.
-
-> That specific development build is no longer downloadable from moodle.org
-> (dev snapshots are replaced continuously), which is why the archive is provided
-> here.
-
-#### Option B — pack it from a local Moodle install
-
-*Skip this if you used Option A.*
-
-If you already have the matching Moodle source on disk, point `MOODLE_SRC` at it
-in `.env` (Step B below) and pack it yourself:
-
-```bash
-powershell -ExecutionPolicy Bypass -File docker\prepare-moodle.ps1
-```
-
-On macOS/Linux:
-
-```bash
-bash docker/prepare-moodle.sh
-```
-
-This writes `docker/moodle-dist/moodle-src.tar.gz` (~10 seconds). Packing matters:
-the folder holds ~29,000 files, and letting the container copy them individually
-through Docker's file sharing takes **30+ minutes**, versus seconds for the
-archive. Your folder is mounted **read-only** and is never modified.
-
-> If no archive is present, the demo still works — it falls back to the slow
-> file-by-file copy and warns you.
+**Why an archive?** The test dataset was built with **Moodle 5.1dev
+(Build: 20250711)**, and Moodle must run that exact version — otherwise it would
+try to upgrade, and thereby alter, the dataset on first boot. That specific
+development build is no longer downloadable from moodle.org (dev snapshots are
+replaced continuously), so the complete, unmodified source is provided here.
+Moodle is licensed under the GPLv3, which permits this redistribution.
 
 ### Step B — Create your `.env`
 
@@ -203,13 +179,13 @@ cp .env.example .env
 On **Windows Command Prompt** use `copy .env.example .env` instead
 (PowerShell accepts `cp`).
 
-`.env.example` ships with working defaults, so **for Option A you do not need to
-edit anything**. The settings it contains:
+`.env.example` ships with working defaults, so **you do not need to edit
+anything**. The settings it contains:
 
 | Variable | Purpose |
 |----------|---------|
 | `MOODLE_ADMIN_USER` / `MOODLE_ADMIN_PASSWORD` | Your Moodle login, applied when the container starts. Defaults to `admin` / `Pm4Moodle!Demo1`. The dataset's original password is not published, which is why this is set here. |
-| `MOODLE_SRC` | Only for **Option B** — path to your Moodle code folder. Commented out by default. |
+| `MOODLE_SRC` | Not needed. Only used when building the archive from your own Moodle install (see [Regenerating the archive](#regenerating-the-moodle-archive-maintainers)). Commented out by default. |
 | `MOODLE_DATA_SRC` | Optional. Path to a `moodledata` folder so previously-uploaded files appear. Mounted read-only; only uploaded file contents are copied, and Moodle regenerates its own caches. Commented out by default. |
 
 ### Step C — Start the full stack
@@ -347,3 +323,38 @@ dataset from scratch.
 | First `docker compose up --build` | **5–10 minutes** |
 | Later starts | seconds |
 | Each extraction | **40–50 seconds** |
+
+---
+
+## Regenerating the Moodle archive (maintainers)
+
+*Testers can ignore this section — the archive is provided for download in
+[Step A](#step-a--download-the-moodle-archive).*
+
+If you need to rebuild `moodle-src.tar.gz` — for example after moving to a newer
+Moodle version, or to publish a new dataset — point `MOODLE_SRC` in `.env` at
+your Moodle code folder (the one containing `version.php`, `admin/`, `course/`,
+`mod/`) and run:
+
+**Windows**
+
+```powershell
+powershell -ExecutionPolicy Bypass -File docker\prepare-moodle.ps1
+```
+
+**macOS / Linux**
+
+```bash
+bash docker/prepare-moodle.sh
+```
+
+This writes `docker/moodle-dist/moodle-src.tar.gz` in about 10 seconds and prints
+the detected Moodle release so you can confirm it matches the dataset. Your
+source folder is mounted **read-only** and is never modified. Upload the result
+as a release asset so testers can download it.
+
+**Why an archive instead of mounting the folder directly?** The Moodle source
+holds ~29,000 files. Copying those individually across Docker's file-sharing
+boundary takes **30+ minutes** on Windows and macOS, versus a few seconds to
+extract one archive inside the container. The container still falls back to the
+slow folder copy if no archive is present, and warns when it does.

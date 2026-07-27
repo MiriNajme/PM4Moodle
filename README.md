@@ -35,9 +35,9 @@ root/
 ---
 ## Documentation Overview
 
-**Start here**
+**Docker demo** — run everything with one command, nothing to install but Docker
 
-- [Docker Demo Guide](DOCKER_DEMO.md) — run everything with one command, nothing to install
+- [Docker Demo Guide](DOCKER_DEMO.md) — extract OCEL 2.0 logs from the bundled test dataset, optionally with a live, editable Moodle
 
 **Manual installation and usage**
 

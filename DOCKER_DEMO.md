@@ -69,16 +69,24 @@ alter) the dataset on first boot. Choose **one** of the options below.
 
 #### Option A — download the prepared archive (recommended)
 
-**You do not need to install Moodle.** Download `moodle-src.tar.gz` from the
-project's releases page:
+**You do not need to install Moodle.** Download the prepared `moodle-src.tar.gz`
+into `docker/moodle-dist/`, keeping the file name.
 
-<https://github.com/MiriNajme/PM4Moodle/releases>
+From the project root — Windows PowerShell:
 
-and place it here, keeping the file name:
-
+```powershell
+Invoke-WebRequest -Uri https://github.com/MiriNajme/PM4Moodle/releases/download/v1.0-demo/moodle-src.tar.gz -OutFile docker/moodle-dist/moodle-src.tar.gz
 ```
-docker/moodle-dist/moodle-src.tar.gz
+
+macOS / Linux:
+
+```bash
+curl -L -o docker/moodle-dist/moodle-src.tar.gz https://github.com/MiriNajme/PM4Moodle/releases/download/v1.0-demo/moodle-src.tar.gz
 ```
+
+Or download it by hand from the
+[releases page](https://github.com/MiriNajme/PM4Moodle/releases) and save it as
+`docker/moodle-dist/moodle-src.tar.gz` (~70 MB).
 
 That is the complete, unmodified Moodle 5.1dev source (~70 MB), so the version
 matches the dataset exactly. Moodle is licensed under the GPLv3, which permits

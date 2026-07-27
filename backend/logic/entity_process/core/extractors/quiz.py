@@ -440,10 +440,16 @@ class Quiz(Base):
 
     def fetch_attempt_quiz_events(self):
         TABLE = self.db_service.Base.classes.mdl_quiz_attempts
-        quiz_ids = self.fetch_quiz_ids_by_course_ids()
         filter_conditions = None
 
-        if quiz_ids:
+        if self.selected_courses:
+            quiz_ids = self.fetch_quiz_ids_by_course_ids()
+            if not quiz_ids:
+                # Courses were selected but none of them contains a quiz, so no
+                # attempt belongs to the selection. Returning early matters: an
+                # empty id list must not be treated as "no filter", which would
+                # pull in attempts from every course.
+                return None
             filter_conditions = [TABLE.quiz.in_(quiz_ids)]
 
         rows = self.db_service.query_object(TABLE, filter_conditions)
@@ -451,10 +457,14 @@ class Quiz(Base):
 
     def fetch_set_grade_quiz_events(self):
         TABLE = self.db_service.Base.classes.mdl_quiz_grades
-        quiz_ids = self.fetch_quiz_ids_by_course_ids()
         filter_conditions = None
 
-        if quiz_ids:
+        if self.selected_courses:
+            quiz_ids = self.fetch_quiz_ids_by_course_ids()
+            if not quiz_ids:
+                # See fetch_attempt_quiz_events: an empty id list means "nothing
+                # in scope", not "unfiltered".
+                return None
             filter_conditions = [TABLE.quiz.in_(quiz_ids)]
 
         rows = self.db_service.query_object(TABLE, filter_conditions)

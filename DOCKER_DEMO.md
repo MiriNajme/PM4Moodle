@@ -80,9 +80,10 @@ ZIP**), unpack it, and open a terminal in the unpacked folder.
 docker compose up --build
 ```
 
-⏳ **The first run takes about 5–10 minutes** — it downloads the base images,
-builds the backend and frontend, and imports the test dataset. Later starts take
-only seconds.
+⏳ **The first run takes about 2–5 minutes** — it downloads the base images,
+builds the backend and frontend, and imports the test dataset. On a slow internet
+connection it can take longer, since roughly 1 GB is downloaded. Later starts
+take only seconds.
 
 The terminal keeps printing log messages and stays busy — that is normal, leave
 it running. Once you see lines mentioning `pm4moodle-frontend` and
@@ -194,8 +195,8 @@ anything**. The settings it contains:
 docker compose -f docker-compose.yml -f docker-compose.moodle.yml up --build
 ```
 
-⏳ First run: about **5–10 minutes** (or seconds if you already ran the basic
-demo, since the images are reused).
+⏳ First run: about **2–5 minutes** — or only seconds if you already ran the
+basic demo, since the images are reused.
 
 Then open:
 
@@ -320,7 +321,7 @@ dataset from scratch.
 |------|------|
 | Install Docker Desktop | one-off, a few minutes |
 | Download `moodle-src.tar.gz` (full demo only) | ~70 MB, a few minutes |
-| First `docker compose up --build` | **5–10 minutes** |
+| First `docker compose up --build` | **2–5 minutes** (longer on a slow connection) |
 | Later starts | seconds |
 | Each extraction | **40–50 seconds** |
 

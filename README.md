@@ -21,6 +21,32 @@
 This tool streamlines the extraction, validation, and analysis of object-centric event logs from Moodle, facilitating educational analytics using object-centric process mining.
 
 ---
+## Quick Start — try it with Docker (recommended)
+
+**Want to try PM4Moodle without installing anything?** The Docker demo runs the
+complete tool against a bundled test dataset. You do **not** need to install
+Moodle, MySQL, Python or Node, and there is no database to restore by hand.
+
+Install [Docker Desktop](https://www.docker.com/products/docker-desktop/), then:
+
+```bash
+git clone https://github.com/MiriNajme/PM4Moodle.git
+cd PM4Moodle
+docker compose up --build
+```
+
+Open <http://localhost:8080> and click **Run Extraction**.
+
+Optionally, the demo can also start a **live, editable Moodle** alongside it, so
+you can change a course and immediately see the change in a freshly extracted
+log.
+
+➡️ **Full instructions: [Docker Demo Guide](DOCKER_DEMO.md)**
+
+> Prefer a manual installation, or want to connect PM4Moodle to your *own*
+> Moodle? Follow the [Setup Guide](SETUP.md) instead.
+
+---
 ## Project Structure
 
 ```
@@ -35,11 +61,20 @@ root/
 ---
 ## Documentation Overview
 
-- [PM4Moodle Setup Giud](SETUP.md)
-- [PM4Moodle Usage Guid](USAGE_GUIDE.md)
+**Start here**
+
+- [Docker Demo Guide](DOCKER_DEMO.md) — run everything with one command, nothing to install *(recommended for first-time users and reviewers)*
+
+**Manual installation and usage**
+
+- [PM4Moodle Setup Guide](SETUP.md) — install and run the backend and frontend yourself
+- [PM4Moodle Usage Guide](USAGE_GUIDE.md) — how to use the interface and interpret the outputs
+- [Moodle Setup Guide](MOODLE_SETUP.md) — install Moodle locally *(not needed for the Docker demo)*
+- [Testing with Example Dataset](TEST_DATASET.md) — restore the test dataset manually *(not needed for the Docker demo)*
+
+**Background**
+
 - [OCPM<sup>2</sup> Methodology and Case Study](METHODOLOGY_AND_CASE_STUDY.md)
-- [Moodle Setup Guid](MOODLE_SETUP.md)
-- [Testing with Example Dataset](TEST_DATASET.md)
 ---
 ## License
 

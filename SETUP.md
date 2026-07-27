@@ -2,6 +2,12 @@
 
 Welcome to the **PM4Moodle Setup Guide**. This document will walk you through the process of cloning the repository, setting up the backend and frontend environments, and troubleshooting common installation issues.
 
+> 💡 **Just want to try PM4Moodle quickly?**
+> The [Docker Demo Guide](DOCKER_DEMO.md) runs the complete tool with one
+> command — no Python, Node, MySQL or Moodle installation, and no manual
+> database restore. Follow this guide instead if you want to install PM4Moodle
+> natively or connect it to your own Moodle.
+
 ---
 
 ## Table of Contents

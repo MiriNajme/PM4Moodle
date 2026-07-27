@@ -181,7 +181,7 @@ We developed and released **PM4Moodle**, an open-source tool for repeatable OCEL
 - Extraction can be targeted: users may select specific courses, module types (e.g., assignment, file, folder, URL), and event types of interest.
 - For convenience, PM4Moodle also supports “one-click” extraction—automatically generating OCEL 2.0 logs for all courses and supported modules.
 
-For step-by-step usage instructions, see the [User Guide](USER_GUIDE.md).
+For step-by-step usage instructions, see the [Usage Guide](USAGE_GUIDE.md).
 
 ### 3.2 Extraction
 

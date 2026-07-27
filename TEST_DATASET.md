@@ -2,6 +2,11 @@
 
 This page explains how to download, set up, and use the provided test dataset by PM4Moodle for OCEL 2.0 extraction.
 
+> 💡 **Shortcut:** the [Docker Demo Guide](DOCKER_DEMO.md) loads this same test
+> dataset automatically — no Moodle installation, no HeidiSQL, and no manual
+> restore step. Use the instructions below if you prefer to restore the dataset
+> into your own Moodle/MySQL installation.
+
 ---
 ## Table of Contents
 

@@ -2,6 +2,12 @@
 
 This guide explains how to download and install Moodle on your local computer (Windows or Mac) and connect it to a database app such as HeidiSQL.
 
+> 💡 **Not needed for the Docker demo.**
+> If you only want to try PM4Moodle — including a live, editable Moodle — use the
+> [Docker Demo Guide](DOCKER_DEMO.md) instead. It provides Moodle and the test
+> database for you, with nothing to install but Docker. Follow the guide below
+> only if you want your own local Moodle installation.
+
 ---
 
 ## 1. Download Moodle

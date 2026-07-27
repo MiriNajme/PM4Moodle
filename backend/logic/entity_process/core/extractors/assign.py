@@ -73,6 +73,11 @@ class Assign(Base):
             course_module = self.fetch_course_module_by_instance(
                 assign["id"], self.module_id
             )
+            if not course_module:
+                # No course module for this assignment within the selected
+                # courses: there is no event to build from it.
+                continue
+
             event = self.fetch_assign_event_by_ids(
                 course_module["id"], EventType.CREATED.value.name
             )
@@ -691,7 +696,10 @@ class Assign(Base):
             self.object_class, filters=filters, sort_by=[("timemodified", "asc")]
         )
 
-        return assigns if assigns else None
+        # Return an empty list rather than None so callers can iterate directly,
+        # as the other fetch_* helpers in this package do. A selected course with
+        # no assignments is perfectly valid (e.g. a newly created course).
+        return assigns if assigns else []
 
     def fetch_module_by_id(self, module_id):
         filter_conditions = [self.object_class.id == module_id]

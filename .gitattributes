@@ -1,2 +1,14 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Files that are executed inside Linux containers MUST keep LF line endings.
+# On Windows, `core.autocrlf=true` would otherwise check them out with CRLF,
+# and the shell then fails with errors such as
+#   syntax error near unexpected token `elif'
+#   /usr/bin/env: 'bash\r': No such file or directory
+# which breaks the Docker demo on a fresh clone.
+*.sh text eol=lf
+Dockerfile text eol=lf
+*.Dockerfile text eol=lf
+docker-entrypoint.sh text eol=lf
+nginx.conf text eol=lf

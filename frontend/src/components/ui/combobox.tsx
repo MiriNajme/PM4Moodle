@@ -65,12 +65,13 @@ export function Combobox({
           {value.length > 0 ? (
             value.map((val) => {
               const option = options.find((o) => o.value === val);
+              const Label = option?.label;
               return (
                 <span
                   key={val}
                   className='flex items-center bg-indigo-100  text-indigo-700 rounded px-2 py-0.5 text-xs'
                 >
-                  {option?.label ?? val}
+                  {typeof Label === "function" ? <Label /> : Label ?? val}
                   <button
                     type='button'
                     onClick={(e) => {

@@ -1,0 +1,56 @@
+# Optional overlay: adds a live, editable Moodle that shares the demo database.
+#
+# Run the full stack (PM4Moodle + Moodle) with:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.moodle.yml up --build
+#
+# Requires the matching Moodle 5.1dev source on disk. Point MOODLE_SRC at it via
+# a .env file (see .env.example). The source folder is mounted READ-ONLY and is
+# never modified — it is copied into a container volume on first start.
+#
+# After it is up:
+#   - Moodle:    http://localhost:8081   (edit courses here)
+#   - PM4Moodle: http://localhost:8080   (re-run extraction to see your changes)
+
+services:
+  moodle:
+    image: moodlehq/moodle-php-apache:8.3
+    container_name: pm4moodle-moodle
+    environment:
+      # The moodlehq image's Apache config references ${APACHE_DOCUMENT_ROOT};
+      # without it Apache serves a non-existent DocumentRoot and returns 403.
+      APACHE_DOCUMENT_ROOT: /var/www/html
+      MOODLE_DBTYPE: mariadb
+      MOODLE_DB_HOST: db
+      MOODLE_DB_PORT: "3306"
+      MOODLE_DB_NAME: moodle
+      MOODLE_DB_USER: pm4moodle
+      MOODLE_DB_PASS: pm4moodle
+      MOODLE_WWWROOT: http://localhost:8081
+      # Optional: lets you log in as admin. Set in .env. Local demo use only.
+      MOODLE_ADMIN_USER: ${MOODLE_ADMIN_USER:-admin}
+      MOODLE_ADMIN_PASSWORD: ${MOODLE_ADMIN_PASSWORD:-}
+    volumes:
+      # Prepared tarball (fast path) — created by docker/prepare-moodle.*
+      - ./docker/moodle-dist:/opt/moodle-dist:ro
+      # Your local Moodle code, mounted read-only (never changed). Only needed
+      # when packing your own source; defaults to an empty placeholder so the
+      # prepared-tarball path works without setting MOODLE_SRC at all.
+      - ${MOODLE_SRC:-./docker/empty-moodle-src}:/opt/moodle-src:ro
+      # Optional: your moodledata folder (uploaded files), mounted read-only.
+      # Defaults to an empty placeholder so the demo also works without it.
+      - ${MOODLE_DATA_SRC:-./docker/empty-moodledata}:/opt/moodledata-src:ro
+      # Writable copies live in named volumes, keeping your folders pristine.
+      - moodle-html:/var/www/html
+      - moodle-moodledata:/var/www/moodledata
+      - ./docker/moodle-entrypoint.sh:/usr/local/bin/pm4moodle-entrypoint.sh:ro
+    entrypoint: ["bash", "/usr/local/bin/pm4moodle-entrypoint.sh"]
+    ports:
+      - "8081:80"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  moodle-html:
+  moodle-moodledata:

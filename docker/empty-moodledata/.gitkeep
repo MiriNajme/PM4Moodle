@@ -1,0 +1,2 @@
+# Placeholder so the optional moodledata mount has a valid (empty) default
+# source when MOODLE_DATA_SRC is not set. Do not remove.

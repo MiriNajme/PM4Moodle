@@ -2,3 +2,8 @@ __pycache__/
 
 output/*
 backend/logic/output/*
+
+# Docker demo: local env + any Moodle source copied into the project
+.env
+moodle-src/
+docker/moodle-dist/*.tar.gz

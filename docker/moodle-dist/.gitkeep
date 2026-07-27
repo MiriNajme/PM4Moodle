@@ -1,0 +1,2 @@
+# Prepared Moodle tarballs (moodle-src.tar.gz) are written here by
+# docker/prepare-moodle.ps1 / prepare-moodle.sh. They are gitignored.

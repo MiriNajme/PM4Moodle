@@ -1,0 +1,61 @@
+# PM4Moodle lightweight demo.
+#
+#   docker compose up --build
+#
+# Then open http://localhost:8080 and click "Run Extraction".
+# No Moodle install, no manual database restore: the MariaDB container loads the
+# bundled test dataset (test_dataset/backup.sql) automatically on first start,
+# and the backend is pre-connected to it.
+#
+# To add a live, editable Moodle on top of this, see docker-compose.moodle.yml.
+
+services:
+  db:
+    image: mariadb:10.11
+    container_name: pm4moodle-db
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpw
+      MARIADB_DATABASE: moodle
+      MARIADB_USER: pm4moodle
+      MARIADB_PASSWORD: pm4moodle
+    ports:
+      # Exposed so you can also inspect the DB with HeidiSQL/DBeaver at localhost:3307.
+      - "3307:3306"
+    volumes:
+      # Auto-import the test dataset on first initialization (empty data dir only).
+      - ./test_dataset/backup.sql:/docker-entrypoint-initdb.d/01-backup.sql:ro
+      - pm4moodle-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  backend:
+    build: ./backend
+    container_name: pm4moodle-backend
+    environment:
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_NAME: moodle
+      DB_USER: pm4moodle
+      DB_PASSWORD: pm4moodle
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: http://localhost:5000/api
+    container_name: pm4moodle-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+volumes:
+  pm4moodle-db-data:

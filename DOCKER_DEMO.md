@@ -98,9 +98,9 @@ Then open:
 
 Click **Run Extraction**.
 
-⏳ **Extraction takes about 40–50 seconds** — most of that is rendering the
-OC-DFG diagram, so the page will look busy for a while. That is normal, not a
-freeze.
+⏳ **Extraction takes roughly a minute**, sometimes up to two on a slower
+machine. Most of that time is spent rendering the OC-DFG diagram, not extracting
+the log, so the page will look busy for a while. That is normal, not a freeze.
 
 When it finishes you should see download cards for:
 
@@ -124,6 +124,10 @@ To also wipe the database and start completely fresh next time:
 ```bash
 docker compose down -v
 ```
+
+> **Note:** the test dataset is imported only when the database is first created.
+> If you later pull an updated `test_dataset/backup.sql`, a plain restart keeps
+> the old data — use `down -v` as above to load the new dataset.
 
 ---
 
@@ -278,9 +282,27 @@ Wait until `pm4moodle-db` shows `healthy` and the other containers show
 The database may still be importing on first start. Wait until `pm4moodle-db` is
 `healthy`, then reload the page.
 
+**I pulled a new version but the extraction still shows the old data**
+The test dataset is only imported when the database volume is created, so simply
+restarting the containers keeps the previous data — with no error to tell you so.
+After pulling an updated `test_dataset/backup.sql` (or changing it yourself), you
+must remove the volume:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.moodle.yml down -v
+docker compose -f docker-compose.yml -f docker-compose.moodle.yml up -d
+```
+
+You can confirm which dataset is loaded with:
+
+```bash
+docker exec pm4moodle-db mariadb -upm4moodle -ppm4moodle moodle -e "SELECT COUNT(*) FROM mdl_logstore_standard_log;"
+```
+
 **Extraction seems stuck**
-It normally takes 40–50 seconds, most of it rendering the OC-DFG. Give it a
-minute before assuming a problem. To watch what the backend is doing:
+It normally takes about a minute, occasionally two, most of it rendering the
+OC-DFG. Give it a couple of minutes before assuming a problem. To watch what the
+backend is doing:
 
 ```bash
 docker compose logs -f backend
@@ -323,7 +345,7 @@ dataset from scratch.
 | Download `moodle-src.tar.gz` (full demo only) | ~70 MB, a few minutes |
 | First `docker compose up --build` | **2–5 minutes** (longer on a slow connection) |
 | Later starts | seconds |
-| Each extraction | **40–50 seconds** |
+| Each extraction | **about a minute** (occasionally two) |
 
 ---
 

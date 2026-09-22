@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, send_from_directory, url_for
 from flasgger import Swagger, swag_from
 from flask_cors import CORS
+from werkzeug.middleware.proxy_fix import ProxyFix
 import os
 import glob
 from logic.model.event_types import EventType
@@ -15,6 +16,16 @@ from logic.utils.ocel_tools import (
 from logic.pm4py_test import run_dfg_analysis
 
 app = Flask(__name__)
+
+# When the app runs behind a reverse proxy (see docker-compose.prod.yml) it is
+# served over https and under a path prefix, neither of which it can see from
+# the request alone. Without this, the download links returned by
+# /api/run-extraction are built as http://host/output/... and 404 for the
+# tester. ProxyFix reads X-Forwarded-Proto/-Host/-Prefix so url_for(...,
+# _external=True) produces the real public URL. With no proxy in front (the
+# local demo) no such headers arrive and this is a no-op.
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
+
 CORS(app)
 swagger = Swagger(app)
 

@@ -10,8 +10,26 @@ set -e
 SRC=/opt/moodle-src            # read-only mount of the Moodle code folder
 DIST=/opt/moodle-dist          # may contain a prepared moodle-src.tar.gz
 DATA_SRC=/opt/moodledata-src   # read-only mount of moodledata (optional)
-HTML=/var/www/html
 DATA=/var/www/moodledata
+
+# Where Moodle is installed below the Apache document root. Empty (the default)
+# serves it at "/", which is what the local demo uses. Set MOODLE_SUBDIR=/moodle
+# to install it in a subdirectory instead, so that a site published under
+# https://host/moodle asks for exactly the paths Moodle generates — see
+# docker-compose.prod.yml.
+HTML="/var/www/html${MOODLE_SUBDIR:-}"
+
+# The public address Moodle builds all its links from, and whether TLS is
+# terminated in front of it. sslproxy must be on for an https wwwroot served by
+# a proxy that speaks plain http to this container, or Moodle redirect-loops.
+WWWROOT="${MOODLE_WWWROOT:-http://localhost:8081}"
+case "$WWWROOT" in
+  https://*) SSLPROXY_DEFAULT=true ;;
+  *)         SSLPROXY_DEFAULT=false ;;
+esac
+SSLPROXY="${MOODLE_SSLPROXY:-$SSLPROXY_DEFAULT}"
+
+mkdir -p "$HTML"
 
 # ---------------------------------------------------------------------------
 # First run only: populate the served code directory.
@@ -69,7 +87,8 @@ global \$CFG;
     'dbcollation' => 'utf8mb4_unicode_ci',
 );
 
-\$CFG->wwwroot  = '${MOODLE_WWWROOT:-http://localhost:8081}';
+\$CFG->wwwroot  = '$WWWROOT';
+\$CFG->sslproxy = $SSLPROXY;
 \$CFG->dataroot = '$DATA';
 \$CFG->admin    = 'admin';
 \$CFG->directorypermissions = 02777;
@@ -108,7 +127,7 @@ if [ -n "${MOODLE_ADMIN_PASSWORD:-}" ]; then
   cat > /tmp/pm4moodle-set-admin-password.php <<'PHP'
 <?php
 define('CLI_SCRIPT', true);
-require('/var/www/html/config.php');
+require(getenv('MOODLE_CONFIG_PATH'));
 global $DB;
 $username = getenv('MOODLE_ADMIN_USER') ?: 'admin';
 $password = getenv('MOODLE_ADMIN_PASSWORD');
@@ -120,10 +139,10 @@ if (!$user) {
 update_internal_user_password($user, $password);
 echo "[set-admin-password] password set for '$username'\n";
 PHP
-  php /tmp/pm4moodle-set-admin-password.php \
+  MOODLE_CONFIG_PATH="$HTML/config.php" php /tmp/pm4moodle-set-admin-password.php \
     || echo "[moodle-entrypoint] WARNING: could not set the admin password."
   rm -f /tmp/pm4moodle-set-admin-password.php
 fi
 
-echo "[moodle-entrypoint] Starting Apache. Moodle will be available at ${MOODLE_WWWROOT:-http://localhost:8081}"
+echo "[moodle-entrypoint] Starting Apache. Moodle will be available at $WWWROOT"
 exec apache2-foreground

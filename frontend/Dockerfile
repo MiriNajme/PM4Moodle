@@ -13,10 +13,17 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 
-# The API base URL is baked in at build time. It must be reachable from the
-# tester's browser, so it points at the backend's published host port.
+# The API base URL is baked in at build time. For the local demo it points at
+# the backend's published host port; the server deployment passes a relative
+# path (/pm4moodle/api) so it works on any hostname and needs no CORS.
 ARG VITE_API_BASE_URL=http://localhost:5000/api
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+
+# The path the app is served from. "/" locally, "/pm4moodle/" on the server.
+# Vite uses it for asset URLs and it becomes the router's basename.
+ARG VITE_BASE_PATH=/
+ENV VITE_BASE_PATH=$VITE_BASE_PATH
+
 RUN npm run build
 
 # --- Serve stage ---

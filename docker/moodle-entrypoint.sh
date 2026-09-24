@@ -29,6 +29,13 @@ case "$WWWROOT" in
 esac
 SSLPROXY="${MOODLE_SSLPROXY:-$SSLPROXY_DEFAULT}"
 
+# Moodle normally checks that the host in the incoming request matches wwwroot,
+# and redirects to wwwroot when it does not — which becomes an endless loop if
+# the proxy in front rewrites Host on every hop. Preserving the original Host
+# upstream is the proper fix; setting MOODLE_REVERSEPROXY=true tells Moodle to
+# trust wwwroot instead, for proxies that cannot preserve it.
+REVERSEPROXY="${MOODLE_REVERSEPROXY:-false}"
+
 mkdir -p "$HTML"
 
 # ---------------------------------------------------------------------------
@@ -87,8 +94,9 @@ global \$CFG;
     'dbcollation' => 'utf8mb4_unicode_ci',
 );
 
-\$CFG->wwwroot  = '$WWWROOT';
-\$CFG->sslproxy = $SSLPROXY;
+\$CFG->wwwroot      = '$WWWROOT';
+\$CFG->sslproxy     = $SSLPROXY;
+\$CFG->reverseproxy = $REVERSEPROXY;
 \$CFG->dataroot = '$DATA';
 \$CFG->admin    = 'admin';
 \$CFG->directorypermissions = 02777;

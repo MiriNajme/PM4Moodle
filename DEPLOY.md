@@ -98,8 +98,15 @@ ProxyPass        / http://127.0.0.1:8080/ timeout=600
 ProxyPassReverse / http://127.0.0.1:8080/
 ```
 
-Note the absence of any `rewrite` or path manipulation — `/pm4moodle` and
-`/moodle` must arrive at the stack exactly as the browser sent them.
+Two details in those snippets carry more weight than they look:
+
+- **No `rewrite` or path manipulation.** `/pm4moodle` and `/moodle` must arrive
+  at the stack exactly as the browser sent them.
+- **The original `Host` must be preserved** (`proxy_set_header Host $host` /
+  `ProxyPreserveHost On`). Moodle compares the request's host against its
+  configured `wwwroot` and redirects to `wwwroot` when they differ, so a proxy
+  that replaces `Host` with `127.0.0.1:8080` puts Moodle in an endless redirect
+  loop. See Troubleshooting below.
 
 If access should be restricted to invited testers, HTTP basic authentication on
 this outer proxy is the simplest place to add it.
@@ -115,6 +122,44 @@ this outer proxy is the simplest place to add it.
   `X-Forwarded-Proto` / `X-Forwarded-Prefix` headers are not reaching Flask
 - `https://<host>/moodle/` shows the Moodle login and the admin password works
 - editing a course in Moodle and re-running the extraction shows the new events
+
+## Troubleshooting
+
+**`/moodle` redirects to itself forever, and/or `/` sends the browser to
+`localhost:8080`**
+
+Both mean the outer proxy is not passing the original `Host` header through, so
+the stack sees `Host: localhost:8080` (or `127.0.0.1:8080`) instead of the real
+hostname. Confirm it from the server:
+
+```bash
+curl -sI -H 'Host: pm4moodle.dsv.su.se' http://127.0.0.1:8080/
+```
+
+Sent with the correct `Host`, that returns `302` with `Location: /pm4moodle/`
+and `/moodle/` loads normally. If the site misbehaves only when reached through
+the outer proxy, the header is being lost there — add `proxy_set_header Host
+$host;` (nginx) or `ProxyPreserveHost On` (Apache).
+
+If preserving `Host` is not possible in your setup, set
+`MOODLE_REVERSEPROXY=true` in `.env.prod` and recreate the Moodle container.
+Moodle then trusts `wwwroot` rather than comparing it with the incoming request:
+
+```bash
+docker compose -f docker-compose.prod.yml --env-file .env.prod up -d moodle
+```
+
+**The download links after an extraction point at `http://` or omit
+`/pm4moodle`**
+
+`X-Forwarded-Proto` or `X-Forwarded-Prefix` is not reaching Flask. The internal
+proxy sets `X-Forwarded-Prefix` itself, so this is normally the outer proxy
+dropping `X-Forwarded-Proto`.
+
+**Moodle shows "Incorrect access detected"**
+
+The same `Host` mismatch as above, on a Moodle version that reports it rather
+than redirecting. The same two fixes apply.
 
 ## What differs from the local demo
 

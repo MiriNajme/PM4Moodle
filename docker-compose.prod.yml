@@ -91,9 +91,14 @@ services:
       MOODLE_SUBDIR: /moodle
       MOODLE_WWWROOT: ${PUBLIC_BASE_URL:?set PUBLIC_BASE_URL in .env.prod}/moodle
       # TLS is terminated by the outer proxy; without this Moodle would build
-      # http:// links and redirect-loop. Derived from the wwwroot scheme, but
-      # set explicitly here for clarity.
-      MOODLE_SSLPROXY: "true"
+      # http:// links and redirect-loop. Set MOODLE_SSLPROXY=false in .env.prod
+      # when dry-running the whole stack over plain http on a laptop
+      # (PUBLIC_BASE_URL=http://localhost:8080).
+      MOODLE_SSLPROXY: "${MOODLE_SSLPROXY:-true}"
+      # Escape hatch for a proxy that cannot preserve the original Host header:
+      # Moodle then trusts wwwroot instead of comparing it with the request, and
+      # stops redirecting to itself. Preserving Host upstream is the better fix.
+      MOODLE_REVERSEPROXY: "${MOODLE_REVERSEPROXY:-false}"
       MOODLE_ADMIN_USER: ${MOODLE_ADMIN_USER:-admin}
       MOODLE_ADMIN_PASSWORD: ${MOODLE_ADMIN_PASSWORD:?set MOODLE_ADMIN_PASSWORD in .env.prod}
     volumes:

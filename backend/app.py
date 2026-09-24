@@ -281,19 +281,22 @@ def run_extraction():
 
     result = run_dfg_analysis(courses, module_events)
 
+    # Root-relative URLs ("/output/..." locally, "/pm4moodle/output/..." behind
+    # the reverse proxy, via the prefix ProxyFix reads from X-Forwarded-Prefix).
+    # The browser resolves them against the page's own origin, so they are
+    # correct over http or https and on any hostname. Absolute URLs would need
+    # the proxy to report the scheme and host accurately, and getting that wrong
+    # makes the browser block the fetch as mixed content — which shows up as the
+    # Verification Matrix and State Chart staying empty after an extraction.
     if result["image_file"] is not None:
-        img_url = url_for(
-            "serve_output_file", filename=result["image_file"], _external=True
-        )
+        img_url = url_for("serve_output_file", filename=result["image_file"])
     else:
         img_url = ""
 
     return jsonify(
         {
             "image_url": img_url,
-            "json_url": url_for(
-                "serve_output_file", filename=result["json_file"], _external=True
-            ),
+            "json_url": url_for("serve_output_file", filename=result["json_file"]),
         }
     )
 

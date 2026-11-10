@@ -525,9 +525,11 @@ class Assign(Base):
                 event["userid"],
             )
             if grade:
-                final_grade = float(grade.get("finalgrade"))
+                final_grade = grade.get("finalgrade")
                 if final_grade is not None:
-                    result["attributes"].append({"name": "grade", "value": final_grade})
+                    result["attributes"].append(
+                        {"name": "grade", "value": float(final_grade)}
+                    )
 
         result["relationships"] = relationships
         # endregion RELATIONSHIPS

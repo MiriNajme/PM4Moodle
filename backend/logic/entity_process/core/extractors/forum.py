@@ -889,9 +889,9 @@ class Forum(Base):
             event["userid"],
         )
         if grade:
-            final_grade = float(grade.get("finalgrade"))
+            final_grade = grade.get("finalgrade")
             if final_grade is not None:
-                attributes.append({"name": "grade", "value": final_grade})
+                attributes.append({"name": "grade", "value": float(final_grade)})
 
         result = {
             "id": f'{event_qualifier}_{event["id"]}',
